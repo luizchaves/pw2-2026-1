@@ -1,0 +1,7 @@
+{
+  "name": "esm-npm",
+  "type": "module",
+  "dependencies": {
+    "mathjs": "^15.1.1"
+  }
+}

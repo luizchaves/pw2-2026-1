@@ -74,3 +74,19 @@ console.log(number || 0);
 
 // Nullish coalescing operator (??)
 console.log(number ?? 0);
+
+// Increment and decrement operators
+console.log('Increment and decrement operators'); //
+let count = 0;
+
+// pós fixado
+let x = count++;
+console.log(x); // 0
+
+// pré fixado
+let y = ++count;
+console.log(y); // 2
+
+// console.log(++count++);
+console.log((++count)++);
+

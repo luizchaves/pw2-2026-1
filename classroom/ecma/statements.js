@@ -113,8 +113,46 @@ console.log(`
 
 let numbers = '';
 
-for (let count = 1; count < 100; count++) {
-  numbers += count
+for (let count = 0; count < 100; count++) {
+  numbers += count < 10 ? '0' + count : count;
+
+  if (count < 99) {
+    numbers += ',';
+  }
+
+  // if (String(count).at(-1) === '9') {
+  //   numbers += '\n'
+  // } else {
+  //   numbers += ' '
+  // }
+
+  // if ((count + 1) % 10 === 0) {
+  //   numbers += '\n'
+  // } else {
+  //   numbers += ' '
+  // }
+
+  if (count % 10 === 9) {
+    numbers += '\n'
+  } else {
+    numbers += ' '
+  }
 }
 
 console.log(numbers)
+
+numbers = '';
+
+for (let decimal = 0; decimal <= 9; decimal++) {
+  for (let unit = 0; unit <= 9; unit++) {
+    numbers += `${decimal}${unit}`;
+
+    if (unit === 9 && decimal !== 9) {
+      numbers += ',\n';
+    } else if (unit !== 9) {
+      numbers += ', ';
+    }
+  }
+}
+
+console.log(numbers);
