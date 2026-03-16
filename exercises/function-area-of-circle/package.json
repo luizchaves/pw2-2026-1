@@ -1,0 +1,8 @@
+{
+  "name": "function-area-of-circle",
+  "type": "module",
+  "scripts": {
+    "start": "node main.print.js",
+    "test": "node main.test.js"
+  }
+}
