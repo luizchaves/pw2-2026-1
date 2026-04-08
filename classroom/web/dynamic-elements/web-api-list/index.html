@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web API</title>
+</head>
+
+<body>
+  <h1>Web API</h1>
+  <ul></ul>
+  <script>
+    function generateWebApiItem(webAPI) {
+      return `<li><strong>${webAPI.name}</strong>: ${webAPI.description}</li>`;
+    }
+
+    const webAPIs = [
+      { name: 'DOM API', description: 'Manipulação de elementos HTML e CSS.' },
+      { name: 'Fetch API', description: 'Realização de requisições HTTP.' },
+      { name: 'Canvas API', description: 'Desenho gráfico em 2D e 3D.' },
+      { name: 'Web Storage API', description: 'Armazenamento local de dados.' },
+      { name: 'Geolocation API', description: 'Acesso à localização do usuário.' },
+    ];
+
+    const ul = document.querySelector('ul');
+
+    // Element.innerHTML / Element.innerText
+    ul.innerHTML = generateWebApiItem(webAPIs[0]);
+    // ul.innerHTML += generateWebApiItem(webAPIs[1]);
+
+    // Element.insertAdjacentHTML()
+    ul.insertAdjacentHTML('beforeend', generateWebApiItem(webAPIs[1]));
+
+    // Document.createElement() + Element.appendChild()
+    // <li><strong>${webAPI.name}</strong>: ${webAPI.description}</li>
+    const { name, description } = webAPIs[2];
+    const li = document.createElement('li');
+
+    const strong = document.createElement('strong');
+    strong.textContent = name;
+    li.appendChild(strong);
+
+    const textNode = document.createTextNode(': ' + description);
+    li.appendChild(textNode);
+
+    ul.appendChild(li);
+
+    // loop
+    webAPIs.slice(3)
+      .forEach((webAPI) =>
+        ul.insertAdjacentHTML('beforeend', generateWebApiItem(webAPI))
+      );
+
+  </script>
+</body>
+
+</html>
