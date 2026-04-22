@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventos</title>
+</head>
+<body>
+  <h1>Eventos</h1>
+  <!-- inline onEvent -->
+  <button onclick="handleClick(this)">inline onEvent</button>
+  <!-- js onEvent -->
+  <button>js onEvent</button>
+  <!-- addEventListener -->
+  <button>addEventListener</button>
+  <script>
+    function handleClick(target) {
+      console.log(`Button clicked: ${target.textContent}`);
+    }
+
+    const buttons = document.querySelectorAll('button');
+
+    // js onEvent
+    buttons[1].onclick = function() {
+      handleClick(this);
+    };
+
+    // addEventListener
+    buttons[2].addEventListener('click', function() {
+      handleClick(this);
+    });
+
+    // event details
+    document.addEventListener('keyup', function(event) {
+      console.log(`Key released: ${event.key}`);
+
+      if (event.key === 'Enter') {
+        console.log('Enter key was released!');
+      }
+    });
+  </script>
+</body>
+</html>

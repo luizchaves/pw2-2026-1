@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World</title>
+</head>
+<body>
+  <form>
+    <input type="text" name="name" placeholder="Digite seu nome" autofocus autocomplete="off">
+    <button type="submit">Hello</button>
+  </form>
+  <p></p>
+
+  <script>
+    const form = document.querySelector('form');
+    const nameInput = document.querySelector('input[name="name"]')
+
+    form.onsubmit = function(event) {
+      event.preventDefault();
+
+      const name = nameInput.value;
+
+      document.querySelector('p').textContent = `Hello, ${name}!`;
+    }
+
+    document.addEventListener('keyup', function(event) {
+      if (event.key === 'Escape') {
+        form.reset();
+
+        document.querySelector('p').textContent = '';
+      }
+    });
+  </script>
+</body>
+</html>
