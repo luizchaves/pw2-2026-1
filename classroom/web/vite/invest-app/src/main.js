@@ -101,13 +101,9 @@ investmentForm.addEventListener('submit', (event) => {
     category: formData.get('category').trim(),
     investedDate: formData.get('investedDate'),
     maturityDate: formData.get('maturityDate') || null,
-    icon: formData.get('icon').trim() || 'account_balance',
-    iconColor: formData.get('iconColor').trim() || 'primary',
   }
 
   grid.appendChild(createInvestCard(newInvestment))
   investmentForm.reset()
   closeInvestmentModal()
-})
-
-app.appendChild(wrapper)
+}
