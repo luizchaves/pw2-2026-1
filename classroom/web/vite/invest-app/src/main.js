@@ -65,29 +65,13 @@ const createInvestCard = (investment) => {
   return card
 }
 
-const heading = document.createElement('div')
-heading.className = 'mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between'
-heading.innerHTML = `
-  <div class="space-y-2">
-    <p class="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Portfólio</p>
-    <h1 class="text-4xl font-extrabold tracking-tight text-slate-900">Meus investimentos</h1>
-    <p class="max-w-2xl text-sm text-slate-600">Uma visão rápida dos seus principais ativos, com retorno, valor investido e datas importantes.</p>
-  </div>
-  <button id="open-investment-form" class="w-full rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500 sm:w-auto">
-    Cadastrar investimento
-  </button>
-`
+const grid = document.getElementById('investment-grid')
 
-const grid = document.createElement('div')
 grid.className = 'grid gap-6 sm:grid-cols-2 xl:grid-cols-3'
 
 investments.forEach((investment) => {
   grid.appendChild(createInvestCard(investment))
 })
-
-const wrapper = document.createElement('section')
-wrapper.className = 'mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8'
-wrapper.append(heading, grid)
 
 const openModalButton = document.getElementById('open-investment-form')
 const modal = document.getElementById('investment-modal')

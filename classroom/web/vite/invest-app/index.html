@@ -24,11 +24,22 @@
         <h1 class="text-center text-5xl font-black tracking-tight text-slate-900 sm:text-6xl">
           Invest App
         </h1>
-        <button id="open-investment-form" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500">
-          Cadastrar investimento
-        </button>
       </div>
-      <div id="app" class="mt-10"></div>
+      <div id="app" class="mt-10">
+        <section class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <div class="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div class="space-y-2">
+              <p class="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Portfólio</p>
+              <h1 class="text-4xl font-extrabold tracking-tight text-slate-900">Meus investimentos</h1>
+              <p class="max-w-2xl text-sm text-slate-600">Uma visão rápida dos seus principais ativos, com retorno, valor investido e datas importantes.</p>
+            </div>
+            <button id="open-investment-form" class="w-full rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500 sm:w-auto">
+              Cadastrar investimento
+            </button>
+          </div>
+          <div id="investment-grid" class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"></div>
+        </section>
+      </div>
     </main>
 
     <div id="investment-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
