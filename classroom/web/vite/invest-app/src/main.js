@@ -1,5 +1,9 @@
 import '../global.css'
-import { investments } from './data/investments.js'
+import { investments as initialInvestments } from './data/investments.js'
+
+const investments = localStorage.getItem('investments')
+  ? JSON.parse(localStorage.getItem('investments'))
+  : initialInvestments
 
 const app = document.getElementById('app')
 
@@ -104,6 +108,8 @@ investmentForm.addEventListener('submit', (event) => {
   }
 
   grid.appendChild(createInvestCard(newInvestment))
+  investments.push(newInvestment)
+  localStorage.setItem('investments', JSON.stringify(investments))
   investmentForm.reset()
   closeInvestmentModal()
 })
