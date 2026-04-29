@@ -106,4 +106,4 @@ investmentForm.addEventListener('submit', (event) => {
   grid.appendChild(createInvestCard(newInvestment))
   investmentForm.reset()
   closeInvestmentModal()
-}
+})
