@@ -66,11 +66,16 @@ const createInvestCard = (investment) => {
 }
 
 const heading = document.createElement('div')
-heading.className = 'mb-8 space-y-2'
+heading.className = 'mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between'
 heading.innerHTML = `
-  <p class="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Portfólio</p>
-  <h1 class="text-4xl font-extrabold tracking-tight text-slate-900">Meus investimentos</h1>
-  <p class="max-w-2xl text-sm text-slate-600">Uma visão rápida dos seus principais ativos, com retorno, valor investido e datas importantes.</p>
+  <div class="space-y-2">
+    <p class="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Portfólio</p>
+    <h1 class="text-4xl font-extrabold tracking-tight text-slate-900">Meus investimentos</h1>
+    <p class="max-w-2xl text-sm text-slate-600">Uma visão rápida dos seus principais ativos, com retorno, valor investido e datas importantes.</p>
+  </div>
+  <button id="open-investment-form" class="w-full rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500 sm:w-auto">
+    Cadastrar investimento
+  </button>
 `
 
 const grid = document.createElement('div')
@@ -83,5 +88,42 @@ investments.forEach((investment) => {
 const wrapper = document.createElement('section')
 wrapper.className = 'mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8'
 wrapper.append(heading, grid)
+
+const openModalButton = document.getElementById('open-investment-form')
+const modal = document.getElementById('investment-modal')
+const closeModalButton = document.getElementById('close-investment-form')
+const investmentForm = document.getElementById('investment-form')
+
+const openInvestmentModal = () => modal.classList.remove('hidden')
+const closeInvestmentModal = () => modal.classList.add('hidden')
+
+modal.addEventListener('click', (event) => {
+  if (event.target === modal) closeInvestmentModal()
+})
+
+openModalButton.addEventListener('click', openInvestmentModal)
+closeModalButton.addEventListener('click', closeInvestmentModal)
+
+investmentForm.addEventListener('submit', (event) => {
+  event.preventDefault()
+
+  const formData = new FormData(investmentForm)
+
+  const newInvestment = {
+    name: formData.get('name').trim(),
+    description: formData.get('description').trim(),
+    amount: Number(formData.get('amount')) || 0,
+    yield: Number(formData.get('yield')) || 0,
+    category: formData.get('category').trim(),
+    investedDate: formData.get('investedDate'),
+    maturityDate: formData.get('maturityDate') || null,
+    icon: formData.get('icon').trim() || 'account_balance',
+    iconColor: formData.get('iconColor').trim() || 'primary',
+  }
+
+  grid.appendChild(createInvestCard(newInvestment))
+  investmentForm.reset()
+  closeInvestmentModal()
+})
 
 app.appendChild(wrapper)

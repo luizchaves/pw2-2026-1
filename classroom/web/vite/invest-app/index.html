@@ -6,9 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>invest-app</title>
   </head>
-  <body>
-    <h1 class="text-center">Invest App</h1>
-    <div id="app"></div>
+  <body class="bg-slate-50 text-slate-900">
+    <header class="border-b border-slate-200 bg-white/90 backdrop-blur-sm">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+        <a href="#" class="text-lg font-semibold tracking-tight text-slate-900">Invest App</a>
+        <div class="hidden items-center gap-8 md:flex">
+          <a href="#" class="text-sm font-medium text-slate-600 transition hover:text-slate-900">Início</a>
+          <a href="#" class="text-sm font-medium text-slate-600 transition hover:text-slate-900">Investimentos</a>
+          <a href="#" class="text-sm font-medium text-slate-600 transition hover:text-slate-900">Perfil</a>
+        </div>
+        <a href="#" class="inline-flex rounded-full bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500">Entrar</a>
+      </nav>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-center gap-6">
+        <h1 class="text-center text-5xl font-black tracking-tight text-slate-900 sm:text-6xl">
+          Invest App
+        </h1>
+        <button id="open-investment-form" class="rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500">
+          Cadastrar investimento
+        </button>
+      </div>
+      <div id="app" class="mt-10"></div>
+    </main>
+
+    <div id="investment-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
+      <div class="w-full max-w-2xl overflow-hidden rounded-3xl bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Cadastrar novo investimento</h2>
+            <p class="mt-1 text-sm text-slate-500">Preencha os dados para adicionar um novo ativo.</p>
+          </div>
+          <button id="close-investment-form" class="rounded-full bg-slate-100 px-3 py-2 text-slate-600 transition hover:bg-slate-200">Fechar</button>
+        </div>
+        <form id="investment-form" class="space-y-4 px-6 py-6">
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">Nome</span>
+              <input name="name" type="text" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">Descrição</span>
+              <input name="description" type="text" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            </label>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">Valor investido</span>
+              <input name="amount" type="number" min="0" step="0.01" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">Retorno anual (%)</span>
+              <input name="yield" type="number" step="0.1" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            </label>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">Categoria</span>
+              <input name="category" type="text" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" placeholder="Fixed Income ou Variable Income" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">Data investido</span>
+              <input name="investedDate" type="date" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            </label>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">Data de vencimento</span>
+              <input name="maturityDate" type="date" class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">Ícone</span>
+              <input name="icon" type="text" placeholder="account_balance" class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            </label>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-medium text-slate-700">Cor do ícone</span>
+              <input name="iconColor" type="text" placeholder="primary" class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
+            </label>
+            <div class="flex items-end">
+              <button type="submit" class="w-full rounded-2xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-500">Salvar investimento</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
