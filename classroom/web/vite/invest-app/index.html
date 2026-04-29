@@ -78,7 +78,11 @@
           <div class="grid gap-4 sm:grid-cols-2">
             <label class="block">
               <span class="text-sm font-medium text-slate-700">Categoria</span>
-              <input name="category" type="text" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" placeholder="Fixed Income ou Variable Income" />
+              <select name="category" required class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
+                <option value="Renda Fixa">Renda Fixa</option>
+                <option value="Renda Variável">Renda Variável</option>
+                <option value="Alternativos">Alternativos</option>
+              </select>
             </label>
             <label class="block">
               <span class="text-sm font-medium text-slate-700">Data investido</span>
@@ -89,16 +93,6 @@
             <label class="block">
               <span class="text-sm font-medium text-slate-700">Data de vencimento</span>
               <input name="maturityDate" type="date" class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
-            </label>
-            <label class="block">
-              <span class="text-sm font-medium text-slate-700">Ícone</span>
-              <input name="icon" type="text" placeholder="account_balance" class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
-            </label>
-          </div>
-          <div class="grid gap-4 sm:grid-cols-2">
-            <label class="block">
-              <span class="text-sm font-medium text-slate-700">Cor do ícone</span>
-              <input name="iconColor" type="text" placeholder="primary" class="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-100" />
             </label>
             <div class="flex items-end">
               <button type="submit" class="w-full rounded-2xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-500">Salvar investimento</button>
