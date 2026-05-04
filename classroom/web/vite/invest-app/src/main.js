@@ -1,9 +1,8 @@
 import '../global.css'
 import { investments as initialInvestments } from './data/investments.js'
+import { getStorage, setStorage } from './lib/storage.js'
 
-const investments = localStorage.getItem('investments')
-  ? JSON.parse(localStorage.getItem('investments'))
-  : initialInvestments
+const investments = getStorage('investments') ?? initialInvestments
 
 const app = document.getElementById('app')
 
@@ -109,7 +108,7 @@ investmentForm.addEventListener('submit', (event) => {
 
   grid.appendChild(createInvestCard(newInvestment))
   investments.push(newInvestment)
-  localStorage.setItem('investments', JSON.stringify(investments))
+  setStorage('investments', investments)
   investmentForm.reset()
   closeInvestmentModal()
 })
