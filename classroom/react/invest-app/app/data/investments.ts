@@ -1,33 +1,54 @@
-export type Investment = {
-  id: string;
-  name: string;
-  description: string;
-  amount: number;
-  yieldValue: number;
-  category: 'Fixed Income' | 'Variable Income';
-  investedDate: string; // ISO format date string
-  maturityDate: string | null; // ISO format date string or null for non-maturing investments
-};
+import type { InvestmentType, Investment } from '@/app/types/investment';
+
+export const investmentTypes: InvestmentType[] = [
+  {
+    id: 'tesouro-ipca',
+    name: 'Tesouro IPCA+',
+    category: 'Fixed Income',
+  },
+  {
+    id: 'cdb',
+    name: 'CDB',
+    category: 'Fixed Income',
+  },
+  {
+    id: 'acoes',
+    name: 'Ações',
+    category: 'Variable Income',
+  },
+  {
+    id: 'fii',
+    name: 'FII',
+    category: 'Variable Income',
+  },
+  {
+    id: 'renda-fixa',
+    name: 'Renda Fixa',
+    category: 'Fixed Income',
+  },
+];
 
 export const investments: Investment[] = [
   {
     id: 'aetg9941v91allu57kwa8miu',
-    name: 'Tesouro Direto IPCA+',
-    description: 'TD 2045',
+    name: 'Tesouro IPCA+ 2045',
+    type: 'tesouro-ipca',
+    broker: 'Corretora Y',
     amount: 152000,
-    yieldValue: 12.5,
+    yield: 'IPCA + 5%',
     category: 'Fixed Income',
     investedDate: '2023-05-14',
-    maturityDate: '2045-08-15',
+    dueDate: '2045-08-15',
   },
   {
     id: 'asbaa15dtm2uwvw7qs4fczvq',
-    name: 'CDB Banco Itaú Unibanco',
-    description: '110% CDI',
+    name: 'CDB Banco X',
+    type: 'cdb',
+    broker: 'Corretora Y',
     amount: 45300,
-    yieldValue: 10.2,
+    yield: '110% CDI',
     category: 'Fixed Income',
     investedDate: '2024-01-02',
-    maturityDate: '2026-01-02',
+    dueDate: '2027-01-02',
   },
 ];

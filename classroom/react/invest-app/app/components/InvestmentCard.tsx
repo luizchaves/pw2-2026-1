@@ -1,49 +1,73 @@
-import { Investment } from '@/app/data/investments';
+import type { Investment } from '@/app/types/investment';
 import { formatCurrency, formatDate } from '@/app/lib/format';
 
 type InvestmentCardProps = {
   investment: Investment;
 };
 
+const categoryTheme: Record<Investment['category'], string> = {
+  'Fixed Income': 'bg-sky-100 text-sky-700 ring-1 ring-sky-200',
+  'Variable Income': 'bg-amber-100 text-amber-700 ring-1 ring-amber-200',
+};
+
+const categoryLabel: Record<Investment['category'], string> = {
+  'Fixed Income': 'Renda Fixa',
+  'Variable Income': 'Renda Variavel',
+};
+
 export default function InvestmentCard({ investment }: InvestmentCardProps) {
+  const yieldText = investment.yield ?? 'Nao informado';
+
   return (
-    <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-      <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">
-        {investment.category}
-      </span>
-      <h2 className="mt-4 text-xl font-semibold text-slate-900">
-        {investment.name}
-      </h2>
-      <p className="mt-2 text-sm text-slate-600">{investment.description}</p>
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-3xl bg-slate-50 p-4">
-          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
-            Valor investido
-          </p>
-          <p className="mt-2 text-lg font-semibold text-slate-900">
-            {formatCurrency(investment.amount)}
-          </p>
+    <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-lg">
+      <header>
+        <h2 className="text-2xl font-extrabold leading-tight text-slate-900 sm:text-3xl">
+          {investment.name}
+        </h2>
+        <div className="mt-3 flex items-center justify-between gap-3">
+          <span
+            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${categoryTheme[investment.category]}`}
+          >
+            {categoryLabel[investment.category]}
+          </span>
+          <p className="text-sm font-extrabold text-emerald-700">{yieldText}</p>
         </div>
-        <div className="rounded-3xl p-4 bg-emerald-50 text-emerald-700">
-          <p className="text-xs uppercase tracking-[0.18em]">Retorno anual</p>
-          <p className="mt-2 text-lg font-semibold">{investment.yieldValue}%</p>
-        </div>
+      </header>
+
+      <div className="mt-6 rounded-2xl bg-slate-50 p-4">
+        <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+          Valor investido
+        </p>
+        <p className="mt-2 text-2xl font-black text-slate-900">
+          {formatCurrency(investment.amount)}
+        </p>
       </div>
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-3xl bg-slate-50 p-4">
-          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        <div className="rounded-2xl bg-slate-50 p-4">
+          <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
             Investido em
           </p>
-          <p className="mt-2 text-sm font-medium text-slate-900">
+          <p className="mt-2 text-sm font-semibold text-slate-900">
             {formatDate(investment.investedDate)}
           </p>
         </div>
-        <div className="rounded-3xl bg-slate-50 p-4">
-          <p className="text-xs uppercase tracking-[0.18em] text-slate-500">
+
+        <div className="rounded-2xl bg-slate-50 p-4">
+          <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
             Vencimento
           </p>
-          <p className="mt-2 text-sm font-medium text-slate-900">
-            {formatDate(investment.maturityDate)}
+          <p className="mt-2 text-sm font-semibold text-slate-900">
+            {formatDate(investment.dueDate)}
+          </p>
+        </div>
+
+        <div className="col-span-2 rounded-2xl bg-slate-50 p-4">
+          <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+            Corretora
+          </p>
+          <p className="mt-2 text-sm font-semibold text-slate-900">
+            {investment.broker}
           </p>
         </div>
       </div>
