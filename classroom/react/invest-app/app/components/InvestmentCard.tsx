@@ -1,5 +1,5 @@
-import { Investment } from '../data/investments';
-import { formatCurrency, formatDate } from '../lib/format';
+import { Investment } from '@/app/data/investments';
+import { formatCurrency, formatDate } from '@/app/lib/format';
 
 type InvestmentCardProps = {
   investment: Investment;

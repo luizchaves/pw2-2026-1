@@ -1,5 +1,5 @@
-import InvestmentCard from './components/InvestmentCard';
-import { investments, type Investment } from './data/investments';
+import InvestmentCard from '@/app/components/InvestmentCard';
+import { investments } from '@/app/data/investments';
 
 export default function Home() {
   return (
