@@ -1,6 +1,10 @@
+'use client';
+
 import Link from 'next/link';
+import { useVisibility } from '@/context/visibility';
 
 export default function Home() {
+  const { showValues } = useVisibility();
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="grid items-center gap-10 lg:grid-cols-2">
@@ -40,7 +44,7 @@ export default function Home() {
                 Patrimonio total
               </p>
               <p className="mt-2 text-2xl font-black text-slate-900">
-                R$ 197.300,00
+                {showValues ? 'R$ 197.300,00' : '••••••••'}
               </p>
             </div>
             <div className="rounded-2xl bg-slate-50 p-4">

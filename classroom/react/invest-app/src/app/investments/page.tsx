@@ -1,20 +1,18 @@
 'use client';
 
-import { Eye, EyeOff } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import InvestmentCard from '@/components/InvestmentCard';
 import { investments as initialInvestments } from '@/data/investments';
 import type { Investment } from '@/types/investment';
+import { useVisibility } from '@/context/visibility';
 
 export default function InvestmentsPage() {
-  const [showValues, setShowValues] = useState(true);
+  const { showValues } = useVisibility();
   const [investments, setInvestments] = useState<Investment[]>([]);
 
   useEffect(() => {
     setInvestments(initialInvestments);
   }, []);
-
-  const handleToggleShowValues = () => setShowValues((v) => !v);
 
   const handleAddInvestment = () => {
     const today = new Date();
@@ -52,17 +50,6 @@ export default function InvestmentsPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <button
-            onClick={handleToggleShowValues}
-            className="rounded-full p-2.5 text-slate-500 border border-slate-200 bg-white transition hover:bg-slate-50 hover:text-slate-900"
-            aria-label={showValues ? 'Ocultar valores' : 'Exibir valores'}
-          >
-            {showValues ? (
-              <EyeOff className="h-4 w-4" />
-            ) : (
-              <Eye className="h-4 w-4" />
-            )}
-          </button>
           <button
             id="open-investment-form"
             onClick={handleAddInvestment}
