@@ -40,30 +40,47 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-600">
-            Resumo rapido
-          </p>
-          <div className="mt-6 space-y-4">
-            <div className="rounded-2xl bg-slate-50 p-4">
-              <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-                Patrimonio total
-              </p>
-              <p className="mt-2 text-2xl font-black text-slate-900">
-                {showValues ? formatCurrency(totalAmount / 100) : '••••••••'}
-              </p>
-            </div>
-            <div className="rounded-2xl bg-slate-50 p-4">
-              <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-                Ativos cadastrados
-              </p>
-              <p className="mt-2 text-2xl font-black text-slate-900">
-                {totalCount}{' '}
-                {totalCount === 1 ? 'investimento' : 'investimentos'}
-              </p>
+        {totalCount === 0 ? (
+          <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
+            <p className="text-lg font-semibold text-slate-700">
+              Nenhum investimento ainda
+            </p>
+            <p className="mt-2 text-sm text-slate-500">
+              Adicione seu primeiro ativo e comece a acompanhar sua carteira.
+            </p>
+            <Link
+              href="/investments"
+              className="mt-6 inline-flex items-center rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500"
+            >
+              Cadastrar agora
+            </Link>
+          </div>
+        ) : (
+          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-600">
+              Resumo rapido
+            </p>
+            <div className="mt-6 space-y-4">
+              <div className="rounded-2xl bg-slate-50 p-4">
+                <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+                  Patrimonio total
+                </p>
+                <p className="mt-2 text-2xl font-black text-slate-900">
+                  {showValues ? formatCurrency(totalAmount / 100) : '••••••••'}
+                </p>
+              </div>
+              <div className="rounded-2xl bg-slate-50 p-4">
+                <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+                  Ativos cadastrados
+                </p>
+                <p className="mt-2 text-2xl font-black text-slate-900">
+                  {totalCount}{' '}
+                  {totalCount === 1 ? 'investimento' : 'investimentos'}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

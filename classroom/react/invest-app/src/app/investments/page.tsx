@@ -6,6 +6,7 @@ import { useInvestments } from '@/context/investments';
 import type { Investment } from '@/types/investment';
 import InvestmentCard from '@/components/InvestmentCard';
 import InvestmentForm from '@/components/InvestmentForm';
+import Modal from '@/components/ui/Modal';
 
 export default function InvestmentsPage() {
   const { showValues } = useVisibility();
@@ -14,6 +15,8 @@ export default function InvestmentsPage() {
   const [editingInvestment, setEditingInvestment] = useState<Investment | null>(
     null,
   );
+  const [deletingInvestment, setDeletingInvestment] =
+    useState<Investment | null>(null);
 
   const closeForm = () => {
     setShowForm(false);
@@ -32,6 +35,14 @@ export default function InvestmentsPage() {
   const handleEdit = (investment: Investment) => {
     setEditingInvestment(investment);
     setShowForm(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (!deletingInvestment) return;
+    setInvestments((prev) =>
+      prev.filter((i) => i.id !== deletingInvestment.id),
+    );
+    setDeletingInvestment(null);
   };
 
   return (
@@ -71,19 +82,32 @@ export default function InvestmentsPage() {
           </button>
         </div>
       </div>
-      <div
-        id="investment-grid"
-        className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
-      >
-        {investments.map((investment) => (
-          <InvestmentCard
-            key={investment.id}
-            investment={investment}
-            showValues={showValues}
-            onEdit={() => handleEdit(investment)}
-          />
-        ))}
-      </div>
+      {investments.length === 0 ? (
+        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-16 text-center">
+          <p className="text-lg font-semibold text-slate-700">
+            Nenhum investimento cadastrado
+          </p>
+          <p className="mt-2 text-sm text-slate-500">
+            Clique em &ldquo;Cadastrar investimento&rdquo; para adicionar o seu
+            primeiro ativo.
+          </p>
+        </div>
+      ) : (
+        <div
+          id="investment-grid"
+          className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+        >
+          {investments.map((investment) => (
+            <InvestmentCard
+              key={investment.id}
+              investment={investment}
+              showValues={showValues}
+              onEdit={() => handleEdit(investment)}
+              onDelete={() => setDeletingInvestment(investment)}
+            />
+          ))}
+        </div>
+      )}
 
       {showForm && (
         <InvestmentForm
@@ -91,6 +115,37 @@ export default function InvestmentsPage() {
           onSubmit={handleFormSubmit}
           onClose={closeForm}
         />
+      )}
+
+      {deletingInvestment && (
+        <Modal
+          title="Remover investimento"
+          onClose={() => setDeletingInvestment(null)}
+        >
+          <p className="text-slate-600">
+            Tem certeza que deseja remover{' '}
+            <strong className="font-semibold text-slate-900">
+              {deletingInvestment.name}
+            </strong>
+            ? Essa ação não pode ser desfeita.
+          </p>
+          <div className="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              onClick={() => setDeletingInvestment(null)}
+              className="rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-400"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              onClick={handleDeleteConfirm}
+              className="rounded-full bg-rose-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-500"
+            >
+              Remover
+            </button>
+          </div>
+        </Modal>
       )}
     </section>
   );

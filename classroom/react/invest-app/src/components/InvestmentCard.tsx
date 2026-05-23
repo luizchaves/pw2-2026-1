@@ -1,4 +1,4 @@
-import { Pencil } from 'lucide-react';
+import { Pencil, Trash2 } from 'lucide-react';
 import type { Investment } from '@/types/investment';
 import { formatCurrency, formatDate } from '@/lib/format';
 
@@ -6,6 +6,7 @@ type InvestmentCardProps = {
   investment: Investment;
   showValues: boolean;
   onEdit: () => void;
+  onDelete: () => void;
 };
 
 const categoryTheme: Record<Investment['category'], string> = {
@@ -22,6 +23,7 @@ export default function InvestmentCard({
   investment,
   showValues,
   onEdit,
+  onDelete,
 }: InvestmentCardProps) {
   const yieldText = investment.yield ?? 'Nao informado';
 
@@ -32,13 +34,22 @@ export default function InvestmentCard({
           <h2 className="text-2xl font-extrabold leading-tight text-slate-900 sm:text-3xl">
             {investment.name}
           </h2>
-          <button
-            type="button"
-            onClick={onEdit}
-            className="shrink-0 rounded-full p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
-          >
-            <Pencil className="h-4 w-4" />
-          </button>
+          <div className="flex shrink-0 gap-1">
+            <button
+              type="button"
+              onClick={onEdit}
+              className="rounded-full p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+            >
+              <Pencil className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={onDelete}
+              className="rounded-full p-1.5 text-slate-400 transition hover:bg-rose-50 hover:text-rose-500"
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
+          </div>
         </div>
         <div className="mt-3 flex items-center justify-between gap-3">
           <span
