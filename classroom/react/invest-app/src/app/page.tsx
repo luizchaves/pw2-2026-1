@@ -2,9 +2,15 @@
 
 import Link from 'next/link';
 import { useVisibility } from '@/context/visibility';
+import { useInvestments } from '@/context/investments';
+import { formatCurrency } from '@/lib/format';
 
 export default function Home() {
   const { showValues } = useVisibility();
+  const { investments } = useInvestments();
+
+  const totalAmount = investments.reduce((sum, inv) => sum + inv.amount, 0);
+  const totalCount = investments.length;
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="grid items-center gap-10 lg:grid-cols-2">
@@ -44,7 +50,7 @@ export default function Home() {
                 Patrimonio total
               </p>
               <p className="mt-2 text-2xl font-black text-slate-900">
-                {showValues ? 'R$ 197.300,00' : '••••••••'}
+                {showValues ? formatCurrency(totalAmount) : '••••••••'}
               </p>
             </div>
             <div className="rounded-2xl bg-slate-50 p-4">
@@ -52,7 +58,8 @@ export default function Home() {
                 Ativos cadastrados
               </p>
               <p className="mt-2 text-2xl font-black text-slate-900">
-                2 investimentos
+                {totalCount}{' '}
+                {totalCount === 1 ? 'investimento' : 'investimentos'}
               </p>
             </div>
           </div>

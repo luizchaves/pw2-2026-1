@@ -1,18 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import InvestmentCard from '@/components/InvestmentCard';
-import { investments as initialInvestments } from '@/data/investments';
-import type { Investment } from '@/types/investment';
 import { useVisibility } from '@/context/visibility';
+import { useInvestments } from '@/context/investments';
+import type { Investment } from '@/types/investment';
+import InvestmentCard from '@/components/InvestmentCard';
 
 export default function InvestmentsPage() {
   const { showValues } = useVisibility();
-  const [investments, setInvestments] = useState<Investment[]>([]);
-
-  useEffect(() => {
-    setInvestments(initialInvestments);
-  }, []);
+  const { investments, setInvestments } = useInvestments();
 
   const handleAddInvestment = () => {
     const today = new Date();

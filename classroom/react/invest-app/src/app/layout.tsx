@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import { VisibilityProvider } from '@/context/visibility';
+import { InvestmentsProvider } from '@/context/investments';
 import '@/app/globals.css';
 
 const geistSans = Geist({
@@ -31,10 +32,12 @@ export default function RootLayout({
     >
       <body className="bg-slate-50 text-slate-900">
         <VisibilityProvider>
-          <Navbar />
-          <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-            {children}
-          </main>
+          <InvestmentsProvider>
+            <Navbar />
+            <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+              {children}
+            </main>
+          </InvestmentsProvider>
         </VisibilityProvider>
       </body>
     </html>
