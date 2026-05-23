@@ -1,0 +1,59 @@
+import Link from 'next/link';
+
+export default function InvestmentsPage() {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="grid items-center gap-10 lg:grid-cols-2">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">
+            Invest App
+          </p>
+          <h1 className="mt-4 text-4xl font-black tracking-tight text-slate-900 sm:text-6xl">
+            Controle seus investimentos com clareza.
+          </h1>
+          <p className="mt-6 max-w-xl text-base text-slate-600">
+            Uma plataforma simples para acompanhar aportes, vencimentos e
+            rendimento da sua carteira em um unico lugar.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/investments"
+              className="inline-flex items-center rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500"
+            >
+              Ver investimentos
+            </Link>
+            <Link
+              href="/investments"
+              className="inline-flex items-center rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400"
+            >
+              Comecar agora
+            </Link>
+          </div>
+        </div>
+        <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-600">
+            Resumo rapido
+          </p>
+          <div className="mt-6 space-y-4">
+            <div className="rounded-2xl bg-slate-50 p-4">
+              <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+                Patrimonio total
+              </p>
+              <p className="mt-2 text-2xl font-black text-slate-900">
+                R$ 197.300,00
+              </p>
+            </div>
+            <div className="rounded-2xl bg-slate-50 p-4">
+              <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+                Ativos cadastrados
+              </p>
+              <p className="mt-2 text-2xl font-black text-slate-900">
+                2 investimentos
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

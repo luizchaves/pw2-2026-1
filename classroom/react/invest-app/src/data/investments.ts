@@ -1,4 +1,4 @@
-import type { InvestmentType, Investment } from '@/app/types/investment';
+import type { InvestmentType, Investment } from '@/types/investment';
 
 export const investmentTypes: InvestmentType[] = [
   {
