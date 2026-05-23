@@ -1,32 +1,20 @@
 'use client';
 
+import { useState } from 'react';
 import { useVisibility } from '@/context/visibility';
 import { useInvestments } from '@/context/investments';
 import type { Investment } from '@/types/investment';
 import InvestmentCard from '@/components/InvestmentCard';
+import InvestmentForm from '@/components/InvestmentForm';
 
 export default function InvestmentsPage() {
   const { showValues } = useVisibility();
   const { investments, setInvestments } = useInvestments();
+  const [showForm, setShowForm] = useState(false);
 
-  const handleAddInvestment = () => {
-    const today = new Date();
-    const dueDate = new Date(today);
-    dueDate.setFullYear(dueDate.getFullYear() + 10);
-
-    const newInvestment: Investment = {
-      id: crypto.randomUUID(),
-      name: 'Tesouro Reserva',
-      type: 'tesouro-ipca',
-      broker: 'Corretora Y',
-      amount: 10000,
-      yield: '100% Selic',
-      category: 'Fixed Income',
-      investedDate: today.toISOString().split('T')[0],
-      dueDate: dueDate.toISOString().split('T')[0],
-    };
-
-    setInvestments((prev) => [...prev, newInvestment]);
+  const handleAddInvestment = (investment: Investment) => {
+    setInvestments((prev) => [...prev, investment]);
+    setShowForm(false);
   };
 
   return (
@@ -47,7 +35,7 @@ export default function InvestmentsPage() {
         <div className="flex items-center gap-3">
           <button
             id="open-investment-form"
-            onClick={handleAddInvestment}
+            onClick={() => setShowForm(true)}
             className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500 sm:w-auto"
           >
             <svg
@@ -78,6 +66,13 @@ export default function InvestmentsPage() {
           />
         ))}
       </div>
+
+      {showForm && (
+        <InvestmentForm
+          onSubmit={handleAddInvestment}
+          onClose={() => setShowForm(false)}
+        />
+      )}
     </section>
   );
 }
