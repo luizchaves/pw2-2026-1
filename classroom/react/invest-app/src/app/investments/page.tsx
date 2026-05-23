@@ -1,14 +1,40 @@
 'use client';
 
 import { Eye, EyeOff } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import InvestmentCard from '@/components/InvestmentCard';
-import { investments } from '@/data/investments';
+import { investments as initialInvestments } from '@/data/investments';
+import type { Investment } from '@/types/investment';
 
 export default function InvestmentsPage() {
   const [showValues, setShowValues] = useState(true);
+  const [investments, setInvestments] = useState<Investment[]>([]);
+
+  useEffect(() => {
+    setInvestments(initialInvestments);
+  }, []);
 
   const handleToggleShowValues = () => setShowValues((v) => !v);
+
+  const handleAddInvestment = () => {
+    const today = new Date();
+    const dueDate = new Date(today);
+    dueDate.setFullYear(dueDate.getFullYear() + 10);
+
+    const newInvestment: Investment = {
+      id: crypto.randomUUID(),
+      name: 'Tesouro Reserva',
+      type: 'tesouro-ipca',
+      broker: 'Corretora Y',
+      amount: 10000,
+      yield: '100% Selic',
+      category: 'Fixed Income',
+      investedDate: today.toISOString().split('T')[0],
+      dueDate: dueDate.toISOString().split('T')[0],
+    };
+
+    setInvestments((prev) => [...prev, newInvestment]);
+  };
 
   return (
     <section className="mx-auto mt-6 max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -39,6 +65,7 @@ export default function InvestmentsPage() {
           </button>
           <button
             id="open-investment-form"
+            onClick={handleAddInvestment}
             className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500 sm:w-auto"
           >
             <svg
