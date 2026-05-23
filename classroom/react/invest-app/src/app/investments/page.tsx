@@ -1,7 +1,15 @@
+'use client';
+
+import { Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
 import InvestmentCard from '@/components/InvestmentCard';
 import { investments } from '@/data/investments';
 
 export default function InvestmentsPage() {
+  const [showValues, setShowValues] = useState(true);
+
+  const handleToggleShowValues = () => setShowValues((v) => !v);
+
   return (
     <section className="mx-auto mt-6 max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
@@ -17,31 +25,48 @@ export default function InvestmentsPage() {
             investido e datas importantes.
           </p>
         </div>
-        <button
-          id="open-investment-form"
-          className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500 sm:w-auto"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-4 w-4"
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleToggleShowValues}
+            className="rounded-full p-2.5 text-slate-500 border border-slate-200 bg-white transition hover:bg-slate-50 hover:text-slate-900"
+            aria-label={showValues ? 'Ocultar valores' : 'Exibir valores'}
           >
-            <path d="M12 5v14M5 12h14"></path>
-          </svg>
-          Cadastrar investimento
-        </button>
+            {showValues ? (
+              <EyeOff className="h-4 w-4" />
+            ) : (
+              <Eye className="h-4 w-4" />
+            )}
+          </button>
+          <button
+            id="open-investment-form"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500 sm:w-auto"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4"
+            >
+              <path d="M12 5v14M5 12h14"></path>
+            </svg>
+            Cadastrar investimento
+          </button>
+        </div>
       </div>
       <div
         id="investment-grid"
         className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
       >
         {investments.map((investment) => (
-          <InvestmentCard key={investment.id} investment={investment} />
+          <InvestmentCard
+            key={investment.id}
+            investment={investment}
+            showValues={showValues}
+          />
         ))}
       </div>
     </section>

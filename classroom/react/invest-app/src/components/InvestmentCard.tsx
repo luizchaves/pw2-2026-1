@@ -3,6 +3,7 @@ import { formatCurrency, formatDate } from '@/lib/format';
 
 type InvestmentCardProps = {
   investment: Investment;
+  showValues: boolean;
 };
 
 const categoryTheme: Record<Investment['category'], string> = {
@@ -15,7 +16,10 @@ const categoryLabel: Record<Investment['category'], string> = {
   'Variable Income': 'Renda Variavel',
 };
 
-export default function InvestmentCard({ investment }: InvestmentCardProps) {
+export default function InvestmentCard({
+  investment,
+  showValues,
+}: InvestmentCardProps) {
   const yieldText = investment.yield ?? 'Nao informado';
 
   return (
@@ -39,11 +43,20 @@ export default function InvestmentCard({ investment }: InvestmentCardProps) {
           Valor investido
         </p>
         <p className="mt-2 text-2xl font-black text-slate-900">
-          {formatCurrency(investment.amount)}
+          {showValues ? formatCurrency(investment.amount) : '••••••'}
         </p>
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3">
+        <div className="col-span-2 rounded-2xl bg-slate-50 p-4">
+          <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+            Corretora
+          </p>
+          <p className="mt-2 text-sm font-semibold text-slate-900">
+            {investment.broker}
+          </p>
+        </div>
+
         <div className="rounded-2xl bg-slate-50 p-4">
           <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
             Investido em
@@ -59,15 +72,6 @@ export default function InvestmentCard({ investment }: InvestmentCardProps) {
           </p>
           <p className="mt-2 text-sm font-semibold text-slate-900">
             {formatDate(investment.dueDate)}
-          </p>
-        </div>
-
-        <div className="col-span-2 rounded-2xl bg-slate-50 p-4">
-          <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-            Corretora
-          </p>
-          <p className="mt-2 text-sm font-semibold text-slate-900">
-            {investment.broker}
           </p>
         </div>
       </div>

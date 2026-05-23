@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function InvestmentsPage() {
+export default function Home() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="grid items-center gap-10 lg:grid-cols-2">
