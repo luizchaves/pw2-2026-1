@@ -2,34 +2,14 @@ import type { InvestmentType, Investment } from '@/types/investment';
 
 export const investmentTypes: InvestmentType[] = [
   {
-    id: 'tesouro-reserva',
-    name: 'Tesouro Reserva',
-    category: 'Fixed Income',
-  },
-  {
-    id: 'tesouro-selic',
-    name: 'Tesouro Selic',
-    category: 'Fixed Income',
-  },
-  {
-    id: 'tesouro-prefixado',
-    name: 'Tesouro Prefixado',
-    category: 'Fixed Income',
-  },
-  {
-    id: 'tesouro-ipca',
-    name: 'Tesouro IPCA+',
-    category: 'Fixed Income',
+    id: 'acoes',
+    name: 'Ações',
+    category: 'Variable Income',
   },
   {
     id: 'cdb',
     name: 'CDB',
     category: 'Fixed Income',
-  },
-  {
-    id: 'acoes',
-    name: 'Ações',
-    category: 'Variable Income',
   },
   {
     id: 'fii',
@@ -39,6 +19,26 @@ export const investmentTypes: InvestmentType[] = [
   {
     id: 'renda-fixa',
     name: 'Renda Fixa',
+    category: 'Fixed Income',
+  },
+  {
+    id: 'tesouro-ipca',
+    name: 'Tesouro IPCA+',
+    category: 'Fixed Income',
+  },
+  {
+    id: 'tesouro-prefixado',
+    name: 'Tesouro Prefixado',
+    category: 'Fixed Income',
+  },
+  {
+    id: 'tesouro-reserva',
+    name: 'Tesouro Reserva',
+    category: 'Fixed Income',
+  },
+  {
+    id: 'tesouro-selic',
+    name: 'Tesouro Selic',
     category: 'Fixed Income',
   },
 ];
