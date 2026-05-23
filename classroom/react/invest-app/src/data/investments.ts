@@ -1,4 +1,4 @@
-import type { InvestmentType, Investment } from '@/types/investment';
+import type { InvestmentType, Investment } from '@/schemas/investment';
 
 export const investmentTypes: InvestmentType[] = [
   {
@@ -49,7 +49,7 @@ export const investments: Investment[] = [
     name: 'Tesouro IPCA+ 2045',
     type: 'tesouro-ipca',
     broker: 'Corretora Y',
-    amount: 152000,
+    amount: 15200,
     yield: 'IPCA + 5%',
     category: 'Fixed Income',
     investedDate: '2023-05-14',

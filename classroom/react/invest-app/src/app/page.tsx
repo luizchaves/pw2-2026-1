@@ -50,7 +50,7 @@ export default function Home() {
                 Patrimonio total
               </p>
               <p className="mt-2 text-2xl font-black text-slate-900">
-                {showValues ? formatCurrency(totalAmount) : '••••••••'}
+                {showValues ? formatCurrency(totalAmount / 100) : '••••••••'}
               </p>
             </div>
             <div className="rounded-2xl bg-slate-50 p-4">

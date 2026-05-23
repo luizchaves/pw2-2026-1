@@ -43,7 +43,7 @@ export default function InvestmentCard({
           Valor investido
         </p>
         <p className="mt-2 text-2xl font-black text-slate-900">
-          {showValues ? formatCurrency(investment.amount) : '••••••'}
+          {showValues ? formatCurrency(investment.amount / 100) : '••••••'}
         </p>
       </div>
 

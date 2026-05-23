@@ -1,8 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { investmentTypes } from '@/data/investments';
-import type { Investment, InvestmentYield } from '@/types/investment';
+import {
+  investmentFormSchema,
+  type InvestmentFormData,
+} from '@/schemas/investment';
+import type { Investment } from '@/types/investment';
 import Modal from '@/components/ui/Modal';
 
 type Props = {
@@ -10,89 +16,98 @@ type Props = {
   onClose: () => void;
 };
 
-const todayISO = new Date().toISOString().split('T')[0];
-
-const initialForm = {
-  name: '',
-  type: investmentTypes[0].id,
-  broker: '',
-  amount: '',
-  yieldValue: '',
-  investedDate: todayISO,
-  dueDate: '',
+const categoryLabels: Record<string, string> = {
+  'Fixed Income': 'Renda Fixa',
+  'Variable Income': 'Renda Variável',
 };
 
+const todayISO = new Date().toISOString().split('T')[0];
+
+const inputClass =
+  'w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200';
+const labelClass =
+  'mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500';
+const errorClass = 'mt-1 text-xs text-red-500';
+
 export default function InvestmentForm({ onSubmit, onClose }: Props) {
-  const [form, setForm] = useState(initialForm);
+  const [amountDisplay, setAmountDisplay] = useState('');
 
-  const selectedType = investmentTypes.find((t) => t.id === form.type)!;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<InvestmentFormData>({
+    resolver: zodResolver(investmentFormSchema),
+    defaultValues: {
+      typeId: investmentTypes[0].id,
+      investedDate: todayISO,
+    },
+  });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const typeId = watch('typeId');
+  const selectedType =
+    investmentTypes.find((t) => t.id === typeId) ?? investmentTypes[0];
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, '');
+    const cents = parseInt(digits || '0', 10);
+    setValue('amountCents', cents, { shouldValidate: true });
+    setAmountDisplay(
+      (cents / 100).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+    );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onFormSubmit = (data: InvestmentFormData) => {
     onSubmit({
       id: crypto.randomUUID(),
-      name: form.name,
-      type: form.type,
-      broker: form.broker,
-      amount: Number(form.amount),
-      yield: form.yieldValue ? (form.yieldValue as InvestmentYield) : undefined,
+      name: data.name,
+      type: data.typeId,
+      broker: data.broker,
+      amount: data.amountCents,
+      yield: data.yield || undefined,
       category: selectedType.category,
-      investedDate: form.investedDate,
-      dueDate: form.dueDate || null,
+      investedDate: data.investedDate,
+      dueDate: data.dueDate || null,
     });
   };
 
   return (
     <Modal title="Novo investimento" onClose={onClose}>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
         <div>
-          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-            Nome
-          </label>
+          <label className={labelClass}>Nome</label>
           <input
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            required
-            placeholder="Ex: Tesouro Reserva"
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200"
+            {...register('name')}
+            placeholder="Ex: Tesouro IPCA+ 2045"
+            className={inputClass}
           />
+          {errors.name && <p className={errorClass}>{errors.name.message}</p>}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Tipo
-            </label>
-            <select
-              name="type"
-              value={form.type}
-              onChange={handleChange}
-              required
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200"
-            >
-              {[...investmentTypes]
-                .sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
-                .map((t) => (
-                  <option key={t.id} value={t.id}>
-                    {t.name}
-                  </option>
-                ))}
+            <label className={labelClass}>Tipo</label>
+            <select {...register('typeId')} className={inputClass}>
+              {investmentTypes.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.name}
+                </option>
+              ))}
             </select>
+            {errors.typeId && (
+              <p className={errorClass}>{errors.typeId.message}</p>
+            )}
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Categoria
-            </label>
+            <label className={labelClass}>Categoria</label>
             <input
-              value={selectedType.category}
+              value={categoryLabels[selectedType.category]}
               readOnly
               className="w-full rounded-xl border border-slate-100 bg-slate-100 px-3 py-2 text-sm text-slate-500"
             />
@@ -101,81 +116,71 @@ export default function InvestmentForm({ onSubmit, onClose }: Props) {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Corretora
-            </label>
+            <label className={labelClass}>Corretora</label>
             <input
-              name="broker"
-              value={form.broker}
-              onChange={handleChange}
-              required
-              placeholder="Ex: Corretora Y"
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200"
+              {...register('broker')}
+              placeholder="Ex: XP Investimentos"
+              className={inputClass}
             />
+            {errors.broker && (
+              <p className={errorClass}>{errors.broker.message}</p>
+            )}
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Valor (R$)
-            </label>
+            <label className={labelClass}>Valor (R$)</label>
             <input
-              name="amount"
-              type="number"
-              min="0.01"
-              step="0.01"
-              value={form.amount}
-              onChange={handleChange}
-              required
+              value={amountDisplay}
+              onChange={handleAmountChange}
+              inputMode="numeric"
               placeholder="0,00"
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200"
+              className={inputClass}
             />
+            {errors.amountCents && (
+              <p className={errorClass}>{errors.amountCents.message}</p>
+            )}
           </div>
         </div>
 
         <div>
-          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <label className={labelClass}>
             Rendimento{' '}
             <span className="font-normal normal-case text-slate-400">
               (opcional — ex: IPCA + 5%, 110% CDI, 100% Selic, 15%)
             </span>
           </label>
           <input
-            name="yieldValue"
-            value={form.yieldValue}
-            onChange={handleChange}
+            {...register('yield')}
             placeholder="Ex: 100% Selic"
-            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 placeholder-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200"
+            className={inputClass}
           />
+          {errors.yield && <p className={errorClass}>{errors.yield.message}</p>}
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
-              Data de aporte
-            </label>
+            <label className={labelClass}>Data de aporte</label>
             <input
-              name="investedDate"
+              {...register('investedDate')}
               type="date"
-              value={form.investedDate}
-              onChange={handleChange}
-              required
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200"
+              className={inputClass}
             />
+            {errors.investedDate && (
+              <p className={errorClass}>{errors.investedDate.message}</p>
+            )}
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <label className={labelClass}>
               Vencimento{' '}
               <span className="font-normal normal-case text-slate-400">
                 (opcional)
               </span>
             </label>
             <input
-              name="dueDate"
+              {...register('dueDate')}
               type="date"
-              value={form.dueDate}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200"
+              className={inputClass}
             />
           </div>
         </div>
