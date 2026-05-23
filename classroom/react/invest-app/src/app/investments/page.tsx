@@ -11,10 +11,27 @@ export default function InvestmentsPage() {
   const { showValues } = useVisibility();
   const { investments, setInvestments } = useInvestments();
   const [showForm, setShowForm] = useState(false);
+  const [editingInvestment, setEditingInvestment] = useState<Investment | null>(
+    null,
+  );
 
-  const handleAddInvestment = (investment: Investment) => {
-    setInvestments((prev) => [...prev, investment]);
+  const closeForm = () => {
     setShowForm(false);
+    setEditingInvestment(null);
+  };
+
+  const handleFormSubmit = (investment: Investment) => {
+    setInvestments((prev) =>
+      prev.some((i) => i.id === investment.id)
+        ? prev.map((i) => (i.id === investment.id ? investment : i))
+        : [...prev, investment],
+    );
+    closeForm();
+  };
+
+  const handleEdit = (investment: Investment) => {
+    setEditingInvestment(investment);
+    setShowForm(true);
   };
 
   return (
@@ -63,14 +80,16 @@ export default function InvestmentsPage() {
             key={investment.id}
             investment={investment}
             showValues={showValues}
+            onEdit={() => handleEdit(investment)}
           />
         ))}
       </div>
 
       {showForm && (
         <InvestmentForm
-          onSubmit={handleAddInvestment}
-          onClose={() => setShowForm(false)}
+          investment={editingInvestment ?? undefined}
+          onSubmit={handleFormSubmit}
+          onClose={closeForm}
         />
       )}
     </section>

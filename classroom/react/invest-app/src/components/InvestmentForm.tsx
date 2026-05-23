@@ -12,6 +12,7 @@ import type { Investment } from '@/types/investment';
 import Modal from '@/components/ui/Modal';
 
 type Props = {
+  investment?: Investment;
   onSubmit: (investment: Investment) => void;
   onClose: () => void;
 };
@@ -29,8 +30,20 @@ const labelClass =
   'mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500';
 const errorClass = 'mt-1 text-xs text-red-500';
 
-export default function InvestmentForm({ onSubmit, onClose }: Props) {
-  const [amountDisplay, setAmountDisplay] = useState('');
+const formatCents = (cents: number) =>
+  (cents / 100).toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+export default function InvestmentForm({
+  investment,
+  onSubmit,
+  onClose,
+}: Props) {
+  const [amountDisplay, setAmountDisplay] = useState(
+    investment ? formatCents(investment.amount) : '',
+  );
 
   const {
     register,
@@ -40,10 +53,20 @@ export default function InvestmentForm({ onSubmit, onClose }: Props) {
     formState: { errors },
   } = useForm<InvestmentFormData>({
     resolver: zodResolver(investmentFormSchema),
-    defaultValues: {
-      typeId: investmentTypes[0].id,
-      investedDate: todayISO,
-    },
+    defaultValues: investment
+      ? {
+          name: investment.name,
+          typeId: investment.type,
+          broker: investment.broker,
+          amountCents: investment.amount,
+          yield: investment.yield ?? '',
+          investedDate: investment.investedDate,
+          dueDate: investment.dueDate ?? '',
+        }
+      : {
+          typeId: investmentTypes[0].id,
+          investedDate: todayISO,
+        },
   });
 
   const typeId = watch('typeId');
@@ -64,7 +87,7 @@ export default function InvestmentForm({ onSubmit, onClose }: Props) {
 
   const onFormSubmit = (data: InvestmentFormData) => {
     onSubmit({
-      id: crypto.randomUUID(),
+      id: investment?.id ?? crypto.randomUUID(),
       name: data.name,
       type: data.typeId,
       broker: data.broker,
@@ -77,7 +100,10 @@ export default function InvestmentForm({ onSubmit, onClose }: Props) {
   };
 
   return (
-    <Modal title="Novo investimento" onClose={onClose}>
+    <Modal
+      title={investment ? 'Editar investimento' : 'Novo investimento'}
+      onClose={onClose}
+    >
       <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
         <div>
           <label className={labelClass}>Nome</label>
@@ -197,7 +223,7 @@ export default function InvestmentForm({ onSubmit, onClose }: Props) {
             type="submit"
             className="rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500"
           >
-            Cadastrar
+            {investment ? 'Salvar' : 'Cadastrar'}
           </button>
         </div>
       </form>
