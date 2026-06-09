@@ -42,7 +42,7 @@ Never skip steps 5 or 6.
 
 ## Code conventions
 
-- **Language:** TypeScript everywhere. No plain `.js` files except `lib/format.js` (legacy).
+- **Language:** TypeScript everywhere. No plain `.js` files.
 - **Styling:** Tailwind CSS utility classes only — no inline styles, no CSS modules.
 - **Validation:** Use Zod for all schema definitions. Infer TypeScript types from schemas (`z.infer<typeof schema>`).
 - **State:** Use React Context for cross-component state. Keep `useState` local when the state is not shared.
