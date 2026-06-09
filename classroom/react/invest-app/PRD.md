@@ -179,7 +179,7 @@ The database schema is versioned in `supabase/migrations/`, and the initial seed
 TanStack Query manages client-side fetch, loading, error, and mutation cache state for investment data.
 `src/services/api/` contains client-side fetch wrappers for the app API routes.
 `src/services/supabase/` owns Supabase persistence/auth helpers and maps database rows to the app's TypeScript models.
-`src/lib/supabase.ts` owns the server-only Supabase client.
+`src/lib/supabase.ts` owns the shared Supabase publishable client used by browser and server code.
 
 ## 8. API Routes
 

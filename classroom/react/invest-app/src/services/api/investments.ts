@@ -1,10 +1,10 @@
 import type { Investment, InvestmentType } from '@/schemas/investment';
-import { supabaseBrowser } from '@/lib/supabase-browser';
+import { supabase } from '@/lib/supabase';
 
 async function fetchApi<T>(input: string, init?: RequestInit): Promise<T> {
   const {
     data: { session },
-  } = await supabaseBrowser.auth.getSession();
+  } = await supabase.auth.getSession();
 
   const response = await fetch(input, {
     ...init,

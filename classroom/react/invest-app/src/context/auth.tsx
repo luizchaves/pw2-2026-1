@@ -9,7 +9,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { supabaseBrowser } from '@/lib/supabase-browser';
+import { supabase } from '@/lib/supabase';
 
 type AuthContextValue = {
   user: User | null;
@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let isMounted = true;
 
-    supabaseBrowser.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(({ data }) => {
       if (!isMounted) return;
       setUser(data.session?.user ?? null);
       setIsLoading(false);
@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const {
       data: { subscription },
-    } = supabaseBrowser.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setIsLoading(false);
     });
@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
-    const { error } = await supabaseBrowser.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -70,7 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       email: string;
       password: string;
     }) => {
-      const { data, error } = await supabaseBrowser.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -88,7 +88,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   const logout = useCallback(async () => {
-    const { error } = await supabaseBrowser.auth.signOut();
+    const { error } = await supabase.auth.signOut();
     if (error) throw error;
   }, []);
 
