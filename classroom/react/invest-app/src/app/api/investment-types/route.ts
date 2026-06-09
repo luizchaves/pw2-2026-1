@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getInvestmentTypes } from '@/service/supabase/investments';
+import { getInvestmentTypes } from '@/services/supabase/investments';
 
 export async function GET() {
   try {

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { getAuthenticatedUser } from '@/lib/auth';
-import { deleteInvestment } from '@/service/supabase/investments';
+import { getAuthenticatedUser } from '@/services/supabase/auth';
+import { deleteInvestment } from '@/services/supabase/investments';
 
 const paramsSchema = z.object({
   id: z.uuid(),

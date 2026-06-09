@@ -177,8 +177,8 @@ The database schema is versioned in `supabase/migrations/`, and the initial seed
 | `VisibilityContext`  | Holds the `showValues` boolean and `handleToggleShowValues` function.                                                   |
 
 TanStack Query manages client-side fetch, loading, error, and mutation cache state for investment data.
-`src/service/api/` contains client-side fetch wrappers for the app API routes.
-`src/service/supabase/` owns Supabase persistence and maps database rows to the app's TypeScript models.
+`src/services/api/` contains client-side fetch wrappers for the app API routes.
+`src/services/supabase/` owns Supabase persistence/auth helpers and maps database rows to the app's TypeScript models.
 `src/lib/supabase.ts` owns the server-only Supabase client.
 
 ## 8. API Routes
@@ -190,7 +190,7 @@ TanStack Query manages client-side fetch, loading, error, and mutation cache sta
 | `/api/investments`            | `POST`  | Validates and upserts an investment for the authenticated user. |
 | `/api/investments/[id]`       | `DELETE` | Validates the investment ID and removes it for the authenticated user. |
 
-The API routes delegate persistence to `src/service/supabase/`.
+The API routes delegate Supabase auth and persistence to `src/services/supabase/`.
 Investment routes require a valid Supabase bearer token.
 
 ---
