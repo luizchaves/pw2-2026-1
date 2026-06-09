@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch</title>
+</head>
+<body>
+  <script type="module">
+    async function getCepData(cep) {
+      try {
+        const pattern = /^\d{8}$/;
+
+        if (!pattern.test(cep)) {
+          throw new Error('Invalid CEP format. Please enter an 8-digit number.');
+        }
+
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        return await response.json();
+      } catch (error) {
+        throw new Error('Error to get CEP data');
+      }
+    }
+
+    const cepData = await getCepData('01001000');
+    console.log(cepData);
+  </script>
+</body>
+</html>
