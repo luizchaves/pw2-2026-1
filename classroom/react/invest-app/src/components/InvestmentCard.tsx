@@ -31,7 +31,7 @@ export default function InvestmentCard({
     <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-lg">
       <header>
         <div className="flex items-start justify-between gap-2">
-          <h2 className="text-2xl font-extrabold leading-tight text-slate-900 sm:text-3xl">
+          <h2 className="text-lg font-bold leading-snug text-slate-900 sm:text-xl">
             {investment.name}
           </h2>
           <div className="flex shrink-0 gap-1">
@@ -65,7 +65,7 @@ export default function InvestmentCard({
         <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
           Valor investido
         </p>
-        <p className="mt-2 text-2xl font-black text-slate-900">
+        <p className="mt-2 text-xl font-extrabold text-slate-900">
           {showValues ? formatCurrency(investment.amount / 100) : '••••••'}
         </p>
       </div>
