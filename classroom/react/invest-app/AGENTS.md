@@ -59,11 +59,12 @@ src/
   app/          # Next.js App Router pages and layouts
   components/   # Shared React components
     ui/         # Generic, stateless UI primitives (Modal, etc.)
-  contexts/      # React Context providers and hooks
+  contexts/     # App-owned React Context providers and hooks
   data/         # Static seed data
   lib/          # Pure utility functions
+  providers/    # Third-party or infrastructure providers
   schemas/      # Zod schemas (source of truth for types)
-  types/        # Re-export barrel for schema-inferred types
+  services/     # API fetch wrappers and Supabase integrations
 ```
 
 Do not create new top-level directories under `src/` without a clear reason.
