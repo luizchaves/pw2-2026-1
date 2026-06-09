@@ -157,9 +157,10 @@ The database schema is versioned in `supabase/migrations/`, and the initial seed
 
 | Context              | Responsibility                                                                                                          |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `InvestmentsContext` | Loads investment types and investments through the Next.js API; provides save and delete operations for portfolio assets. |
+| `InvestmentsContext` | Exposes investment data and mutations backed by TanStack Query cache.                                                    |
 | `VisibilityContext`  | Holds the `showValues` boolean and `handleToggleShowValues` function.                                                   |
 
+TanStack Query manages client-side fetch, loading, error, and mutation cache state for investment data.
 `src/service/investments-api.ts` is the client-side fetch wrapper for the investment API routes.
 `src/service/investments-repository.ts` owns investment persistence and maps database rows to the app's TypeScript models.
 `src/lib/supabase.ts` owns the server-only Supabase client.
@@ -199,6 +200,7 @@ Yield field accepted formats (case-insensitive):
 | Type safety    | End-to-end TypeScript with Zod-inferred types.                                                   |
 | Performance    | Next.js App Router; only client components that require interactivity are marked `'use client'`. |
 | Data access    | Client components call Next.js API routes instead of importing the Supabase client directly.      |
+| Client cache    | TanStack Query manages investment fetches and mutation cache updates.                             |
 
 ---
 

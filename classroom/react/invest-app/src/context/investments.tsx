@@ -1,6 +1,7 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { createContext, useContext } from 'react';
 import {
   deleteInvestment as deleteStoredInvestment,
   getInvestments,
@@ -20,72 +21,65 @@ type InvestmentsContextValue = {
 
 const InvestmentsContext = createContext<InvestmentsContextValue | null>(null);
 
+const investmentKeys = {
+  all: ['investments'] as const,
+  types: ['investment-types'] as const,
+};
+
 export function InvestmentsProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [investments, setInvestments] = useState<Investment[]>([]);
-  const [investmentTypes, setInvestmentTypes] = useState<InvestmentType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const investmentTypesQuery = useQuery({
+    queryKey: investmentKeys.types,
+    queryFn: getInvestmentTypes,
+  });
+  const investmentsQuery = useQuery({
+    queryKey: investmentKeys.all,
+    queryFn: getInvestments,
+  });
 
-  useEffect(() => {
-    let isMounted = true;
+  const saveMutation = useMutation({
+    mutationFn: saveStoredInvestment,
+    onSuccess: (storedInvestment) => {
+      queryClient.setQueryData<Investment[]>(investmentKeys.all, (prev = []) =>
+        prev.some((i) => i.id === storedInvestment.id)
+          ? prev.map((i) =>
+              i.id === storedInvestment.id ? storedInvestment : i,
+            )
+          : [...prev, storedInvestment],
+      );
+    },
+  });
 
-    async function loadData() {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const [types, storedInvestments] = await Promise.all([
-          getInvestmentTypes(),
-          getInvestments(),
-        ]);
-
-        if (!isMounted) return;
-
-        setInvestmentTypes(types);
-        setInvestments(storedInvestments);
-      } catch (err) {
-        if (!isMounted) return;
-        setError(
-          err instanceof Error
-            ? err.message
-            : 'Não foi possível carregar os investimentos',
-        );
-      } finally {
-        if (isMounted) setIsLoading(false);
-      }
-    }
-
-    loadData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const deleteMutation = useMutation({
+    mutationFn: deleteStoredInvestment,
+    onSuccess: (_data, id) => {
+      queryClient.setQueryData<Investment[]>(investmentKeys.all, (prev = []) =>
+        prev.filter((i) => i.id !== id),
+      );
+    },
+  });
 
   const saveInvestment = async (investment: Investment) => {
-    const storedInvestment = await saveStoredInvestment(investment);
-    setInvestments((prev) =>
-      prev.some((i) => i.id === storedInvestment.id)
-        ? prev.map((i) => (i.id === storedInvestment.id ? storedInvestment : i))
-        : [...prev, storedInvestment],
-    );
+    await saveMutation.mutateAsync(investment);
   };
 
   const deleteInvestment = async (id: string) => {
-    await deleteStoredInvestment(id);
-    setInvestments((prev) => prev.filter((i) => i.id !== id));
+    await deleteMutation.mutateAsync(id);
   };
+
+  const loadError = investmentsQuery.error ?? investmentTypesQuery.error;
 
   return (
     <InvestmentsContext.Provider
       value={{
-        investments,
-        investmentTypes,
-        isLoading,
-        error,
+        investments: investmentsQuery.data ?? [],
+        investmentTypes: investmentTypesQuery.data ?? [],
+        isLoading: investmentsQuery.isLoading || investmentTypesQuery.isLoading,
+        error: loadError instanceof Error ? loadError.message : null,
         saveInvestment,
         deleteInvestment,
       }}

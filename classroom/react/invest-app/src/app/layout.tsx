@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Navbar from '@/components/Navbar';
+import { AppQueryClientProvider } from '@/context/query-client';
 import { VisibilityProvider } from '@/context/visibility';
 import { InvestmentsProvider } from '@/context/investments';
 import '@/app/globals.css';
@@ -31,14 +32,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="bg-slate-50 text-slate-900">
-        <VisibilityProvider>
-          <InvestmentsProvider>
-            <Navbar />
-            <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-              {children}
-            </main>
-          </InvestmentsProvider>
-        </VisibilityProvider>
+        <AppQueryClientProvider>
+          <VisibilityProvider>
+            <InvestmentsProvider>
+              <Navbar />
+              <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+                {children}
+              </main>
+            </InvestmentsProvider>
+          </VisibilityProvider>
+        </AppQueryClientProvider>
       </body>
     </html>
   );
