@@ -15,6 +15,7 @@
 - Persist portfolio data in Supabase.
 - Support privacy by allowing users to hide monetary values on screen.
 - Validate investment data on the client side before submission.
+- Restrict portfolio access to authenticated users.
 
 ---
 
@@ -30,34 +31,46 @@
 
 | Route          | Page        | Description                                                |
 | -------------- | ----------- | ---------------------------------------------------------- |
+| `/login`       | Login       | Email and password sign-in through Supabase Auth.          |
+| `/register`    | Register    | Account creation with name, email, password, and confirmation. |
 | `/`            | Home        | Landing page with portfolio summary and quick-access CTAs. |
 | `/investments` | Investments | Full list of investments with add / edit / delete actions. |
 
-Navigation is handled by a persistent `Navbar` component present on all pages.
+Navigation is handled by a persistent `Navbar` component on authenticated pages.
+`/` and `/investments` are only accessible after login.
 
 ---
 
 ## 5. Features
 
-### 5.1 Portfolio Summary (Home)
+### 5.1 Authentication
+
+- Users can create an account with name, email, password, and password confirmation.
+- Users can sign in with email and password through Supabase Auth.
+- If Supabase requires email confirmation, registration shows a confirmation message before login.
+- Authenticated pages redirect anonymous users to `/login`.
+- Logged-in users can sign out from the navbar.
+- Investment API calls send the current Supabase access token.
+
+### 5.2 Portfolio Summary (Home)
 
 - Displays **total patrimony** (sum of all investment amounts).
 - Displays **total number of registered assets**.
 - Values are hidden when the privacy toggle is active (shows `••••••••`).
 - When no investments exist, shows an empty-state card with a CTA to register the first asset.
 
-### 5.2 Privacy Toggle
+### 5.3 Privacy Toggle
 
 - A global toggle (available via `Navbar`) that shows or hides all monetary values across the app.
 - State is managed through `VisibilityContext` and persists for the duration of the session.
 
-### 5.3 Investment List
+### 5.4 Investment List
 
 - Renders one `InvestmentCard` per investment.
 - Cards display: name, category badge, yield, invested amount, broker, invested date, and due date.
 - Empty state message is shown when no investments are registered.
 
-### 5.4 Investment Card
+### 5.5 Investment Card
 
 Each card shows:
 
@@ -73,7 +86,7 @@ Each card shows:
 | Edit button     | Opens edit form in modal                                  |
 | Delete button   | Opens delete confirmation modal                           |
 
-### 5.5 Add / Edit Investment (Form)
+### 5.6 Add / Edit Investment (Form)
 
 Opened in a `Modal`. Fields:
 
@@ -91,8 +104,9 @@ Opened in a `Modal`. Fields:
 - On submit, the investment is added or updated through `InvestmentsContext`, which calls the Next.js API.
 - Category is automatically derived from the selected investment type.
 - IDs are generated client-side.
+- Saved investments are attached to the authenticated Supabase user.
 
-### 5.6 Delete Investment
+### 5.7 Delete Investment
 
 - Triggered from the trash icon on an `InvestmentCard`.
 - A confirmation modal is shown before the deletion is committed.
@@ -158,6 +172,7 @@ The database schema is versioned in `supabase/migrations/`, and the initial seed
 
 | Context              | Responsibility                                                                                                          |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `AuthContext`        | Tracks the Supabase Auth session and exposes login, register, and logout actions.                                        |
 | `InvestmentsContext` | Exposes investment data and mutations backed by TanStack Query cache.                                                    |
 | `VisibilityContext`  | Holds the `showValues` boolean and `handleToggleShowValues` function.                                                   |
 
@@ -171,11 +186,12 @@ TanStack Query manages client-side fetch, loading, error, and mutation cache sta
 | Route                         | Methods | Responsibility                                           |
 | ----------------------------- | ------- | -------------------------------------------------------- |
 | `/api/investment-types`       | `GET`   | Returns supported investment types from Supabase.        |
-| `/api/investments`            | `GET`   | Returns portfolio investments from Supabase.             |
-| `/api/investments`            | `POST`  | Validates and upserts an investment in Supabase.         |
-| `/api/investments/[id]`       | `DELETE` | Validates the investment ID and removes it from Supabase. |
+| `/api/investments`            | `GET`   | Returns portfolio investments for the authenticated user. |
+| `/api/investments`            | `POST`  | Validates and upserts an investment for the authenticated user. |
+| `/api/investments/[id]`       | `DELETE` | Validates the investment ID and removes it for the authenticated user. |
 
 The API routes delegate persistence to `src/service/investments-repository.ts`.
+Investment routes require a valid Supabase bearer token.
 
 ---
 
@@ -202,12 +218,12 @@ Yield field accepted formats (case-insensitive):
 | Performance    | Next.js App Router; only client components that require interactivity are marked `'use client'`. |
 | Data access    | Client components call Next.js API routes instead of importing the Supabase client directly.      |
 | Client cache    | TanStack Query manages investment fetches and mutation cache updates.                             |
+| Authentication | Supabase Auth controls account registration, login, logout, and API authorization.                |
 
 ---
 
 ## 11. Out of Scope (current version)
 
-- User authentication and multi-user support.
 - Portfolio charts and performance analytics.
 - Import from broker APIs or CSV files.
 - Currency conversion or multi-currency support.

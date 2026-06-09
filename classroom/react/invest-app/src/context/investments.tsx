@@ -9,6 +9,7 @@ import {
   saveInvestment as saveStoredInvestment,
 } from '@/service/investments-api';
 import type { Investment, InvestmentType } from '@/types/investment';
+import { useAuth } from '@/context/auth';
 
 type InvestmentsContextValue = {
   investments: Investment[];
@@ -22,7 +23,7 @@ type InvestmentsContextValue = {
 const InvestmentsContext = createContext<InvestmentsContextValue | null>(null);
 
 const investmentKeys = {
-  all: ['investments'] as const,
+  all: (userId: string) => ['investments', userId] as const,
   types: ['investment-types'] as const,
 };
 
@@ -32,24 +33,29 @@ export function InvestmentsProvider({
   children: React.ReactNode;
 }) {
   const queryClient = useQueryClient();
+  const { user } = useAuth();
+  const userId = user?.id ?? '';
   const investmentTypesQuery = useQuery({
     queryKey: investmentKeys.types,
     queryFn: getInvestmentTypes,
   });
   const investmentsQuery = useQuery({
-    queryKey: investmentKeys.all,
+    queryKey: investmentKeys.all(userId),
     queryFn: getInvestments,
+    enabled: Boolean(userId),
   });
 
   const saveMutation = useMutation({
     mutationFn: saveStoredInvestment,
     onSuccess: (storedInvestment) => {
-      queryClient.setQueryData<Investment[]>(investmentKeys.all, (prev = []) =>
-        prev.some((i) => i.id === storedInvestment.id)
-          ? prev.map((i) =>
-              i.id === storedInvestment.id ? storedInvestment : i,
-            )
-          : [...prev, storedInvestment],
+      queryClient.setQueryData<Investment[]>(
+        investmentKeys.all(userId),
+        (prev = []) =>
+          prev.some((i) => i.id === storedInvestment.id)
+            ? prev.map((i) =>
+                i.id === storedInvestment.id ? storedInvestment : i,
+              )
+            : [...prev, storedInvestment],
       );
     },
   });
@@ -57,8 +63,9 @@ export function InvestmentsProvider({
   const deleteMutation = useMutation({
     mutationFn: deleteStoredInvestment,
     onSuccess: (_data, id) => {
-      queryClient.setQueryData<Investment[]>(investmentKeys.all, (prev = []) =>
-        prev.filter((i) => i.id !== id),
+      queryClient.setQueryData<Investment[]>(
+        investmentKeys.all(userId),
+        (prev = []) => prev.filter((i) => i.id !== id),
       );
     },
   });

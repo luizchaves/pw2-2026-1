@@ -1,10 +1,18 @@
 import type { Investment, InvestmentType } from '@/schemas/investment';
+import { supabaseBrowser } from '@/lib/supabase-browser';
 
 async function fetchApi<T>(input: string, init?: RequestInit): Promise<T> {
+  const {
+    data: { session },
+  } = await supabaseBrowser.auth.getSession();
+
   const response = await fetch(input, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
+      ...(session?.access_token
+        ? { Authorization: `Bearer ${session.access_token}` }
+        : {}),
       ...init?.headers,
     },
   });

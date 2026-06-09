@@ -5,6 +5,7 @@ import type { Investment, InvestmentType } from '@/schemas/investment';
 
 type InvestmentRow = {
   id: string;
+  userId: string | null;
   name: string;
   type: string;
   broker: string;
@@ -17,6 +18,7 @@ type InvestmentRow = {
 
 type InvestmentTableRow = {
   id: string;
+  user_id: string;
   name: string;
   type_id: string;
   broker: string;
@@ -27,10 +29,11 @@ type InvestmentTableRow = {
 };
 
 const investmentSelect =
-  'id, name, type, broker, amount, yield, category, investedDate, dueDate';
+  'id, userId, name, type, broker, amount, yield, category, investedDate, dueDate';
 
 const toInvestment = (row: InvestmentRow): Investment => ({
   id: row.id,
+  userId: row.userId,
   name: row.name,
   type: row.type,
   broker: row.broker,
@@ -41,8 +44,12 @@ const toInvestment = (row: InvestmentRow): Investment => ({
   dueDate: row.dueDate,
 });
 
-const toInvestmentRow = (investment: Investment): InvestmentTableRow => ({
+const toInvestmentRow = (
+  investment: Investment,
+  userId: string,
+): InvestmentTableRow => ({
   id: investment.id,
+  user_id: userId,
   name: investment.name,
   type_id: investment.type,
   broker: investment.broker,
@@ -63,10 +70,11 @@ export async function getInvestmentTypes() {
   return data satisfies InvestmentType[];
 }
 
-export async function getInvestments() {
+export async function getInvestments(userId: string) {
   const { data, error } = await supabase
     .from('investments_with_types')
     .select(investmentSelect)
+    .eq('userId', userId)
     .order('name');
 
   if (error) throw error;
@@ -74,10 +82,25 @@ export async function getInvestments() {
   return data.map((row) => toInvestment(row as InvestmentRow));
 }
 
-export async function saveInvestment(investment: Investment) {
+export async function saveInvestment(investment: Investment, userId: string) {
+  const { data: existingInvestment, error: ownershipError } = await supabase
+    .from('investments')
+    .select('user_id')
+    .eq('id', investment.id)
+    .maybeSingle();
+
+  if (ownershipError) throw ownershipError;
+
+  if (
+    existingInvestment?.user_id &&
+    existingInvestment.user_id !== userId
+  ) {
+    throw new Error('Investimento não encontrado');
+  }
+
   const { error } = await supabase
     .from('investments')
-    .upsert(toInvestmentRow(investment));
+    .upsert(toInvestmentRow(investment, userId));
 
   if (error) throw error;
 
@@ -85,6 +108,7 @@ export async function saveInvestment(investment: Investment) {
     .from('investments_with_types')
     .select(investmentSelect)
     .eq('id', investment.id)
+    .eq('userId', userId)
     .single();
 
   if (selectError) throw selectError;
@@ -92,8 +116,12 @@ export async function saveInvestment(investment: Investment) {
   return toInvestment(data as InvestmentRow);
 }
 
-export async function deleteInvestment(id: string) {
-  const { error } = await supabase.from('investments').delete().eq('id', id);
+export async function deleteInvestment(id: string, userId: string) {
+  const { error } = await supabase
+    .from('investments')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', userId);
 
   if (error) throw error;
 }
