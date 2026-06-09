@@ -1,18 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { investmentTypes } from '@/data/investments';
 import {
   investmentFormSchema,
   type InvestmentFormData,
 } from '@/schemas/investment';
-import type { Investment } from '@/types/investment';
+import type { Investment, InvestmentType } from '@/types/investment';
 import Modal from '@/components/ui/Modal';
 
 type Props = {
   investment?: Investment;
+  investmentTypes: InvestmentType[];
   onSubmit: (investment: Investment) => void;
   onClose: () => void;
 };
@@ -38,9 +38,11 @@ const formatCents = (cents: number) =>
 
 export default function InvestmentForm({
   investment,
+  investmentTypes,
   onSubmit,
   onClose,
 }: Props) {
+  const defaultType = investmentTypes[0];
   const [amountDisplay, setAmountDisplay] = useState(
     investment ? formatCents(investment.amount) : '',
   );
@@ -49,7 +51,7 @@ export default function InvestmentForm({
     register,
     handleSubmit,
     setValue,
-    watch,
+    control,
     formState: { errors },
   } = useForm<InvestmentFormData>({
     resolver: zodResolver(investmentFormSchema),
@@ -64,14 +66,14 @@ export default function InvestmentForm({
           dueDate: investment.dueDate ?? '',
         }
       : {
-          typeId: investmentTypes[0].id,
+          typeId: defaultType?.id ?? '',
           investedDate: todayISO,
         },
   });
 
-  const typeId = watch('typeId');
+  const typeId = useWatch({ control, name: 'typeId' });
   const selectedType =
-    investmentTypes.find((t) => t.id === typeId) ?? investmentTypes[0];
+    investmentTypes.find((t) => t.id === typeId) ?? defaultType;
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const digits = e.target.value.replace(/\D/g, '');
@@ -86,6 +88,8 @@ export default function InvestmentForm({
   };
 
   const onFormSubmit = (data: InvestmentFormData) => {
+    if (!selectedType) return;
+
     onSubmit({
       id: investment?.id ?? crypto.randomUUID(),
       name: data.name,
@@ -133,7 +137,7 @@ export default function InvestmentForm({
           <div>
             <label className={labelClass}>Categoria</label>
             <input
-              value={categoryLabels[selectedType.category]}
+              value={selectedType ? categoryLabels[selectedType.category] : ''}
               readOnly
               className="w-full rounded-xl border border-slate-100 bg-slate-100 px-3 py-2 text-sm text-slate-500"
             />
@@ -221,6 +225,7 @@ export default function InvestmentForm({
           </button>
           <button
             type="submit"
+            disabled={!selectedType}
             className="rounded-full bg-sky-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500"
           >
             {investment ? 'Salvar' : 'Cadastrar'}

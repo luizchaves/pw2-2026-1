@@ -10,8 +10,16 @@ import Modal from '@/components/ui/Modal';
 
 export default function InvestmentsPage() {
   const { showValues } = useVisibility();
-  const { investments, setInvestments } = useInvestments();
+  const {
+    investments,
+    investmentTypes,
+    isLoading,
+    error,
+    saveInvestment,
+    deleteInvestment,
+  } = useInvestments();
   const [showForm, setShowForm] = useState(false);
+  const [actionError, setActionError] = useState<string | null>(null);
   const [editingInvestment, setEditingInvestment] = useState<Investment | null>(
     null,
   );
@@ -23,13 +31,18 @@ export default function InvestmentsPage() {
     setEditingInvestment(null);
   };
 
-  const handleFormSubmit = (investment: Investment) => {
-    setInvestments((prev) =>
-      prev.some((i) => i.id === investment.id)
-        ? prev.map((i) => (i.id === investment.id ? investment : i))
-        : [...prev, investment],
-    );
-    closeForm();
+  const handleFormSubmit = async (investment: Investment) => {
+    try {
+      setActionError(null);
+      await saveInvestment(investment);
+      closeForm();
+    } catch (err) {
+      setActionError(
+        err instanceof Error
+          ? err.message
+          : 'Não foi possível salvar o investimento',
+      );
+    }
   };
 
   const handleEdit = (investment: Investment) => {
@@ -37,12 +50,19 @@ export default function InvestmentsPage() {
     setShowForm(true);
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     if (!deletingInvestment) return;
-    setInvestments((prev) =>
-      prev.filter((i) => i.id !== deletingInvestment.id),
-    );
-    setDeletingInvestment(null);
+    try {
+      setActionError(null);
+      await deleteInvestment(deletingInvestment.id);
+      setDeletingInvestment(null);
+    } catch (err) {
+      setActionError(
+        err instanceof Error
+          ? err.message
+          : 'Não foi possível remover o investimento',
+      );
+    }
   };
 
   return (
@@ -82,7 +102,19 @@ export default function InvestmentsPage() {
           </button>
         </div>
       </div>
-      {investments.length === 0 ? (
+      {(error || actionError) && (
+        <div className="mb-6 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">
+          {error ?? actionError}
+        </div>
+      )}
+
+      {isLoading ? (
+        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-16 text-center">
+          <p className="text-lg font-semibold text-slate-700">
+            Carregando investimentos
+          </p>
+        </div>
+      ) : investments.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-16 text-center">
           <p className="text-lg font-semibold text-slate-700">
             Nenhum investimento cadastrado
@@ -112,6 +144,7 @@ export default function InvestmentsPage() {
       {showForm && (
         <InvestmentForm
           investment={editingInvestment ?? undefined}
+          investmentTypes={investmentTypes}
           onSubmit={handleFormSubmit}
           onClose={closeForm}
         />

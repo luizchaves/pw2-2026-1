@@ -7,7 +7,7 @@ import { formatCurrency } from '@/lib/format';
 
 export default function Home() {
   const { showValues } = useVisibility();
-  const { investments } = useInvestments();
+  const { investments, isLoading } = useInvestments();
 
   const totalAmount = investments.reduce((sum, inv) => sum + inv.amount, 0);
   const totalCount = investments.length;
@@ -40,7 +40,13 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        {totalCount === 0 ? (
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
+            <p className="text-lg font-semibold text-slate-700">
+              Carregando carteira
+            </p>
+          </div>
+        ) : totalCount === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
             <p className="text-lg font-semibold text-slate-700">
               Nenhum investimento ainda

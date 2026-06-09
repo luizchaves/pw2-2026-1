@@ -4,7 +4,7 @@
 
 **Product name:** Invest App
 **Purpose:** A personal investment portfolio tracker that lets users register, visualize, and manage their financial assets in one place.
-**Tech stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, Zod
+**Tech stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, Zod, Supabase
 
 ---
 
@@ -12,6 +12,7 @@
 
 - Give individual investors a simple interface to track all their assets.
 - Provide a quick portfolio summary (total patrimony, number of assets).
+- Persist portfolio data in Supabase.
 - Support privacy by allowing users to hide monetary values on screen.
 - Validate investment data on the client side before submission.
 
@@ -87,7 +88,7 @@ Opened in a `Modal`. Fields:
 | Due date       | Date                      | Optional                                                 |
 
 - Validation is performed with **Zod** (`investmentFormSchema`).
-- On submit, the investment is added or updated in `InvestmentsContext`.
+- On submit, the investment is added or updated in Supabase through `InvestmentsContext`.
 - Category is automatically derived from the selected investment type.
 - IDs are generated client-side.
 
@@ -95,7 +96,7 @@ Opened in a `Modal`. Fields:
 
 - Triggered from the trash icon on an `InvestmentCard`.
 - A confirmation modal is shown before the deletion is committed.
-- On confirm, the investment is removed from `InvestmentsContext`.
+- On confirm, the investment is removed from Supabase through `InvestmentsContext`.
 
 ---
 
@@ -127,6 +128,14 @@ Opened in a `Modal`. Fields:
 }
 ```
 
+### Supabase tables
+
+| Table                      | Purpose                                                       |
+| -------------------------- | ------------------------------------------------------------- |
+| `public.investment_types`  | Stores supported investment types and their categories.       |
+| `public.investments`       | Stores portfolio assets and references `investment_types.id`. |
+| `public.investments_with_types` | View used by the app to read investments with category data. |
+
 ### Supported investment types
 
 | id                  | Name              | Category        |
@@ -146,10 +155,10 @@ Opened in a `Modal`. Fields:
 
 | Context              | Responsibility                                                                                                          |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `InvestmentsContext` | Holds the investment list; provides `investments` array and `setInvestments` setter. Initialized from static seed data. |
+| `InvestmentsContext` | Loads investment types and investments from Supabase; provides save and delete operations for portfolio assets. |
 | `VisibilityContext`  | Holds the `showValues` boolean and `handleToggleShowValues` function.                                                   |
 
-> **Current limitation:** Data is stored in React state only. Refreshing the page resets the list to seed data. Persistence (localStorage or a backend) is not yet implemented.
+`src/service/storage.ts` owns the Supabase client and maps database rows to the app's TypeScript models.
 
 ---
 
@@ -180,7 +189,6 @@ Yield field accepted formats (case-insensitive):
 ## 10. Out of Scope (current version)
 
 - User authentication and multi-user support.
-- Data persistence (database or localStorage).
 - Portfolio charts and performance analytics.
 - Import from broker APIs or CSV files.
 - Currency conversion or multi-currency support.
