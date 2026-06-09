@@ -88,7 +88,7 @@ Opened in a `Modal`. Fields:
 | Due date       | Date                      | Optional                                                 |
 
 - Validation is performed with **Zod** (`investmentFormSchema`).
-- On submit, the investment is added or updated in Supabase through `InvestmentsContext`.
+- On submit, the investment is added or updated through `InvestmentsContext`, which calls the Next.js API.
 - Category is automatically derived from the selected investment type.
 - IDs are generated client-side.
 
@@ -96,7 +96,7 @@ Opened in a `Modal`. Fields:
 
 - Triggered from the trash icon on an `InvestmentCard`.
 - A confirmation modal is shown before the deletion is committed.
-- On confirm, the investment is removed from Supabase through `InvestmentsContext`.
+- On confirm, the investment is removed through `InvestmentsContext`, which calls the Next.js API.
 
 ---
 
@@ -157,14 +157,25 @@ The database schema is versioned in `supabase/migrations/`, and the initial seed
 
 | Context              | Responsibility                                                                                                          |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `InvestmentsContext` | Loads investment types and investments from Supabase; provides save and delete operations for portfolio assets. |
+| `InvestmentsContext` | Loads investment types and investments through the Next.js API; provides save and delete operations for portfolio assets. |
 | `VisibilityContext`  | Holds the `showValues` boolean and `handleToggleShowValues` function.                                                   |
 
-`src/service/storage.ts` owns the Supabase client and maps database rows to the app's TypeScript models.
+`src/service/investments-api.ts` is the client-side fetch wrapper for the investment API routes.
+
+## 8. API Routes
+
+| Route                         | Methods | Responsibility                                           |
+| ----------------------------- | ------- | -------------------------------------------------------- |
+| `/api/investment-types`       | `GET`   | Returns supported investment types from Supabase.        |
+| `/api/investments`            | `GET`   | Returns portfolio investments from Supabase.             |
+| `/api/investments`            | `POST`  | Validates and upserts an investment in Supabase.         |
+| `/api/investments/[id]`       | `DELETE` | Validates the investment ID and removes it from Supabase. |
+
+`src/server/investments.ts` owns the server-only Supabase client and maps database rows to the app's TypeScript models.
 
 ---
 
-## 8. Validation Rules
+## 9. Validation Rules
 
 Yield field accepted formats (case-insensitive):
 
@@ -177,7 +188,7 @@ Yield field accepted formats (case-insensitive):
 
 ---
 
-## 9. Non-Functional Requirements
+## 10. Non-Functional Requirements
 
 | Requirement    | Detail                                                                                           |
 | -------------- | ------------------------------------------------------------------------------------------------ |
@@ -185,10 +196,11 @@ Yield field accepted formats (case-insensitive):
 | Accessibility  | Semantic HTML (`<article>`, `<header>`, `<section>`); buttons have visible hover states.         |
 | Type safety    | End-to-end TypeScript with Zod-inferred types.                                                   |
 | Performance    | Next.js App Router; only client components that require interactivity are marked `'use client'`. |
+| Data access    | Client components call Next.js API routes instead of importing the Supabase client directly.      |
 
 ---
 
-## 10. Out of Scope (current version)
+## 11. Out of Scope (current version)
 
 - User authentication and multi-user support.
 - Portfolio charts and performance analytics.

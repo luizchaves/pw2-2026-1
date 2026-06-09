@@ -6,7 +6,7 @@ import {
   getInvestments,
   getInvestmentTypes,
   saveInvestment as saveStoredInvestment,
-} from '@/service/storage';
+} from '@/service/investments-api';
 import type { Investment, InvestmentType } from '@/types/investment';
 
 type InvestmentsContextValue = {

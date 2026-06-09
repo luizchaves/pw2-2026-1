@@ -1,14 +1,18 @@
+import 'server-only';
+
 import { createClient } from '@supabase/supabase-js';
 import type { Investment, InvestmentType } from '@/schemas/investment';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+const supabaseKey =
+  process.env.SUPABASE_PUBLISHABLE_KEY ??
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
   throw new Error('Supabase environment variables are not configured');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 type InvestmentRow = {
   id: string;
@@ -32,6 +36,9 @@ type InvestmentTableRow = {
   invested_date: string;
   due_date: string | null;
 };
+
+const investmentSelect =
+  'id, name, type, broker, amount, yield, category, investedDate, dueDate';
 
 const toInvestment = (row: InvestmentRow): Investment => ({
   id: row.id,
@@ -70,9 +77,7 @@ export async function getInvestmentTypes() {
 export async function getInvestments() {
   const { data, error } = await supabase
     .from('investments_with_types')
-    .select(
-      'id, name, type, broker, amount, yield, category, investedDate, dueDate',
-    )
+    .select(investmentSelect)
     .order('name');
 
   if (error) throw error;
@@ -89,9 +94,7 @@ export async function saveInvestment(investment: Investment) {
 
   const { data, error: selectError } = await supabase
     .from('investments_with_types')
-    .select(
-      'id, name, type, broker, amount, yield, category, investedDate, dueDate',
-    )
+    .select(investmentSelect)
     .eq('id', investment.id)
     .single();
 

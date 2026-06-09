@@ -19,6 +19,8 @@ Create `.env.local` from `.env.example` and set the Supabase publishable key:
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=https://ualrrhtrkwgsqszqkiwt.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+# Optional server-only alternative used by the Next.js API routes:
+SUPABASE_PUBLISHABLE_KEY=your-publishable-key
 ```
 
 The Supabase schema is kept in `supabase/migrations/`, and the initial seed data is kept in `supabase/seed.sql`.
