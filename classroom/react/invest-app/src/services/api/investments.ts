@@ -1,5 +1,5 @@
 import type { Investment, InvestmentType } from '@/schemas/investment';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/providers/supabase';
 
 async function fetchApi<T>(input: string, init?: RequestInit): Promise<T> {
   const {

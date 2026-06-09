@@ -9,7 +9,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/providers/supabase';
 
 type AuthContextValue = {
   user: User | null;

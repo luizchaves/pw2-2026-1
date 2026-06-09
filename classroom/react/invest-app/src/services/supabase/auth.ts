@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/providers/supabase';
 
 export async function getAuthenticatedUser(request: Request) {
   const authorization = request.headers.get('authorization');

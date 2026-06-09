@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/providers/supabase';
 import type { Investment, InvestmentType } from '@/schemas/investment';
 
 type InvestmentRow = {
