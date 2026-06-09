@@ -136,6 +136,8 @@ Opened in a `Modal`. Fields:
 | `public.investments`       | Stores portfolio assets and references `investment_types.id`. |
 | `public.investments_with_types` | View used by the app to read investments with category data. |
 
+The database schema is versioned in `supabase/migrations/`, and the initial seed data is stored in `supabase/seed.sql`.
+
 ### Supported investment types
 
 | id                  | Name              | Category        |
