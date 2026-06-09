@@ -35,7 +35,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   if (isPublicRoute) {
-    return <main>{children}</main>;
+    return (
+      <>
+        <Navbar />
+        <main>{children}</main>
+      </>
+    );
   }
 
   if (!user) {

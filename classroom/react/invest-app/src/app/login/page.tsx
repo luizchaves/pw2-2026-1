@@ -48,7 +48,7 @@ export default function LoginPage() {
   };
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12">
+    <section className="flex min-h-[calc(100vh-73px)] items-center justify-center bg-slate-50 px-4 py-12">
       <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
         <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-600">
           Invest App

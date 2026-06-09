@@ -36,7 +36,8 @@
 | `/`            | Home        | Landing page with portfolio summary and quick-access CTAs. |
 | `/investments` | Investments | Full list of investments with add / edit / delete actions. |
 
-Navigation is handled by a persistent `Navbar` component on authenticated pages.
+Navigation is handled by a persistent `Navbar` component.
+Anonymous users see Login and Register actions in the navbar.
 `/` and `/investments` are only accessible after login.
 
 ---
