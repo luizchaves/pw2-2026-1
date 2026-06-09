@@ -107,6 +107,7 @@ Opened in a `Modal`. Fields:
 ```ts
 {
   id: string;             // UUID identifier
+  userId?: string | null; // references Supabase auth.users.id
   name: string;           // human-readable label
   type: string;           // references InvestmentType.id
   broker: string;
@@ -133,8 +134,8 @@ Opened in a `Modal`. Fields:
 | Table                      | Purpose                                                       |
 | -------------------------- | ------------------------------------------------------------- |
 | `public.investment_types`  | Stores supported investment types and their categories.       |
-| `public.investments`       | Stores portfolio assets and references `investment_types.id`. |
-| `public.investments_with_types` | View used by the app to read investments with category data. |
+| `public.investments`       | Stores portfolio assets and references `investment_types.id` and `auth.users.id`. |
+| `public.investments_with_types` | View used by the app to read investments with category and owner data. |
 
 The database schema is versioned in `supabase/migrations/`, and the initial seed data is stored in `supabase/seed.sql`.
 
