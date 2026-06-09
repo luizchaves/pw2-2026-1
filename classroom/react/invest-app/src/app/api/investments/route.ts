@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { investmentSchema } from '@/schemas/investment';
-import { getInvestments, saveInvestment } from '@/service/investments-repository';
+import { getInvestments, saveInvestment } from '@/service/supabase/investments';
 
 export async function GET(request: Request) {
   try {

@@ -91,10 +91,7 @@ export async function saveInvestment(investment: Investment, userId: string) {
 
   if (ownershipError) throw ownershipError;
 
-  if (
-    existingInvestment?.user_id &&
-    existingInvestment.user_id !== userId
-  ) {
+  if (existingInvestment?.user_id && existingInvestment.user_id !== userId) {
     throw new Error('Investimento não encontrado');
   }
 

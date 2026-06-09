@@ -7,7 +7,7 @@ import {
   getInvestments,
   getInvestmentTypes,
   saveInvestment as saveStoredInvestment,
-} from '@/service/investments-api';
+} from '@/service/api/investments';
 import type { Investment, InvestmentType } from '@/types/investment';
 import { useAuth } from '@/context/auth';
 
