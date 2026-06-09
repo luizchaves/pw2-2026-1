@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { withErrorHandler } from '@/lib/api-handler';
 import { getAuthenticatedUser } from '@/services/supabase/auth';
 import { deleteInvestment } from '@/services/supabase/investments';
 
@@ -7,29 +8,23 @@ const paramsSchema = z.object({
   id: z.uuid(),
 });
 
-export async function DELETE(
-  request: Request,
-  context: { params: Promise<{ id: string }> },
-) {
-  try {
+export const DELETE = withErrorHandler(
+  async (
+    request: Request,
+    context: { params: Promise<{ id: string }> },
+  ) => {
     const user = await getAuthenticatedUser(request);
     if (!user) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
-    const { id } = paramsSchema.parse(await context.params);
-    await deleteInvestment(id, user.id);
+    const parsed = paramsSchema.safeParse(await context.params);
+    if (!parsed.success) {
+      return NextResponse.json({ error: parsed.error.message }, { status: 400 });
+    }
+
+    await deleteInvestment(parsed.data.id, user.id);
 
     return new NextResponse(null, { status: 204 });
-  } catch (error) {
-    return NextResponse.json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : 'Não foi possível remover o investimento',
-      },
-      { status: 400 },
-    );
-  }
-}
+  },
+);

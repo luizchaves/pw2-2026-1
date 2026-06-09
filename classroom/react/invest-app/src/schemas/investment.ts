@@ -13,13 +13,22 @@ export const investmentTypeSchema = z.object({
   category: z.enum(['Fixed Income', 'Variable Income']),
 });
 
+// Branded type for monetary amounts stored in cents (e.g. 100_000 = R$ 1.000,00)
+export const centsSchema = z
+  .number()
+  .int()
+  .positive('Valor deve ser maior que zero')
+  .brand<'Cents'>();
+export type Cents = z.infer<typeof centsSchema>;
+export const toCents = (n: number): Cents => n as Cents;
+
 export const investmentSchema = z.object({
   id: z.uuid(),
   userId: z.uuid().nullable().optional(),
   name: z.string().min(1, 'Nome é obrigatório'),
-  type: z.string().min(1, 'Tipo é obrigatório'),
+  typeId: z.string().min(1, 'Tipo é obrigatório'),
   broker: z.string().min(1, 'Corretora é obrigatória'),
-  amount: z.number().int().positive('Valor deve ser maior que zero'),
+  amount: centsSchema,
   yield: investmentYieldSchema.optional(),
   category: z.enum(['Fixed Income', 'Variable Income']),
   investedDate: z.string().min(1, 'Data de aporte é obrigatória'),

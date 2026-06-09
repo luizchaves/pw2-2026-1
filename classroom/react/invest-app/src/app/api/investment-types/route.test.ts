@@ -40,6 +40,6 @@ describe('GET /api/investment-types', () => {
 
     expect(response.status).toBe(500);
     const body = await response.json() as { error: string };
-    expect(body.error).toMatch(/tipos de investimento/);
+    expect(body.error).toBe('Erro interno do servidor');
   });
 });

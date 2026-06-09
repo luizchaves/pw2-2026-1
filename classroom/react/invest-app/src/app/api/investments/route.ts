@@ -1,50 +1,33 @@
 import { NextResponse } from 'next/server';
+import { withErrorHandler } from '@/lib/api-handler';
 import { investmentSchema } from '@/schemas/investment';
 import { getAuthenticatedUser } from '@/services/supabase/auth';
 import { getInvestments, saveInvestment } from '@/services/supabase/investments';
 
-export async function GET(request: Request) {
-  try {
-    const user = await getAuthenticatedUser(request);
-    if (!user) {
-      return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
-    }
-
-    const investments = await getInvestments(user.id);
-    return NextResponse.json(investments);
-  } catch (error) {
-    return NextResponse.json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : 'Não foi possível carregar os investimentos',
-      },
-      { status: 500 },
-    );
+export const GET = withErrorHandler(async (request: Request) => {
+  const user = await getAuthenticatedUser(request);
+  if (!user) {
+    return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
   }
-}
 
-export async function POST(request: Request) {
-  try {
-    const user = await getAuthenticatedUser(request);
-    if (!user) {
-      return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
-    }
+  const investments = await getInvestments(user.id);
+  return NextResponse.json(investments);
+});
 
-    const investment = investmentSchema.parse(await request.json());
-    const savedInvestment = await saveInvestment(investment, user.id);
+export const POST = withErrorHandler(async (request: Request) => {
+  const user = await getAuthenticatedUser(request);
+  if (!user) {
+    return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
+  }
 
-    return NextResponse.json(savedInvestment);
-  } catch (error) {
+  const parsed = investmentSchema.safeParse(await request.json());
+  if (!parsed.success) {
     return NextResponse.json(
-      {
-        error:
-          error instanceof Error
-            ? error.message
-            : 'Não foi possível salvar o investimento',
-      },
+      { error: parsed.error.message },
       { status: 400 },
     );
   }
-}
+
+  const savedInvestment = await saveInvestment(parsed.data, user.id);
+  return NextResponse.json(savedInvestment);
+});

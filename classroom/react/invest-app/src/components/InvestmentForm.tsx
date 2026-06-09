@@ -5,6 +5,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   investmentFormSchema,
+  toCents,
   type Investment,
   type InvestmentFormData,
   type InvestmentType,
@@ -59,7 +60,7 @@ export default function InvestmentForm({
     defaultValues: investment
       ? {
           name: investment.name,
-          typeId: investment.type,
+          typeId: investment.typeId,
           broker: investment.broker,
           amountCents: investment.amount,
           yield: investment.yield ?? '',
@@ -94,9 +95,9 @@ export default function InvestmentForm({
     onSubmit({
       id: investment?.id ?? crypto.randomUUID(),
       name: data.name,
-      type: data.typeId,
+      typeId: data.typeId,
       broker: data.broker,
-      amount: data.amountCents,
+      amount: toCents(data.amountCents),
       yield: data.yield || undefined,
       category: selectedType.category,
       investedDate: data.investedDate,

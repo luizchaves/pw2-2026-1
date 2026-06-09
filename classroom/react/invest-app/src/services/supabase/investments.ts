@@ -2,6 +2,7 @@ import 'server-only';
 
 import { supabase } from '@/providers/supabase';
 import type { Investment, InvestmentType } from '@/schemas/investment';
+import { toCents } from '@/schemas/investment';
 
 type InvestmentRow = {
   id: string;
@@ -35,9 +36,9 @@ const toInvestment = (row: InvestmentRow): Investment => ({
   id: row.id,
   userId: row.userId,
   name: row.name,
-  type: row.type,
+  typeId: row.type,
   broker: row.broker,
-  amount: row.amount,
+  amount: toCents(row.amount),
   yield: row.yield ?? undefined,
   category: row.category,
   investedDate: row.investedDate,
@@ -51,7 +52,7 @@ const toInvestmentRow = (
   id: investment.id,
   user_id: userId,
   name: investment.name,
-  type_id: investment.type,
+  type_id: investment.typeId,
   broker: investment.broker,
   amount_cents: investment.amount,
   yield: investment.yield ?? null,

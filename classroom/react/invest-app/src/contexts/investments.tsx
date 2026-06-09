@@ -10,6 +10,8 @@ import {
 } from '@/services/api/investments';
 import type { Investment, InvestmentType } from '@/schemas/investment';
 import { useAuth } from '@/contexts/auth';
+import { useToast } from '@/contexts/toast';
+import { queryKeys } from '@/lib/query-keys';
 
 type InvestmentsContextValue = {
   investments: Investment[];
@@ -22,11 +24,6 @@ type InvestmentsContextValue = {
 
 const InvestmentsContext = createContext<InvestmentsContextValue | null>(null);
 
-const investmentKeys = {
-  all: (userId: string) => ['investments', userId] as const,
-  types: ['investment-types'] as const,
-};
-
 export function InvestmentsProvider({
   children,
 }: {
@@ -34,13 +31,16 @@ export function InvestmentsProvider({
 }) {
   const queryClient = useQueryClient();
   const { user } = useAuth();
+  const { showToast } = useToast();
   const userId = user?.id ?? '';
+
   const investmentTypesQuery = useQuery({
-    queryKey: investmentKeys.types,
+    queryKey: queryKeys.investmentTypes,
     queryFn: getInvestmentTypes,
   });
+
   const investmentsQuery = useQuery({
-    queryKey: investmentKeys.all(userId),
+    queryKey: queryKeys.investments(userId),
     queryFn: getInvestments,
     enabled: Boolean(userId),
   });
@@ -49,7 +49,7 @@ export function InvestmentsProvider({
     mutationFn: saveStoredInvestment,
     onSuccess: (storedInvestment) => {
       queryClient.setQueryData<Investment[]>(
-        investmentKeys.all(userId),
+        queryKeys.investments(userId),
         (prev = []) =>
           prev.some((i) => i.id === storedInvestment.id)
             ? prev.map((i) =>
@@ -57,6 +57,7 @@ export function InvestmentsProvider({
               )
             : [...prev, storedInvestment],
       );
+      showToast('Investimento salvo com sucesso', 'success');
     },
   });
 
@@ -64,9 +65,10 @@ export function InvestmentsProvider({
     mutationFn: deleteStoredInvestment,
     onSuccess: (_data, id) => {
       queryClient.setQueryData<Investment[]>(
-        investmentKeys.all(userId),
+        queryKeys.investments(userId),
         (prev = []) => prev.filter((i) => i.id !== id),
       );
+      showToast('Investimento removido com sucesso', 'success');
     },
   });
 

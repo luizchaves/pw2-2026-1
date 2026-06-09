@@ -131,15 +131,17 @@ Opened in a `Modal`. Fields:
   id: string;             // UUID identifier
   userId?: string | null; // references Supabase auth.users.id
   name: string;           // human-readable label
-  type: string;           // references InvestmentType.id
+  typeId: string;         // references InvestmentType.id
   broker: string;
-  amount: number;         // stored in cents (integer)
+  amount: Cents;          // branded integer (e.g. 100_000 = R$ 1.000,00)
   yield?: string;         // e.g. "110% CDI", "IPCA + 5%"
   category: 'Fixed Income' | 'Variable Income';
   investedDate: string;   // ISO date string YYYY-MM-DD
   dueDate: string | null;
 }
 ```
+
+`Cents` is a branded `number` type (`number & { __brand: 'Cents' }`) exported from `src/schemas/investment.ts`. Use `toCents(n)` to cast plain numbers.
 
 ### InvestmentType
 
@@ -183,8 +185,11 @@ The database schema is versioned in `supabase/migrations/`, and the initial seed
 | `AuthContext`        | Tracks the Supabase Auth session and exposes login, register, and logout actions.                                        |
 | `InvestmentsContext` | Exposes investment data and mutations backed by TanStack Query cache.                                                    |
 | `VisibilityContext`  | Holds the `showValues` boolean and `handleToggleShowValues` function.                                                   |
+| `ToastContext`       | Manages transient toast notifications shown after mutations succeed.                                                    |
 
 TanStack Query manages client-side fetch, loading, error, and mutation cache state for investment data.
+`src/lib/query-keys.ts` centralises all TanStack Query cache keys.
+`src/hooks/` contains custom hooks that extract UI-level logic from page components (e.g. `useInvestmentActions`).
 `src/services/api/` contains client-side fetch wrappers for the app API routes.
 `src/services/supabase/` owns Supabase persistence/auth helpers and maps database rows to the app's TypeScript models.
 `src/lib/supabase.ts` owns the shared Supabase publishable client used by browser and server code.

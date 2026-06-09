@@ -2,10 +2,10 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GET, POST } from './route';
 import { mockInvestments } from '@/test/fixtures';
 
+vi.mock('server-only', () => ({}));
 vi.mock('@/services/supabase/auth', () => ({
   getAuthenticatedUser: vi.fn(),
 }));
-
 vi.mock('@/services/supabase/investments', () => ({
   getInvestments: vi.fn(),
   saveInvestment: vi.fn(),
@@ -100,13 +100,13 @@ describe('POST /api/investments', () => {
     expect(mockSaveInvestment).toHaveBeenCalledWith(validInvestment, MOCK_USER!.id);
   });
 
-  it('returns 400 when service throws', async () => {
+  it('returns 500 when service throws', async () => {
     mockAuth.mockResolvedValue(MOCK_USER);
     mockSaveInvestment.mockRejectedValue(new Error('Save failed'));
 
     const response = await POST(makeRequest(validInvestment));
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(500);
     expect(await response.json()).toEqual({ error: 'Save failed' });
   });
 });

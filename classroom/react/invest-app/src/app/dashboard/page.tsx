@@ -42,10 +42,12 @@ export default function DashboardPage() {
           </div>
         </div>
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
-            <p className="text-lg font-semibold text-slate-700">
-              Carregando carteira
-            </p>
+          <div role="status" aria-label="Carregando carteira" className="animate-pulse rounded-3xl border border-slate-200 bg-white p-8">
+            <div className="h-4 w-32 rounded-full bg-slate-200" />
+            <div className="mt-6 space-y-4">
+              <div className="h-20 rounded-2xl bg-slate-100" />
+              <div className="h-20 rounded-2xl bg-slate-100" />
+            </div>
           </div>
         ) : totalCount === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">

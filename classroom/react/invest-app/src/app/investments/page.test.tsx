@@ -72,7 +72,7 @@ describe('InvestmentsPage', () => {
 
     render(<InvestmentsPage />);
 
-    expect(screen.getByText('Carregando investimentos')).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Carregando investimentos' })).toBeInTheDocument();
   });
 
   it('exibe o estado vazio quando não há investimentos', () => {

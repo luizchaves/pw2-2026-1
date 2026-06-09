@@ -26,7 +26,7 @@ describe('DashboardPage', () => {
 
     render(<DashboardPage />);
 
-    expect(screen.getByText('Carregando carteira')).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Carregando carteira' })).toBeInTheDocument();
   });
 
   it('exibe o estado vazio quando não há investimentos', () => {

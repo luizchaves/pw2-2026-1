@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { DELETE } from './route';
 
+vi.mock('server-only', () => ({}));
 vi.mock('@/services/supabase/auth', () => ({
   getAuthenticatedUser: vi.fn(),
 }));
@@ -60,13 +61,13 @@ describe('DELETE /api/investments/[id]', () => {
     expect(response.status).toBe(400);
   });
 
-  it('returns 400 when service throws', async () => {
+  it('returns 500 when service throws', async () => {
     mockAuth.mockResolvedValue(MOCK_USER);
     mockDelete.mockRejectedValue(new Error('Investment not found'));
 
     const response = await DELETE(makeRequest(), makeContext(VALID_ID));
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(500);
     expect(await response.json()).toEqual({ error: 'Investment not found' });
   });
 });
