@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getInvestmentTypes } from '@/server/investments';
+import { getInvestmentTypes } from '@/service/investments-repository';
 
 export async function GET() {
   try {

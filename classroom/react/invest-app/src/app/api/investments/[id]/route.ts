@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { deleteInvestment } from '@/server/investments';
+import { deleteInvestment } from '@/service/investments-repository';
 
 const paramsSchema = z.object({
   id: z.uuid(),

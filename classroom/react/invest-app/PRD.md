@@ -161,6 +161,8 @@ The database schema is versioned in `supabase/migrations/`, and the initial seed
 | `VisibilityContext`  | Holds the `showValues` boolean and `handleToggleShowValues` function.                                                   |
 
 `src/service/investments-api.ts` is the client-side fetch wrapper for the investment API routes.
+`src/service/investments-repository.ts` owns investment persistence and maps database rows to the app's TypeScript models.
+`src/lib/supabase.ts` owns the server-only Supabase client.
 
 ## 8. API Routes
 
@@ -171,7 +173,7 @@ The database schema is versioned in `supabase/migrations/`, and the initial seed
 | `/api/investments`            | `POST`  | Validates and upserts an investment in Supabase.         |
 | `/api/investments/[id]`       | `DELETE` | Validates the investment ID and removes it from Supabase. |
 
-`src/server/investments.ts` owns the server-only Supabase client and maps database rows to the app's TypeScript models.
+The API routes delegate persistence to `src/service/investments-repository.ts`.
 
 ---
 

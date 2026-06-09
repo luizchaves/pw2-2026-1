@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { investmentSchema } from '@/schemas/investment';
-import { getInvestments, saveInvestment } from '@/server/investments';
+import { getInvestments, saveInvestment } from '@/service/investments-repository';
 
 export async function GET() {
   try {
