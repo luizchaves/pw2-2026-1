@@ -33,12 +33,13 @@
 | -------------- | ----------- | ---------------------------------------------------------- |
 | `/login`       | Login       | Email and password sign-in through Supabase Auth.          |
 | `/register`    | Register    | Account creation with name, email, password, and confirmation. |
-| `/`            | Home        | Landing page with portfolio summary and quick-access CTAs. |
+| `/`            | Landing     | Public landing page explaining the system and CTAs.        |
+| `/dashboard`   | Dashboard   | Authenticated portfolio summary and quick-access CTAs.     |
 | `/investments` | Investments | Full list of investments with add / edit / delete actions. |
 
 Navigation is handled by a persistent `Navbar` component.
 Anonymous users see Login and Register actions in the navbar.
-`/` and `/investments` are only accessible after login.
+`/dashboard` and `/investments` are only accessible after login.
 
 ---
 
@@ -53,25 +54,31 @@ Anonymous users see Login and Register actions in the navbar.
 - Logged-in users can sign out from the navbar.
 - Investment API calls send the current Supabase access token.
 
-### 5.2 Portfolio Summary (Home)
+### 5.2 Public Landing Page
+
+- Presents the product value proposition for anonymous and authenticated users.
+- Shows a visual preview of the investment tracking interface.
+- Offers CTAs to create an account, sign in, open the dashboard, or view investments depending on auth state.
+
+### 5.3 Portfolio Summary (Dashboard)
 
 - Displays **total patrimony** (sum of all investment amounts).
 - Displays **total number of registered assets**.
 - Values are hidden when the privacy toggle is active (shows `••••••••`).
 - When no investments exist, shows an empty-state card with a CTA to register the first asset.
 
-### 5.3 Privacy Toggle
+### 5.4 Privacy Toggle
 
 - A global toggle (available via `Navbar`) that shows or hides all monetary values across the app.
 - State is managed through `VisibilityContext` and persists for the duration of the session.
 
-### 5.4 Investment List
+### 5.5 Investment List
 
 - Renders one `InvestmentCard` per investment.
 - Cards display: name, category badge, yield, invested amount, broker, invested date, and due date.
 - Empty state message is shown when no investments are registered.
 
-### 5.5 Investment Card
+### 5.6 Investment Card
 
 Each card shows:
 
@@ -87,7 +94,7 @@ Each card shows:
 | Edit button     | Opens edit form in modal                                  |
 | Delete button   | Opens delete confirmation modal                           |
 
-### 5.6 Add / Edit Investment (Form)
+### 5.7 Add / Edit Investment (Form)
 
 Opened in a `Modal`. Fields:
 
@@ -107,7 +114,7 @@ Opened in a `Modal`. Fields:
 - IDs are generated client-side.
 - Saved investments are attached to the authenticated Supabase user.
 
-### 5.7 Delete Investment
+### 5.8 Delete Investment
 
 - Triggered from the trash icon on an `InvestmentCard`.
 - A confirmation modal is shown before the deletion is committed.

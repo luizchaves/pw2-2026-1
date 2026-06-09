@@ -6,7 +6,8 @@ import Navbar from '@/components/Navbar';
 import { useAuth } from '@/contexts/auth';
 import { InvestmentsProvider } from '@/contexts/investments';
 
-const publicRoutes = new Set(['/login', '/register']);
+const publicRoutes = new Set(['/', '/login', '/register']);
+const authRoutes = new Set(['/login', '/register']);
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -21,10 +22,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       router.replace('/login');
     }
 
-    if (user && isPublicRoute) {
-      router.replace('/');
+    if (user && authRoutes.has(pathname)) {
+      router.replace('/dashboard');
     }
-  }, [isLoading, isPublicRoute, router, user]);
+  }, [isLoading, isPublicRoute, pathname, router, user]);
 
   if (isLoading) {
     return (
