@@ -22,7 +22,7 @@ insert into public.investments (
   due_date
 ) values
   (
-    'aetg9941v91allu57kwa8miu',
+    '11111111-1111-4111-8111-111111111111',
     'Tesouro IPCA+ 2045',
     'tesouro-ipca',
     'Corretora Y',
@@ -32,7 +32,7 @@ insert into public.investments (
     '2045-08-15'
   ),
   (
-    'asbaa15dtm2uwvw7qs4fczvq',
+    '22222222-2222-4222-8222-222222222222',
     'CDB Banco X',
     'cdb',
     'Corretora Y',

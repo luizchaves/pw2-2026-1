@@ -14,7 +14,7 @@ export const investmentTypeSchema = z.object({
 });
 
 export const investmentSchema = z.object({
-  id: z.string(),
+  id: z.uuid(),
   name: z.string().min(1, 'Nome é obrigatório'),
   type: z.string().min(1, 'Tipo é obrigatório'),
   broker: z.string().min(1, 'Corretora é obrigatória'),

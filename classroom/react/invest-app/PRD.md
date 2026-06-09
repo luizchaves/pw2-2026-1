@@ -106,7 +106,7 @@ Opened in a `Modal`. Fields:
 
 ```ts
 {
-  id: string;             // unique identifier
+  id: string;             // UUID identifier
   name: string;           // human-readable label
   type: string;           // references InvestmentType.id
   broker: string;
