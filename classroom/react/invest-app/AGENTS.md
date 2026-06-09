@@ -59,7 +59,7 @@ src/
   app/          # Next.js App Router pages and layouts
   components/   # Shared React components
     ui/         # Generic, stateless UI primitives (Modal, etc.)
-  context/      # React Context providers and hooks
+  contexts/      # React Context providers and hooks
   data/         # Static seed data
   lib/          # Pure utility functions
   schemas/      # Zod schemas (source of truth for types)

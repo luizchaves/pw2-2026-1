@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useVisibility } from '@/context/visibility';
-import { useInvestments } from '@/context/investments';
+import { useVisibility } from '@/contexts/visibility';
+import { useInvestments } from '@/contexts/investments';
 import { formatCurrency } from '@/lib/format';
 
 export default function Home() {

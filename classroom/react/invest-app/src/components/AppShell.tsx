@@ -3,8 +3,8 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
-import { useAuth } from '@/context/auth';
-import { InvestmentsProvider } from '@/context/investments';
+import { useAuth } from '@/contexts/auth';
+import { InvestmentsProvider } from '@/contexts/investments';
 
 const publicRoutes = new Set(['/login', '/register']);
 

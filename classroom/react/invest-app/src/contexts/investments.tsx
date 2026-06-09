@@ -9,7 +9,7 @@ import {
   saveInvestment as saveStoredInvestment,
 } from '@/services/api/investments';
 import type { Investment, InvestmentType } from '@/schemas/investment';
-import { useAuth } from '@/context/auth';
+import { useAuth } from '@/contexts/auth';
 
 type InvestmentsContextValue = {
   investments: Investment[];

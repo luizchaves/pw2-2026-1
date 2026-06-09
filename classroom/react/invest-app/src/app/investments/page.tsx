@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useVisibility } from '@/context/visibility';
-import { useInvestments } from '@/context/investments';
+import { useVisibility } from '@/contexts/visibility';
+import { useInvestments } from '@/contexts/investments';
 import type { Investment } from '@/schemas/investment';
 import InvestmentCard from '@/components/InvestmentCard';
 import InvestmentForm from '@/components/InvestmentForm';
