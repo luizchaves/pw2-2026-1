@@ -1,5 +1,5 @@
 import { Pencil, Trash2 } from 'lucide-react';
-import type { Investment } from '@/types/investment';
+import type { Investment } from '@/schemas/investment';
 import { formatCurrency, formatDate } from '@/lib/format';
 
 type InvestmentCardProps = {

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useVisibility } from '@/context/visibility';
 import { useInvestments } from '@/context/investments';
-import type { Investment } from '@/types/investment';
+import type { Investment } from '@/schemas/investment';
 import InvestmentCard from '@/components/InvestmentCard';
 import InvestmentForm from '@/components/InvestmentForm';
 import Modal from '@/components/ui/Modal';

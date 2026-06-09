@@ -5,9 +5,10 @@ import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   investmentFormSchema,
+  type Investment,
   type InvestmentFormData,
+  type InvestmentType,
 } from '@/schemas/investment';
-import type { Investment, InvestmentType } from '@/types/investment';
 import Modal from '@/components/ui/Modal';
 
 type Props = {

@@ -220,6 +220,8 @@ Yield field accepted formats (case-insensitive):
 | Client cache    | TanStack Query manages investment fetches and mutation cache updates.                             |
 | Authentication | Supabase Auth controls account registration, login, logout, and API authorization.                |
 
+Zod schemas in `src/schemas/` are the source of truth for runtime validation and TypeScript types.
+
 ---
 
 ## 11. Out of Scope (current version)
