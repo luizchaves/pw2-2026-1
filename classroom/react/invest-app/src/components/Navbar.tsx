@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, LogIn, LogOut, UserPlus } from 'lucide-react';
-import { useVisibility } from '@/contexts/visibility';
-import { useAuth } from '@/contexts/auth';
+import { useVisibility } from '@/stores/visibility';
+import { useAuth } from '@/stores/auth';
 
 export default function Navbar() {
   const { showValues, handleToggleShowValues } = useVisibility();

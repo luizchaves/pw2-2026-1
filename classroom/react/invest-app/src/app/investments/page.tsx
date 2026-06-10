@@ -1,7 +1,7 @@
 'use client';
 
-import { useVisibility } from '@/contexts/visibility';
-import { useInvestments } from '@/contexts/investments';
+import { useVisibility } from '@/stores/visibility';
+import { useInvestments } from '@/hooks/useInvestments';
 import { useInvestmentActions } from '@/hooks/useInvestmentActions';
 import InvestmentCard from '@/components/InvestmentCard';
 import InvestmentForm from '@/components/InvestmentForm';

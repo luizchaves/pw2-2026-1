@@ -7,7 +7,7 @@ import { LogIn } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { loginSchema, type LoginFormData } from '@/schemas/auth';
-import { useAuth } from '@/contexts/auth';
+import { useAuth } from '@/stores/auth';
 
 const inputClass =
   'w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200';

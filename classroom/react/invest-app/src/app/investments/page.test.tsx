@@ -10,11 +10,11 @@ const useInvestmentsMock = vi.fn();
 const saveInvestment = vi.fn();
 const deleteInvestment = vi.fn();
 
-vi.mock('@/contexts/visibility', () => ({
+vi.mock('@/stores/visibility', () => ({
   useVisibility: () => useVisibilityMock(),
 }));
 
-vi.mock('@/contexts/investments', () => ({
+vi.mock('@/hooks/useInvestments', () => ({
   useInvestments: () => useInvestmentsMock(),
 }));
 

@@ -10,7 +10,7 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ replace }),
 }));
 
-vi.mock('@/contexts/auth', () => ({
+vi.mock('@/stores/auth', () => ({
   useAuth: () => ({ login }),
 }));
 

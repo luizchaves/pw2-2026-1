@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useVisibility } from '@/contexts/visibility';
-import { useInvestments } from '@/contexts/investments';
+import { useVisibility } from '@/stores/visibility';
+import { useInvestments } from '@/hooks/useInvestments';
 import { formatCurrency } from '@/lib/format';
 
 export default function DashboardPage() {

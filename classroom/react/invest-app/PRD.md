@@ -70,7 +70,7 @@ Anonymous users see Login and Register actions in the navbar.
 ### 5.4 Privacy Toggle
 
 - A global toggle (available via `Navbar`) that shows or hides all monetary values across the app.
-- State is managed through `VisibilityContext` and persists for the duration of the session.
+- State is managed through the `useVisibility` Zustand store and persists for the duration of the session.
 
 ### 5.5 Investment List
 
@@ -109,7 +109,7 @@ Opened in a `Modal`. Fields:
 | Due date       | Date                      | Optional                                                 |
 
 - Validation is performed with **Zod** (`investmentFormSchema`).
-- On submit, the investment is added or updated through `InvestmentsContext`, which calls the Next.js API.
+- On submit, the investment is added or updated through `useInvestments`, which calls the Next.js API.
 - Category is automatically derived from the selected investment type.
 - IDs are generated client-side.
 - Saved investments are attached to the authenticated Supabase user.
@@ -118,7 +118,7 @@ Opened in a `Modal`. Fields:
 
 - Triggered from the trash icon on an `InvestmentCard`.
 - A confirmation modal is shown before the deletion is committed.
-- On confirm, the investment is removed through `InvestmentsContext`, which calls the Next.js API.
+- On confirm, the investment is removed through `useInvestments`, which calls the Next.js API.
 
 ---
 
@@ -180,16 +180,17 @@ The database schema is versioned in `supabase/migrations/`, and the initial seed
 
 ## 7. State Management
 
-| Context              | Responsibility                                                                                                          |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `AuthContext`        | Tracks the Supabase Auth session and exposes login, register, and logout actions.                                        |
-| `InvestmentsContext` | Exposes investment data and mutations backed by TanStack Query cache.                                                    |
-| `VisibilityContext`  | Holds the `showValues` boolean and `handleToggleShowValues` function.                                                   |
-| `ToastContext`       | Manages transient toast notifications shown after mutations succeed.                                                    |
+| Store / Hook          | Responsibility                                                                                                          |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `useAuth`             | Zustand store for Supabase Auth session state and login, register, and logout actions.                                  |
+| `useVisibility`       | Zustand store for the `showValues` boolean and `handleToggleShowValues` action.                                         |
+| `useToast`            | Zustand store for transient toast notifications shown after mutations succeed.                                           |
+| `useInvestments`      | TanStack Query hook for investment data and mutations backed by the query cache.                                         |
 
 TanStack Query manages client-side fetch, loading, error, and mutation cache state for investment data.
 `src/lib/query-keys.ts` centralises all TanStack Query cache keys.
 `src/hooks/` contains custom hooks that extract UI-level logic from page components (e.g. `useInvestmentActions`).
+`src/stores/` contains Zustand stores for app-wide client state.
 `src/services/api/` contains client-side fetch wrappers for the app API routes.
 `src/services/supabase/` owns Supabase persistence/auth helpers and maps database rows to the app's TypeScript models.
 `src/lib/supabase.ts` owns the shared Supabase publishable client used by browser and server code.

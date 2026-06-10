@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import type { Investment } from '@/schemas/investment';
-import { useInvestments } from '@/contexts/investments';
+import { useInvestments } from '@/hooks/useInvestments';
 
 export function useInvestmentActions() {
   const { saveInvestment, deleteInvestment } = useInvestments();

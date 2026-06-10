@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import AppShell from '@/components/AppShell';
-import { AuthProvider } from '@/contexts/auth';
-import { ToastProvider } from '@/contexts/toast';
-import { VisibilityProvider } from '@/contexts/visibility';
+import ToastViewport from '@/components/ToastViewport';
+import { AuthSessionProvider } from '@/providers/auth-session';
 import { AppQueryClientProvider } from '@/providers/query-client';
 import '@/app/globals.css';
 
@@ -34,13 +33,10 @@ export default function RootLayout({
     >
       <body className="bg-slate-50 text-slate-900">
         <AppQueryClientProvider>
-          <AuthProvider>
-            <ToastProvider>
-              <VisibilityProvider>
-                <AppShell>{children}</AppShell>
-              </VisibilityProvider>
-            </ToastProvider>
-          </AuthProvider>
+          <AuthSessionProvider>
+            <AppShell>{children}</AppShell>
+            <ToastViewport />
+          </AuthSessionProvider>
         </AppQueryClientProvider>
       </body>
     </html>

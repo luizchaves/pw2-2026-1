@@ -5,7 +5,7 @@ import LandingPage from './page';
 
 const useAuthMock = vi.fn();
 
-vi.mock('@/contexts/auth', () => ({
+vi.mock('@/stores/auth', () => ({
   useAuth: () => useAuthMock(),
 }));
 

@@ -45,7 +45,7 @@ Never skip steps 5 or 6.
 - **Language:** TypeScript everywhere. No plain `.js` files.
 - **Styling:** Tailwind CSS utility classes only — no inline styles, no CSS modules.
 - **Validation:** Use Zod for all schema definitions. Infer TypeScript types from schemas (`z.infer<typeof schema>`).
-- **State:** Use React Context for cross-component state. Keep `useState` local when the state is not shared.
+- **State:** Use Zustand for app-wide client state. Keep `useState` local when the state is not shared.
 - **Client components:** Mark a file `'use client'` only when it uses hooks or browser APIs. Prefer Server Components by default.
 - **Naming:** PascalCase for components and types; camelCase for variables, functions, and hooks; kebab-case for file names under `app/`.
 - **Formatting:** Prettier is configured. Run `npm run format` if available, otherwise ensure consistent indentation (2 spaces).
@@ -59,12 +59,13 @@ src/
   app/          # Next.js App Router pages and layouts
   components/   # Shared React components
     ui/         # Generic, stateless UI primitives (Modal, etc.)
-  contexts/     # App-owned React Context providers and hooks
   data/         # Static seed data
+  hooks/        # Custom React hooks for page and data workflows
   lib/          # Pure utility functions
   providers/    # Third-party or infrastructure providers
   schemas/      # Zod schemas (source of truth for types)
   services/     # API fetch wrappers and Supabase integrations
+  stores/       # Zustand stores for app-wide client state
 ```
 
 Do not create new top-level directories under `src/` without a clear reason.

@@ -6,11 +6,11 @@ import { mockInvestments, mockPortfolioTotalLabel } from '@/test/fixtures';
 const useVisibilityMock = vi.fn();
 const useInvestmentsMock = vi.fn();
 
-vi.mock('@/contexts/visibility', () => ({
+vi.mock('@/stores/visibility', () => ({
   useVisibility: () => useVisibilityMock(),
 }));
 
-vi.mock('@/contexts/investments', () => ({
+vi.mock('@/hooks/useInvestments', () => ({
   useInvestments: () => useInvestmentsMock(),
 }));
 

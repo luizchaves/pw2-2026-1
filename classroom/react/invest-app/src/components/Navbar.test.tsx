@@ -19,11 +19,11 @@ vi.mock('next/link', () => ({
   ),
 }));
 
-vi.mock('@/contexts/visibility', () => ({
+vi.mock('@/stores/visibility', () => ({
   useVisibility: () => useVisibilityMock(),
 }));
 
-vi.mock('@/contexts/auth', () => ({
+vi.mock('@/stores/auth', () => ({
   useAuth: () => useAuthMock(),
 }));
 

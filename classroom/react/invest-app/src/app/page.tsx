@@ -8,7 +8,7 @@ import {
   LockKeyhole,
   WalletCards,
 } from 'lucide-react';
-import { useAuth } from '@/contexts/auth';
+import { useAuth } from '@/stores/auth';
 
 const features = [
   {
