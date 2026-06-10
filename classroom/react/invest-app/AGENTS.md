@@ -57,6 +57,8 @@ Never skip steps 5 or 6.
 ```
 src/
   app/          # Next.js App Router pages and layouts
+    (auth)/     # Authentication pages
+    (dashboard)/ # Authenticated app pages
   components/   # Shared React components
     ui/         # Generic, stateless UI primitives (Modal, etc.)
   data/         # Static seed data
