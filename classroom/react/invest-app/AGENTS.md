@@ -44,6 +44,7 @@ Never skip steps 5 or 6.
 
 - **Language:** TypeScript everywhere. No plain `.js` files.
 - **Styling:** Tailwind CSS utility classes only — no inline styles, no CSS modules.
+- **UI primitives:** Prefer existing shadcn/ui components in `src/components/ui/`; they are generated with Base UI primitives.
 - **Validation:** Use Zod for all schema definitions. Infer TypeScript types from schemas (`z.infer<typeof schema>`).
 - **State:** Use Zustand for app-wide client state. Keep `useState` local when the state is not shared.
 - **Client components:** Mark a file `'use client'` only when it uses hooks or browser APIs. Prefer Server Components by default.

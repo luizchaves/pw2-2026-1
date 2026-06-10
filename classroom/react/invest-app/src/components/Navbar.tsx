@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, LogIn, LogOut, UserPlus } from 'lucide-react';
 import { useVisibility } from '@/stores/visibility';
 import { useAuth } from '@/stores/auth';
+import { Button } from '@/components/ui/button';
 
 export default function Navbar() {
   const { showValues, handleToggleShowValues } = useVisibility();
@@ -31,20 +32,21 @@ export default function Navbar() {
             Invest App
           </Link>
           <div className="flex items-center gap-2">
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+            <Button
+              variant="ghost"
+              className="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+              render={<Link href="/login" />}
             >
               <LogIn className="h-4 w-4" />
               Entrar
-            </Link>
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500"
+            </Button>
+            <Button
+              className="rounded-full bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500"
+              render={<Link href="/register" />}
             >
               <UserPlus className="h-4 w-4" />
               Cadastrar
-            </Link>
+            </Button>
           </div>
         </nav>
       </header>
@@ -80,9 +82,12 @@ export default function Navbar() {
               {displayName}
             </span>
           )}
-          <button
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-lg"
             onClick={handleToggleShowValues}
-            className="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+            className="rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900"
             aria-label={showValues ? 'Ocultar valores' : 'Exibir valores'}
           >
             {showValues ? (
@@ -90,14 +95,17 @@ export default function Navbar() {
             ) : (
               <Eye className="h-5 w-5" />
             )}
-          </button>
-          <button
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-lg"
             onClick={handleLogout}
-            className="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+            className="rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900"
             aria-label="Sair"
           >
             <LogOut className="h-5 w-5" />
-          </button>
+          </Button>
         </div>
       </nav>
     </header>

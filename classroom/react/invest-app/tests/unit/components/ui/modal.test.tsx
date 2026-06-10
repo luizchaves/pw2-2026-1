@@ -25,11 +25,11 @@ describe('Modal', () => {
       </Modal>,
     );
 
-    await user.click(screen.getByRole('button'));
+    await user.click(screen.getByRole('button', { name: 'Fechar' }));
     expect(onClose).toHaveBeenCalledOnce();
   });
 
-  it('calls onClose when the backdrop is clicked', async () => {
+  it('calls onClose when Escape is pressed', async () => {
     const user = userEvent.setup();
     onClose.mockReset();
     render(
@@ -38,11 +38,7 @@ describe('Modal', () => {
       </Modal>,
     );
 
-    // Click the outermost overlay (first div)
-    const backdrop = screen
-      .getByRole('heading', { name: 'Backdrop' })
-      .closest('[class*="fixed"]');
-    await user.click(backdrop!);
+    await user.keyboard('{Escape}');
     expect(onClose).toHaveBeenCalled();
   });
 

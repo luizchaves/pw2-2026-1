@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import AppShell from '@/components/AppShell';
-import ToastViewport from '@/components/ToastViewport';
+import { Toaster } from '@/components/ui/sonner';
 import { AuthSessionProvider } from '@/providers/auth-session';
 import { AppQueryClientProvider } from '@/providers/query-client';
 import '@/app/globals.css';
@@ -35,7 +35,7 @@ export default function RootLayout({
         <AppQueryClientProvider>
           <AuthSessionProvider>
             <AppShell>{children}</AppShell>
-            <ToastViewport />
+            <Toaster position="bottom-right" />
           </AuthSessionProvider>
         </AppQueryClientProvider>
       </body>

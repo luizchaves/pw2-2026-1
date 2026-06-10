@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useVisibility } from '@/stores/visibility';
 import { useInvestments } from '@/hooks/useInvestments';
 import { formatCurrency } from '@/lib/format';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 export default function DashboardPage() {
   const { showValues } = useVisibility();
@@ -27,45 +29,46 @@ export default function DashboardPage() {
             unico lugar.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/investments"
-              className="inline-flex items-center rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500"
+            <Button
+              className="h-11 rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-sky-500"
+              render={<Link href="/investments" />}
             >
               Ver investimentos
-            </Link>
-            <Link
-              href="/investments"
-              className="inline-flex items-center rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400"
+            </Button>
+            <Button
+              variant="outline"
+              className="h-11 rounded-full border-slate-300 bg-white px-6 text-sm font-semibold text-slate-700 hover:border-slate-400"
+              render={<Link href="/investments" />}
             >
               Cadastrar ativo
-            </Link>
+            </Button>
           </div>
         </div>
         {isLoading ? (
-          <div role="status" aria-label="Carregando carteira" className="animate-pulse rounded-3xl border border-slate-200 bg-white p-8">
+          <Card role="status" aria-label="Carregando carteira" className="animate-pulse rounded-3xl border-slate-200 bg-white p-8 py-8">
             <div className="h-4 w-32 rounded-full bg-slate-200" />
             <div className="mt-6 space-y-4">
               <div className="h-20 rounded-2xl bg-slate-100" />
               <div className="h-20 rounded-2xl bg-slate-100" />
             </div>
-          </div>
+          </Card>
         ) : totalCount === 0 ? (
-          <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-12 text-center">
+          <Card className="flex flex-col items-center justify-center rounded-3xl border-dashed border-slate-300 bg-slate-50 p-12 py-12 text-center">
             <p className="text-lg font-semibold text-slate-700">
               Nenhum investimento ainda
             </p>
             <p className="mt-2 text-sm text-slate-500">
               Adicione seu primeiro ativo e comece a acompanhar sua carteira.
             </p>
-            <Link
-              href="/investments"
-              className="mt-6 inline-flex items-center rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500"
+            <Button
+              className="mt-6 h-11 rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-sky-500"
+              render={<Link href="/investments" />}
             >
               Cadastrar agora
-            </Link>
-          </div>
+            </Button>
+          </Card>
         ) : (
-          <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+          <Card className="rounded-3xl border-slate-200 bg-white p-8 py-8 shadow-sm">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-600">
               Resumo rapido
             </p>
@@ -88,7 +91,7 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-          </div>
+          </Card>
         )}
       </div>
     </section>

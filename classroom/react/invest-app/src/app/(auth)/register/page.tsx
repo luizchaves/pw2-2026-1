@@ -8,9 +8,13 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { registerSchema, type RegisterFormData } from '@/schemas/auth';
 import { useAuth } from '@/stores/auth';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const inputClass =
-  'w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-200';
+  'h-11 rounded-xl border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:border-sky-400 focus-visible:ring-sky-200';
 const labelClass =
   'mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500';
 const errorClass = 'mt-1 text-xs text-red-500';
@@ -67,30 +71,41 @@ export default function RegisterPage() {
 
   return (
     <section className="flex min-h-[calc(100vh-73px)] items-center justify-center bg-slate-50 px-4 py-12">
-      <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-600">
-          Invest App
-        </p>
-        <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
-          Criar conta
-        </h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-4">
+      <Card className="w-full max-w-md rounded-2xl border-slate-200 bg-white p-8 py-8 shadow-sm">
+        <CardHeader className="px-0">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-600">
+            Invest App
+          </p>
+          <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900">
+            Criar conta
+          </h1>
+        </CardHeader>
+        <CardContent className="px-0">
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
           <div>
-            <label className={labelClass}>Nome</label>
-            <input
+            <Label htmlFor="register-name" className={labelClass}>
+              Nome
+            </Label>
+            <Input
+              id="register-name"
               {...register('name')}
               autoComplete="name"
+              aria-invalid={Boolean(errors.name)}
               className={inputClass}
               placeholder="Seu nome"
             />
             {errors.name && <p className={errorClass}>{errors.name.message}</p>}
           </div>
           <div>
-            <label className={labelClass}>Email</label>
-            <input
+            <Label htmlFor="register-email" className={labelClass}>
+              Email
+            </Label>
+            <Input
+              id="register-email"
               {...register('email')}
               type="email"
               autoComplete="email"
+              aria-invalid={Boolean(errors.email)}
               className={inputClass}
               placeholder="voce@email.com"
             />
@@ -99,11 +114,15 @@ export default function RegisterPage() {
             )}
           </div>
           <div>
-            <label className={labelClass}>Senha</label>
-            <input
+            <Label htmlFor="register-password" className={labelClass}>
+              Senha
+            </Label>
+            <Input
+              id="register-password"
               {...register('password')}
               type="password"
               autoComplete="new-password"
+              aria-invalid={Boolean(errors.password)}
               className={inputClass}
               placeholder="Minimo de 6 caracteres"
             />
@@ -112,11 +131,15 @@ export default function RegisterPage() {
             )}
           </div>
           <div>
-            <label className={labelClass}>Confirmar senha</label>
-            <input
+            <Label htmlFor="register-confirm-password" className={labelClass}>
+              Confirmar senha
+            </Label>
+            <Input
+              id="register-confirm-password"
               {...register('confirmPassword')}
               type="password"
               autoComplete="new-password"
+              aria-invalid={Boolean(errors.confirmPassword)}
               className={inputClass}
               placeholder="Repita sua senha"
             />
@@ -134,22 +157,23 @@ export default function RegisterPage() {
               {actionSuccess}
             </div>
           )}
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-sky-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500 disabled:cursor-not-allowed disabled:bg-slate-300"
+            className="h-11 w-full rounded-full bg-sky-600 px-5 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 disabled:cursor-not-allowed disabled:bg-slate-300"
           >
             <UserPlus className="h-4 w-4" />
             {isSubmitting ? 'Criando conta' : 'Criar conta'}
-          </button>
-        </form>
-        <p className="mt-6 text-center text-sm text-slate-600">
-          Já tem conta?{' '}
-          <Link href="/login" className="font-semibold text-sky-700">
-            Entrar
-          </Link>
-        </p>
-      </div>
+          </Button>
+          </form>
+          <p className="mt-6 text-center text-sm text-slate-600">
+            Já tem conta?{' '}
+            <Link href="/login" className="font-semibold text-sky-700">
+              Entrar
+            </Link>
+          </p>
+        </CardContent>
+      </Card>
     </section>
   );
 }

@@ -9,6 +9,8 @@ import {
   WalletCards,
 } from 'lucide-react';
 import { useAuth } from '@/stores/auth';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 const features = [
   {
@@ -55,19 +57,20 @@ export default function LandingPage() {
               datas de aporte e vencimento em um painel simples para uso diario.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href={primaryHref}
-                className="inline-flex items-center gap-2 rounded-full bg-sky-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500"
+              <Button
+                className="h-11 rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-sky-500"
+                render={<Link href={primaryHref} />}
               >
                 {user ? 'Abrir dashboard' : 'Criar conta'}
                 <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                href={secondaryHref}
-                className="inline-flex items-center rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-400"
+              </Button>
+              <Button
+                variant="outline"
+                className="h-11 rounded-full border-slate-300 bg-white px-6 text-sm font-semibold text-slate-700 hover:border-slate-400"
+                render={<Link href={secondaryHref} />}
               >
                 {user ? 'Ver investimentos' : 'Entrar'}
-              </Link>
+              </Button>
             </div>
           </div>
 
@@ -124,7 +127,7 @@ export default function LandingPage() {
             {features.map((feature) => {
               const Icon = feature.icon;
               return (
-                <article
+                <Card
                   key={feature.title}
                   className="rounded-lg border border-slate-200 bg-white p-5"
                 >
@@ -135,7 +138,7 @@ export default function LandingPage() {
                   <p className="mt-2 text-sm leading-6 text-slate-600">
                     {feature.description}
                   </p>
-                </article>
+                </Card>
               );
             })}
           </div>

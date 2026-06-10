@@ -1,6 +1,9 @@
 import { Pencil, Trash2 } from 'lucide-react';
 import type { Investment } from '@/schemas/investment';
 import { formatCurrency, formatDate } from '@/lib/format';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 type InvestmentCardProps = {
   investment: Investment;
@@ -28,76 +31,85 @@ export default function InvestmentCard({
   const yieldText = investment.yield ?? 'Nao informado';
 
   return (
-    <article className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-lg">
-      <header>
+    <Card className="rounded-3xl border-slate-200 bg-white p-6 py-6 shadow-sm transition hover:shadow-lg">
+      <CardHeader className="px-0">
         <div className="flex items-start justify-between gap-2">
           <h2 className="text-lg font-bold leading-snug text-slate-900 sm:text-xl">
             {investment.name}
           </h2>
           <div className="flex shrink-0 gap-1">
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-sm"
               onClick={onEdit}
-              className="rounded-full p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+              aria-label="Editar investimento"
+              className="rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600"
             >
               <Pencil className="h-4 w-4" />
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-sm"
               onClick={onDelete}
-              className="rounded-full p-1.5 text-slate-400 transition hover:bg-rose-50 hover:text-rose-500"
+              aria-label="Remover investimento"
+              className="rounded-full text-slate-400 hover:bg-rose-50 hover:text-rose-500"
             >
               <Trash2 className="h-4 w-4" />
-            </button>
+            </Button>
           </div>
         </div>
         <div className="mt-3 flex items-center justify-between gap-3">
-          <span
-            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${categoryTheme[investment.category]}`}
+          <Badge
+            variant="outline"
+            className={`h-auto rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${categoryTheme[investment.category]}`}
           >
             {categoryLabel[investment.category]}
-          </span>
+          </Badge>
           <p className="text-sm font-extrabold text-emerald-700">{yieldText}</p>
         </div>
-      </header>
+      </CardHeader>
 
-      <div className="mt-6 rounded-2xl bg-slate-50 p-4">
-        <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-          Valor investido
-        </p>
-        <p className="mt-2 text-xl font-extrabold text-slate-900">
-          {showValues ? formatCurrency(investment.amount / 100) : '••••••'}
-        </p>
-      </div>
-
-      <div className="mt-4 grid grid-cols-2 gap-3">
-        <div className="col-span-2 rounded-2xl bg-slate-50 p-4">
+      <CardContent className="px-0">
+        <div className="mt-4 rounded-2xl bg-slate-50 p-4">
           <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-            Corretora
+            Valor investido
           </p>
-          <p className="mt-2 text-sm font-semibold text-slate-900">
-            {investment.broker}
+          <p className="mt-2 text-xl font-extrabold text-slate-900">
+            {showValues ? formatCurrency(investment.amount / 100) : '••••••'}
           </p>
         </div>
 
-        <div className="rounded-2xl bg-slate-50 p-4">
-          <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-            Investido em
-          </p>
-          <p className="mt-2 text-sm font-semibold text-slate-900">
-            {formatDate(investment.investedDate)}
-          </p>
-        </div>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <div className="col-span-2 rounded-2xl bg-slate-50 p-4">
+            <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+              Corretora
+            </p>
+            <p className="mt-2 text-sm font-semibold text-slate-900">
+              {investment.broker}
+            </p>
+          </div>
 
-        <div className="rounded-2xl bg-slate-50 p-4">
-          <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-            Vencimento
-          </p>
-          <p className="mt-2 text-sm font-semibold text-slate-900">
-            {formatDate(investment.dueDate)}
-          </p>
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+              Investido em
+            </p>
+            <p className="mt-2 text-sm font-semibold text-slate-900">
+              {formatDate(investment.investedDate)}
+            </p>
+          </div>
+
+          <div className="rounded-2xl bg-slate-50 p-4">
+            <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+              Vencimento
+            </p>
+            <p className="mt-2 text-sm font-semibold text-slate-900">
+              {formatDate(investment.dueDate)}
+            </p>
+          </div>
         </div>
-      </div>
-    </article>
+      </CardContent>
+    </Card>
   );
 }
