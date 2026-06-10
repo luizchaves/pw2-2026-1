@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { useVisibility } from './visibility';
+import { useVisibility } from '@/stores/visibility';
 
 describe('useVisibility', () => {
   beforeEach(() => {

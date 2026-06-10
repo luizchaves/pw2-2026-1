@@ -234,6 +234,7 @@ Yield field accepted formats (case-insensitive):
 | Data access    | Client components call Next.js API routes instead of importing the Supabase client directly.      |
 | Client cache    | TanStack Query manages investment fetches and mutation cache updates.                             |
 | Authentication | Supabase Auth controls account registration, login, logout, and API authorization.                |
+| Test coverage  | Unit and component tests use Vitest + Testing Library under `tests/unit`; e2e tests use Playwright under `tests/e2e`. |
 
 Zod schemas in `src/schemas/` are the source of truth for runtime validation and TypeScript types.
 

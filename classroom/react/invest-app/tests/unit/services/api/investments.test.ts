@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { mockInvestments, mockInvestmentTypes } from '@/test/fixtures';
+import { mockInvestments, mockInvestmentTypes } from '@test/fixtures/investments';
 
 vi.mock('@/providers/supabase', () => ({
   supabase: {
@@ -15,7 +15,7 @@ const fetchMock = vi.fn();
 vi.stubGlobal('fetch', fetchMock);
 
 const { getInvestments, getInvestmentTypes, saveInvestment, deleteInvestment } =
-  await import('./investments');
+  await import('@/services/api/investments');
 
 describe('investments API service', () => {
   beforeEach(() => fetchMock.mockReset());

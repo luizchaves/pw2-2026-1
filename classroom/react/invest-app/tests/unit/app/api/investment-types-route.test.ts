@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { GET } from './route';
-import { mockInvestmentTypes } from '@/test/fixtures';
+import { GET } from '@/app/api/investment-types/route';
+import { mockInvestmentTypes } from '@test/fixtures/investments';
 
 vi.mock('@/services/supabase/investments', () => ({
   getInvestmentTypes: vi.fn(),

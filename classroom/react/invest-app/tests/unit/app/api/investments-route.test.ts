@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { GET, POST } from './route';
-import { mockInvestments } from '@/test/fixtures';
+import { GET, POST } from '@/app/api/investments/route';
+import { mockInvestments } from '@test/fixtures/investments';
 
 vi.mock('server-only', () => ({}));
 vi.mock('@/services/supabase/auth', () => ({

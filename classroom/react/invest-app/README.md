@@ -25,6 +25,26 @@ The Supabase schema is kept in `supabase/migrations/`, and the initial seed data
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Tests
+
+Unit and component tests are concentrated in `tests/unit` and run with Vitest + Testing Library:
+
+```bash
+npm run test:unit
+```
+
+End-to-end tests are concentrated in `tests/e2e` and run with Playwright:
+
+```bash
+npm run test:e2e
+```
+
+Run the complete suite with:
+
+```bash
+npm test
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

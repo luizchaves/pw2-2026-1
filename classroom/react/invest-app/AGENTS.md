@@ -70,6 +70,14 @@ src/
   stores/       # Zustand stores for app-wide client state
 ```
 
+```
+tests/
+  unit/       # Vitest + Testing Library unit and component tests
+  e2e/        # Playwright end-to-end tests
+  fixtures/   # Shared test fixtures
+  setup/      # Test runner setup files
+```
+
 Do not create new top-level directories under `src/` without a clear reason.
 
 ---

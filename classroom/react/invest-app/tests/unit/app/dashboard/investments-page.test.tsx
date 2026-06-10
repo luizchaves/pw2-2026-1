@@ -2,8 +2,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { Investment } from '@/schemas/investment';
-import InvestmentsPage from './page';
-import { mockInvestments, mockInvestmentTypes } from '@/test/fixtures';
+import InvestmentsPage from '@/app/(dashboard)/investments/page';
+import { mockInvestments, mockInvestmentTypes } from '@test/fixtures/investments';
 
 const useVisibilityMock = vi.fn();
 const useInvestmentsMock = vi.fn();

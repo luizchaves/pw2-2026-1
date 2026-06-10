@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { DELETE } from './route';
+import { DELETE } from '@/app/api/investments/[id]/route';
 
 vi.mock('server-only', () => ({}));
 vi.mock('@/services/supabase/auth', () => ({

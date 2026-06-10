@@ -3,7 +3,7 @@ import {
   investmentYieldSchema,
   investmentSchema,
   investmentFormSchema,
-} from './investment';
+} from '@/schemas/investment';
 
 describe('investmentYieldSchema', () => {
   it.each(['15%', 'IPCA + 5%', '110% CDI', '100% Selic'])(
@@ -40,7 +40,9 @@ describe('investmentSchema', () => {
   });
 
   it('accepts investment without yield and with null dueDate', () => {
-    const { yield: _, ...rest } = validInvestment;
+    const rest = { ...validInvestment };
+    delete rest.yield;
+
     expect(() =>
       investmentSchema.parse({ ...rest, dueDate: null }),
     ).not.toThrow();
@@ -92,7 +94,12 @@ describe('investmentFormSchema', () => {
   });
 
   it('accepts form data without optional fields', () => {
-    const { dueDate: _, yield: __, ...required } = validForm as typeof validForm & { yield?: string };
+    const required = { ...validForm } as Partial<typeof validForm> & {
+      yield?: string;
+    };
+    delete required.dueDate;
+    delete required.yield;
+
     expect(() => investmentFormSchema.parse(required)).not.toThrow();
   });
 

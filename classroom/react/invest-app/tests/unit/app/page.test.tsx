@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import type { User } from '@supabase/supabase-js';
-import LandingPage from './page';
+import LandingPage from '@/app/page';
 
 const useAuthMock = vi.fn();
 

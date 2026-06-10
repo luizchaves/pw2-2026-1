@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import DashboardPage from './page';
-import { mockInvestments, mockPortfolioTotalLabel } from '@/test/fixtures';
+import DashboardPage from '@/app/(dashboard)/dashboard/page';
+import { mockInvestments, mockPortfolioTotalLabel } from '@test/fixtures/investments';
 
 const useVisibilityMock = vi.fn();
 const useInvestmentsMock = vi.fn();
