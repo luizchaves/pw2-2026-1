@@ -1,2 +1,3 @@
 cd classroom/react/invest-app
+npm run format
 npm run lint
