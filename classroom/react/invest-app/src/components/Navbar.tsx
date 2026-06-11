@@ -6,7 +6,7 @@ import { Eye, EyeOff, LogIn, LogOut, UserCircle, UserPlus } from 'lucide-react';
 import { useVisibility } from '@/stores/visibility';
 import { useAuth } from '@/stores/auth';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -105,43 +105,51 @@ export default function Navbar() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            className={cn(
-              buttonVariants({ variant: 'ghost' }),
-              'max-w-52 rounded-full px-3 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
-            )}
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-lg"
+            onClick={handleToggleShowValues}
+            className="rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+            aria-label={showValues ? 'Ocultar valores' : 'Exibir valores'}
           >
-            <UserCircle className="h-4 w-4" />
-            {displayName && (
-              <span className="hidden truncate sm:inline">{displayName}</span>
+            {showValues ? (
+              <EyeOff className="h-5 w-5" />
+            ) : (
+              <Eye className="h-5 w-5" />
             )}
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuGroup>
-              <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
+          </Button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={cn(
+                buttonVariants({ variant: 'ghost' }),
+                'max-w-52 rounded-full px-3 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+              )}
+            >
+              <UserCircle className="h-4 w-4" />
               {displayName && (
-                <DropdownMenuLabel className="truncate text-slate-900">
-                  {displayName}
-                </DropdownMenuLabel>
+                <span className="hidden truncate sm:inline">{displayName}</span>
               )}
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleToggleShowValues}>
-              {showValues ? (
-                <EyeOff className="h-4 w-4" />
-              ) : (
-                <Eye className="h-4 w-4" />
-              )}
-              {showValues ? 'Ocultar valores' : 'Exibir valores'}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive" onClick={handleLogout}>
-              <LogOut className="h-4 w-4" />
-              Sair
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
+                {displayName && (
+                  <DropdownMenuLabel className="truncate text-slate-900">
+                    {displayName}
+                  </DropdownMenuLabel>
+                )}
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem variant="destructive" onClick={handleLogout}>
+                <LogOut className="h-4 w-4" />
+                Sair
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </nav>
     </header>
   );

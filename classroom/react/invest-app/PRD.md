@@ -72,6 +72,7 @@ Routes are organized with App Router route groups: `(auth)` for login/register a
 ### 5.4 Privacy Toggle
 
 - A global toggle (available via `Navbar`) that shows or hides all monetary values across the app.
+- The toggle is displayed next to the authenticated account dropdown for quick access.
 - State is managed through the `useVisibility` Zustand store and persists for the duration of the session.
 
 ### 5.5 Investment List

@@ -110,10 +110,7 @@ describe('Navbar — authenticated', () => {
     const user = userEvent.setup();
     render(<Navbar />);
 
-    await user.click(screen.getByRole('button', { name: /joão silva/i }));
-    await user.click(
-      await screen.findByRole('menuitem', { name: /ocultar valores/i }),
-    );
+    await user.click(screen.getByRole('button', { name: /ocultar valores/i }));
 
     expect(mockToggle).toHaveBeenCalledOnce();
   });
@@ -123,7 +120,7 @@ describe('Navbar — authenticated', () => {
     render(<Navbar />);
 
     expect(
-      screen.getByRole('button', { name: /joão silva/i }),
+      screen.getByRole('button', { name: /exibir valores/i }),
     ).toBeInTheDocument();
   });
 });
