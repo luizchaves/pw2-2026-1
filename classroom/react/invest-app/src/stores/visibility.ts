@@ -9,6 +9,5 @@ type VisibilityStore = {
 
 export const useVisibility = create<VisibilityStore>((set) => ({
   showValues: true,
-  handleToggleShowValues: () =>
-    set((state) => ({ showValues: !state.showValues })),
+  handleToggleShowValues: () => set((state) => ({ showValues: !state.showValues })),
 }));

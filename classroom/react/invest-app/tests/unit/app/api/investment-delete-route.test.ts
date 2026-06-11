@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { DELETE } from '@/app/api/investments/[id]/route';
 
 vi.mock('server-only', () => ({}));
@@ -16,7 +16,8 @@ import { deleteInvestment } from '@/services/supabase/investments';
 const mockAuth = vi.mocked(getAuthenticatedUser);
 const mockDelete = vi.mocked(deleteInvestment);
 
-const MOCK_USER = { id: '6ba7b810-9dad-11d1-80b4-00c04fd430c8' } as Awaited<ReturnType<typeof getAuthenticatedUser>>;
+const MOCK_USER_ID = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+const MOCK_USER = { id: MOCK_USER_ID } as Awaited<ReturnType<typeof getAuthenticatedUser>>;
 const VALID_ID = '550e8400-e29b-41d4-a716-446655440000';
 
 function makeContext(id: string) {
@@ -50,7 +51,7 @@ describe('DELETE /api/investments/[id]', () => {
     const response = await DELETE(makeRequest(), makeContext(VALID_ID));
 
     expect(response.status).toBe(204);
-    expect(mockDelete).toHaveBeenCalledWith(VALID_ID, MOCK_USER!.id);
+    expect(mockDelete).toHaveBeenCalledWith(VALID_ID, MOCK_USER_ID);
   });
 
   it('returns 400 for a non-UUID id', async () => {

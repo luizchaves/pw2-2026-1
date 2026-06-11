@@ -4,11 +4,7 @@ import { useEffect } from 'react';
 import { supabase } from '@/providers/supabase';
 import { useAuth } from '@/stores/auth';
 
-export function AuthSessionProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function AuthSessionProvider({ children }: { children: React.ReactNode }) {
   const setUser = useAuth((state) => state.setUser);
   const setIsLoading = useAuth((state) => state.setIsLoading);
 

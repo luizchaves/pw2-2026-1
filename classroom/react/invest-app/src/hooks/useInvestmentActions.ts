@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import type { Investment } from '@/schemas/investment';
 import { useInvestments } from '@/hooks/useInvestments';
+import type { Investment } from '@/schemas/investment';
 
 export function useInvestmentActions() {
   const { saveInvestment, deleteInvestment } = useInvestments();
@@ -29,9 +29,7 @@ export function useInvestmentActions() {
       await saveInvestment(investment);
       closeForm();
     } catch (err) {
-      setActionError(
-        err instanceof Error ? err.message : 'Não foi possível salvar o investimento',
-      );
+      setActionError(err instanceof Error ? err.message : 'Não foi possível salvar o investimento');
     }
   };
 

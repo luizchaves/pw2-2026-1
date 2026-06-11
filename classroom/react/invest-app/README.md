@@ -25,6 +25,15 @@ The Supabase schema is kept in `supabase/migrations/`, and the initial seed data
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Code Quality
+
+Biome handles linting and formatting:
+
+```bash
+npm run lint
+npm run format
+```
+
 ## Tests
 
 Unit and component tests are concentrated in `tests/unit` and run with Vitest + Testing Library:

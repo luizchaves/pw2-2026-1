@@ -4,7 +4,7 @@
 
 **Product name:** Invest App
 **Purpose:** A personal investment portfolio tracker that lets users register, visualize, and manage their financial assets in one place.
-**Tech stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, shadcn/ui with Base UI, Zod, Supabase
+**Tech stack:** Next.js (App Router), React, TypeScript, Tailwind CSS, shadcn/ui with Base UI, Zod, Supabase, Biome
 
 ---
 
@@ -238,6 +238,7 @@ Yield field accepted formats (case-insensitive):
 | Authentication | Supabase Auth controls account registration, login, logout, and API authorization.                |
 | UI system      | Shared UI primitives use shadcn/ui generated components backed by Base UI; toast notifications use Sonner. |
 | Typography     | App typography uses Geist Sans for both body and headings.                                        |
+| Code quality   | Biome handles linting and formatting through `npm run lint` and `npm run format`.                 |
 | Test coverage  | Unit and component tests use Vitest + Testing Library under `tests/unit`; e2e tests use Playwright under `tests/e2e`. |
 
 Zod schemas in `src/schemas/` are the source of truth for runtime validation and TypeScript types.

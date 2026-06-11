@@ -1,23 +1,16 @@
 'use client';
 
+import { ArrowRight, Bell, EyeOff, LockKeyhole, WalletCards } from 'lucide-react';
 import Link from 'next/link';
-import {
-  ArrowRight,
-  Bell,
-  EyeOff,
-  LockKeyhole,
-  WalletCards,
-} from 'lucide-react';
-import { useAuth } from '@/stores/auth';
-import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/stores/auth';
 
 const features = [
   {
     title: 'Carteira centralizada',
-    description:
-      'Organize ativos, corretoras, datas e valores em uma visao unica.',
+    description: 'Organize ativos, corretoras, datas e valores em uma visao unica.',
     icon: WalletCards,
   },
   {
@@ -54,8 +47,8 @@ export default function LandingPage() {
               Acompanhe sua carteira sem planilhas soltas.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
-              Cadastre seus investimentos, visualize o patrimonio e mantenha
-              datas de aporte e vencimento em um painel simples para uso diario.
+              Cadastre seus investimentos, visualize o patrimonio e mantenha datas de aporte e
+              vencimento em um painel simples para uso diario.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -87,9 +80,7 @@ export default function LandingPage() {
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-600">
                     Resumo
                   </p>
-                  <p className="mt-1 text-2xl font-black text-slate-950">
-                    R$ 184.250,00
-                  </p>
+                  <p className="mt-1 text-2xl font-black text-slate-950">R$ 184.250,00</p>
                 </div>
                 <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
                   +12 ativos
@@ -107,17 +98,11 @@ export default function LandingPage() {
                   >
                     <div>
                       <p className="text-sm font-bold text-slate-900">{name}</p>
-                      <p className="mt-1 text-xs font-medium text-emerald-700">
-                        {yieldText}
-                      </p>
+                      <p className="mt-1 text-xs font-medium text-emerald-700">{yieldText}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs uppercase tracking-[0.12em] text-slate-400">
-                        Venc.
-                      </p>
-                      <p className="mt-1 text-sm font-semibold text-slate-700">
-                        {dueDate}
-                      </p>
+                      <p className="text-xs uppercase tracking-[0.12em] text-slate-400">Venc.</p>
+                      <p className="mt-1 text-sm font-semibold text-slate-700">{dueDate}</p>
                     </div>
                   </div>
                 ))}
@@ -138,12 +123,8 @@ export default function LandingPage() {
                   className="rounded-lg border border-slate-200 bg-white p-5"
                 >
                   <Icon className="h-5 w-5 text-sky-600" />
-                  <h2 className="mt-4 text-base font-bold text-slate-950">
-                    {feature.title}
-                  </h2>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
-                    {feature.description}
-                  </p>
+                  <h2 className="mt-4 text-base font-bold text-slate-950">{feature.title}</h2>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">{feature.description}</p>
                 </Card>
               );
             })}

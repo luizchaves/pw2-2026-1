@@ -1,14 +1,14 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { queryKeys } from '@/lib/query-keys';
+import type { Investment } from '@/schemas/investment';
 import {
   deleteInvestment as deleteStoredInvestment,
   getInvestments,
   getInvestmentTypes,
   saveInvestment as saveStoredInvestment,
 } from '@/services/api/investments';
-import type { Investment } from '@/schemas/investment';
-import { queryKeys } from '@/lib/query-keys';
 import { useAuth } from '@/stores/auth';
 import { useToast } from '@/stores/toast';
 
@@ -31,14 +31,10 @@ export function useInvestments() {
   const saveMutation = useMutation({
     mutationFn: saveStoredInvestment,
     onSuccess: (storedInvestment) => {
-      queryClient.setQueryData<Investment[]>(
-        queryKeys.investments(userId),
-        (prev = []) =>
-          prev.some((i) => i.id === storedInvestment.id)
-            ? prev.map((i) =>
-                i.id === storedInvestment.id ? storedInvestment : i,
-              )
-            : [...prev, storedInvestment],
+      queryClient.setQueryData<Investment[]>(queryKeys.investments(userId), (prev = []) =>
+        prev.some((i) => i.id === storedInvestment.id)
+          ? prev.map((i) => (i.id === storedInvestment.id ? storedInvestment : i))
+          : [...prev, storedInvestment],
       );
       showToast('Investimento salvo com sucesso', 'success');
     },
@@ -47,9 +43,8 @@ export function useInvestments() {
   const deleteMutation = useMutation({
     mutationFn: deleteStoredInvestment,
     onSuccess: (_data, id) => {
-      queryClient.setQueryData<Investment[]>(
-        queryKeys.investments(userId),
-        (prev = []) => prev.filter((i) => i.id !== id),
+      queryClient.setQueryData<Investment[]>(queryKeys.investments(userId), (prev = []) =>
+        prev.filter((i) => i.id !== id),
       );
       showToast('Investimento removido com sucesso', 'success');
     },
@@ -62,8 +57,7 @@ export function useInvestments() {
     investmentTypes: investmentTypesQuery.data ?? [],
     isLoading: investmentsQuery.isLoading || investmentTypesQuery.isLoading,
     error: loadError instanceof Error ? loadError.message : null,
-    saveInvestment: (investment: Investment) =>
-      saveMutation.mutateAsync(investment),
+    saveInvestment: (investment: Investment) => saveMutation.mutateAsync(investment),
     deleteInvestment: (id: string) => deleteMutation.mutateAsync(id),
   };
 }

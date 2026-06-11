@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { mockInvestments } from '@test/fixtures/investments';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import InvestmentCard from '@/components/InvestmentCard';
-import { mockInvestments } from '@test/fixtures/investments';
 
 const fixedInvestment = mockInvestments[0]; // Fixed Income, amount 100_000, yield IPCA+5%
 const variableInvestment = mockInvestments[1]; // Variable Income, amount 50_000, no yield, no dueDate

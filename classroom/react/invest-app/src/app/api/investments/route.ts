@@ -22,10 +22,7 @@ export const POST = withErrorHandler(async (request: Request) => {
 
   const parsed = investmentSchema.safeParse(await request.json());
   if (!parsed.success) {
-    return NextResponse.json(
-      { error: parsed.error.message },
-      { status: 400 },
-    );
+    return NextResponse.json({ error: parsed.error.message }, { status: 400 });
   }
 
   const savedInvestment = await saveInvestment(parsed.data, user.id);

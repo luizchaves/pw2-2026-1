@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 type Props = {
   title: string;
@@ -26,9 +21,7 @@ export default function Modal({ title, onClose, children }: Props) {
         className="max-w-lg rounded-3xl bg-white p-8 shadow-xl sm:max-w-lg"
       >
         <DialogHeader className="mb-2">
-          <DialogTitle className="text-xl font-bold text-slate-900">
-            {title}
-          </DialogTitle>
+          <DialogTitle className="text-xl font-bold text-slate-900">{title}</DialogTitle>
         </DialogHeader>
         {children}
       </DialogContent>

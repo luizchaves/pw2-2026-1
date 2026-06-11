@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { useVisibility } from '@/stores/visibility';
+import { buttonVariants } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { useInvestments } from '@/hooks/useInvestments';
 import { formatCurrency } from '@/lib/format';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { useVisibility } from '@/stores/visibility';
 
 export default function DashboardPage() {
   const { showValues } = useVisibility();
@@ -19,15 +19,12 @@ export default function DashboardPage() {
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="grid items-center gap-10 lg:grid-cols-2">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">
-            Dashboard
-          </p>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-sky-600">Dashboard</p>
           <h1 className="mt-4 text-4xl font-black tracking-tight text-slate-900 sm:text-6xl">
             Controle seus investimentos com clareza.
           </h1>
           <p className="mt-6 max-w-xl text-base text-slate-600">
-            Acompanhe aportes, vencimentos e rendimento da sua carteira em um
-            unico lugar.
+            Acompanhe aportes, vencimentos e rendimento da sua carteira em um unico lugar.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -51,7 +48,11 @@ export default function DashboardPage() {
           </div>
         </div>
         {isLoading ? (
-          <Card role="status" aria-label="Carregando carteira" className="animate-pulse rounded-3xl border-slate-200 bg-white p-8 py-8">
+          <Card
+            role="status"
+            aria-label="Carregando carteira"
+            className="animate-pulse rounded-3xl border-slate-200 bg-white p-8 py-8"
+          >
             <div className="h-4 w-32 rounded-full bg-slate-200" />
             <div className="mt-6 space-y-4">
               <div className="h-20 rounded-2xl bg-slate-100" />
@@ -60,9 +61,7 @@ export default function DashboardPage() {
           </Card>
         ) : totalCount === 0 ? (
           <Card className="flex flex-col items-center justify-center rounded-3xl border-dashed border-slate-300 bg-slate-50 p-12 py-12 text-center">
-            <p className="text-lg font-semibold text-slate-700">
-              Nenhum investimento ainda
-            </p>
+            <p className="text-lg font-semibold text-slate-700">Nenhum investimento ainda</p>
             <p className="mt-2 text-sm text-slate-500">
               Adicione seu primeiro ativo e comece a acompanhar sua carteira.
             </p>
@@ -95,8 +94,7 @@ export default function DashboardPage() {
                   Ativos cadastrados
                 </p>
                 <p className="mt-2 text-2xl font-black text-slate-900">
-                  {totalCount}{' '}
-                  {totalCount === 1 ? 'investimento' : 'investimentos'}
+                  {totalCount} {totalCount === 1 ? 'investimento' : 'investimentos'}
                 </p>
               </div>
             </div>

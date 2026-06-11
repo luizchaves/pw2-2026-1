@@ -45,10 +45,7 @@ const toInvestment = (row: InvestmentRow): Investment => ({
   dueDate: row.dueDate,
 });
 
-const toInvestmentRow = (
-  investment: Investment,
-  userId: string,
-): InvestmentTableRow => ({
+const toInvestmentRow = (investment: Investment, userId: string): InvestmentTableRow => ({
   id: investment.id,
   user_id: userId,
   name: investment.name,
@@ -96,9 +93,7 @@ export async function saveInvestment(investment: Investment, userId: string) {
     throw new Error('Investimento não encontrado');
   }
 
-  const { error } = await supabase
-    .from('investments')
-    .upsert(toInvestmentRow(investment, userId));
+  const { error } = await supabase.from('investments').upsert(toInvestmentRow(investment, userId));
 
   if (error) throw error;
 
@@ -115,11 +110,7 @@ export async function saveInvestment(investment: Investment, userId: string) {
 }
 
 export async function deleteInvestment(id: string, userId: string) {
-  const { error } = await supabase
-    .from('investments')
-    .delete()
-    .eq('id', id)
-    .eq('user_id', userId);
+  const { error } = await supabase.from('investments').delete().eq('id', id).eq('user_id', userId);
 
   if (error) throw error;
 }

@@ -1,23 +1,20 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  investmentFormSchema,
-  toCents,
-  type Investment,
-  type InvestmentFormData,
-  type InvestmentType,
-} from '@/schemas/investment';
-import Modal from '@/components/ui/Modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import Modal from '@/components/ui/Modal';
+import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import {
-  NativeSelect,
-  NativeSelectOption,
-} from '@/components/ui/native-select';
+  type Investment,
+  type InvestmentFormData,
+  type InvestmentType,
+  investmentFormSchema,
+  toCents,
+} from '@/schemas/investment';
 
 type Props = {
   investment?: Investment;
@@ -33,8 +30,7 @@ const categoryLabels: Record<string, string> = {
 
 const todayISO = new Date().toISOString().split('T')[0];
 
-const labelClass =
-  'mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500';
+const labelClass = 'mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-500';
 const errorClass = 'mt-1 text-xs text-red-500';
 const inputClass =
   'h-10 rounded-xl border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder:text-slate-400 focus-visible:border-sky-400 focus-visible:ring-sky-200';
@@ -45,12 +41,7 @@ const formatCents = (cents: number) =>
     maximumFractionDigits: 2,
   });
 
-export default function InvestmentForm({
-  investment,
-  investmentTypes,
-  onSubmit,
-  onClose,
-}: Props) {
+export default function InvestmentForm({ investment, investmentTypes, onSubmit, onClose }: Props) {
   const defaultType = investmentTypes[0];
   const [amountDisplay, setAmountDisplay] = useState(
     investment ? formatCents(investment.amount) : '',
@@ -81,8 +72,7 @@ export default function InvestmentForm({
   });
 
   const typeId = useWatch({ control, name: 'typeId' });
-  const selectedType =
-    investmentTypes.find((t) => t.id === typeId) ?? defaultType;
+  const selectedType = investmentTypes.find((t) => t.id === typeId) ?? defaultType;
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const digits = e.target.value.replace(/\D/g, '');
@@ -113,10 +103,7 @@ export default function InvestmentForm({
   };
 
   return (
-    <Modal
-      title={investment ? 'Editar investimento' : 'Novo investimento'}
-      onClose={onClose}
-    >
+    <Modal title={investment ? 'Editar investimento' : 'Novo investimento'} onClose={onClose}>
       <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
         <div>
           <Label htmlFor="investment-name" className={labelClass}>
@@ -149,9 +136,7 @@ export default function InvestmentForm({
                 </NativeSelectOption>
               ))}
             </NativeSelect>
-            {errors.typeId && (
-              <p className={errorClass}>{errors.typeId.message}</p>
-            )}
+            {errors.typeId && <p className={errorClass}>{errors.typeId.message}</p>}
           </div>
 
           <div>
@@ -179,9 +164,7 @@ export default function InvestmentForm({
               aria-invalid={Boolean(errors.broker)}
               className={inputClass}
             />
-            {errors.broker && (
-              <p className={errorClass}>{errors.broker.message}</p>
-            )}
+            {errors.broker && <p className={errorClass}>{errors.broker.message}</p>}
           </div>
 
           <div>
@@ -197,9 +180,7 @@ export default function InvestmentForm({
               aria-invalid={Boolean(errors.amountCents)}
               className={inputClass}
             />
-            {errors.amountCents && (
-              <p className={errorClass}>{errors.amountCents.message}</p>
-            )}
+            {errors.amountCents && <p className={errorClass}>{errors.amountCents.message}</p>}
           </div>
         </div>
 
@@ -232,17 +213,12 @@ export default function InvestmentForm({
               aria-invalid={Boolean(errors.investedDate)}
               className={inputClass}
             />
-            {errors.investedDate && (
-              <p className={errorClass}>{errors.investedDate.message}</p>
-            )}
+            {errors.investedDate && <p className={errorClass}>{errors.investedDate.message}</p>}
           </div>
 
           <div>
             <Label htmlFor="investment-due-date" className={labelClass}>
-              Vencimento{' '}
-              <span className="font-normal normal-case text-slate-400">
-                (opcional)
-              </span>
+              Vencimento <span className="font-normal normal-case text-slate-400">(opcional)</span>
             </Label>
             <Input
               id="investment-due-date"

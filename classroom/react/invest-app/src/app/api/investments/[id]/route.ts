@@ -9,10 +9,7 @@ const paramsSchema = z.object({
 });
 
 export const DELETE = withErrorHandler(
-  async (
-    request: Request,
-    context: { params: Promise<{ id: string }> },
-  ) => {
+  async (request: Request, context: { params: Promise<{ id: string }> }) => {
     const user = await getAuthenticatedUser(request);
     if (!user) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });

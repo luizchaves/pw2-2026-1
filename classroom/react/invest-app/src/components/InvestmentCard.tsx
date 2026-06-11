@@ -1,9 +1,9 @@
 import { Pencil, Trash2 } from 'lucide-react';
-import type { Investment } from '@/schemas/investment';
-import { formatCurrency, formatDate } from '@/lib/format';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { formatCurrency, formatDate } from '@/lib/format';
+import type { Investment } from '@/schemas/investment';
 
 type InvestmentCardProps = {
   investment: Investment;
@@ -73,9 +73,7 @@ export default function InvestmentCard({
 
       <CardContent className="px-0">
         <div className="mt-4 rounded-2xl bg-slate-50 p-4">
-          <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-            Valor investido
-          </p>
+          <p className="text-xs uppercase tracking-[0.12em] text-slate-500">Valor investido</p>
           <p className="mt-2 text-xl font-extrabold text-slate-900">
             {showValues ? formatCurrency(investment.amount / 100) : '••••••'}
           </p>
@@ -83,27 +81,19 @@ export default function InvestmentCard({
 
         <div className="mt-4 grid grid-cols-2 gap-3">
           <div className="col-span-2 rounded-2xl bg-slate-50 p-4">
-            <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-              Corretora
-            </p>
-            <p className="mt-2 text-sm font-semibold text-slate-900">
-              {investment.broker}
-            </p>
+            <p className="text-xs uppercase tracking-[0.12em] text-slate-500">Corretora</p>
+            <p className="mt-2 text-sm font-semibold text-slate-900">{investment.broker}</p>
           </div>
 
           <div className="rounded-2xl bg-slate-50 p-4">
-            <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-              Investido em
-            </p>
+            <p className="text-xs uppercase tracking-[0.12em] text-slate-500">Investido em</p>
             <p className="mt-2 text-sm font-semibold text-slate-900">
               {formatDate(investment.investedDate)}
             </p>
           </div>
 
           <div className="rounded-2xl bg-slate-50 p-4">
-            <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
-              Vencimento
-            </p>
+            <p className="text-xs uppercase tracking-[0.12em] text-slate-500">Vencimento</p>
             <p className="mt-2 text-sm font-semibold text-slate-900">
               {formatDate(investment.dueDate)}
             </p>

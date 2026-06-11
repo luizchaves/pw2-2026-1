@@ -55,8 +55,6 @@ export const investmentFormSchema = z.object({
 
 export type Investment = z.infer<typeof investmentSchema>;
 export type InvestmentType = z.infer<typeof investmentTypeSchema>;
-export type InvestmentCategory = z.infer<
-  typeof investmentSchema.shape.category
->;
+export type InvestmentCategory = z.infer<typeof investmentSchema.shape.category>;
 export type InvestmentYield = z.infer<typeof investmentYieldSchema>;
 export type InvestmentFormData = z.infer<typeof investmentFormSchema>;

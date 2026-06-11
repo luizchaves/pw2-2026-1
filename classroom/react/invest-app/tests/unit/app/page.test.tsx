@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
 import type { User } from '@supabase/supabase-js';
+import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import LandingPage from '@/app/page';
 
 const useAuthMock = vi.fn();
@@ -29,12 +29,8 @@ describe('LandingPage', () => {
     ).toBeInTheDocument();
 
     // 4 recursos + amostra da carteira
-    expect(
-      screen.getByRole('heading', { name: 'Carteira centralizada' }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: 'Valores discretos' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Carteira centralizada' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Valores discretos' })).toBeInTheDocument();
     expect(screen.getByText('R$ 184.250,00')).toBeInTheDocument();
     expect(screen.getByText('Tesouro IPCA+ 2045')).toBeInTheDocument();
   });
@@ -44,14 +40,8 @@ describe('LandingPage', () => {
 
     render(<LandingPage />);
 
-    expect(screen.getByRole('link', { name: /Criar conta/i })).toHaveAttribute(
-      'href',
-      '/register',
-    );
-    expect(screen.getByRole('link', { name: /^Entrar$/i })).toHaveAttribute(
-      'href',
-      '/login',
-    );
+    expect(screen.getByRole('link', { name: /Criar conta/i })).toHaveAttribute('href', '/register');
+    expect(screen.getByRole('link', { name: /^Entrar$/i })).toHaveAttribute('href', '/login');
   });
 
   it('aponta os CTAs para a área logada quando autenticado', () => {
@@ -59,11 +49,13 @@ describe('LandingPage', () => {
 
     render(<LandingPage />);
 
-    expect(
-      screen.getByRole('link', { name: /Abrir dashboard/i }),
-    ).toHaveAttribute('href', '/dashboard');
-    expect(
-      screen.getByRole('link', { name: /Ver investimentos/i }),
-    ).toHaveAttribute('href', '/investments');
+    expect(screen.getByRole('link', { name: /Abrir dashboard/i })).toHaveAttribute(
+      'href',
+      '/dashboard',
+    );
+    expect(screen.getByRole('link', { name: /Ver investimentos/i })).toHaveAttribute(
+      'href',
+      '/investments',
+    );
   });
 });

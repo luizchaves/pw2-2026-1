@@ -49,7 +49,7 @@ Never skip steps 5 or 6.
 - **State:** Use Zustand for app-wide client state. Keep `useState` local when the state is not shared.
 - **Client components:** Mark a file `'use client'` only when it uses hooks or browser APIs. Prefer Server Components by default.
 - **Naming:** PascalCase for components and types; camelCase for variables, functions, and hooks; kebab-case for file names under `app/`.
-- **Formatting:** Prettier is configured. Run `npm run format` if available, otherwise ensure consistent indentation (2 spaces).
+- **Formatting:** Biome owns linting and formatting. Run `npm run lint` for checks and `npm run format` to write formatting.
 
 ---
 

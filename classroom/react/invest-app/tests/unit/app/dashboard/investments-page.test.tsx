@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { mockInvestments, mockInvestmentTypes } from '@test/fixtures/investments';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { Investment } from '@/schemas/investment';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import InvestmentsPage from '@/app/(dashboard)/investments/page';
-import { mockInvestments, mockInvestmentTypes } from '@test/fixtures/investments';
+import type { Investment } from '@/schemas/investment';
 
 const useVisibilityMock = vi.fn();
 const useInvestmentsMock = vi.fn();
@@ -31,8 +31,12 @@ vi.mock('@/components/InvestmentCard', () => ({
   }) => (
     <article>
       <h2>{investment.name}</h2>
-      <button onClick={onEdit}>editar-{investment.id}</button>
-      <button onClick={onDelete}>remover-{investment.id}</button>
+      <button type="button" onClick={onEdit}>
+        editar-{investment.id}
+      </button>
+      <button type="button" onClick={onDelete}>
+        remover-{investment.id}
+      </button>
     </article>
   ),
 }));
@@ -43,7 +47,9 @@ vi.mock('@/components/InvestmentForm', () => ({
   default: ({ onClose }: { onClose: () => void }) => (
     <div role="dialog" aria-label="formulario-investimento">
       <p>Formulário de investimento</p>
-      <button onClick={onClose}>fechar-formulario</button>
+      <button type="button" onClick={onClose}>
+        fechar-formulario
+      </button>
     </div>
   ),
 }));
@@ -80,9 +86,7 @@ describe('InvestmentsPage', () => {
 
     render(<InvestmentsPage />);
 
-    expect(
-      screen.getByText('Nenhum investimento cadastrado'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('Nenhum investimento cadastrado')).toBeInTheDocument();
   });
 
   it('mostra o erro vindo do contexto', () => {
@@ -93,9 +97,7 @@ describe('InvestmentsPage', () => {
 
     render(<InvestmentsPage />);
 
-    expect(
-      screen.getByText('Falha ao carregar investimentos'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('Falha ao carregar investimentos')).toBeInTheDocument();
   });
 
   it('lista os investimentos mockados', () => {
@@ -111,13 +113,9 @@ describe('InvestmentsPage', () => {
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
-    await user.click(
-      screen.getByRole('button', { name: 'Cadastrar investimento' }),
-    );
+    await user.click(screen.getByRole('button', { name: 'Cadastrar investimento' }));
 
-    expect(
-      screen.getByRole('dialog', { name: 'formulario-investimento' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('dialog', { name: 'formulario-investimento' })).toBeInTheDocument();
   });
 
   it('confirma a remoção e chama deleteInvestment com o id correto', async () => {
@@ -132,14 +130,10 @@ describe('InvestmentsPage', () => {
     );
 
     // Modal de confirmação real é renderizado pela página.
-    expect(
-      screen.getByRole('heading', { name: 'Remover investimento' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Remover investimento' })).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Remover' }));
 
-    await waitFor(() =>
-      expect(deleteInvestment).toHaveBeenCalledWith(mockInvestments[1].id),
-    );
+    await waitFor(() => expect(deleteInvestment).toHaveBeenCalledWith(mockInvestments[1].id));
   });
 });

@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Navbar from '@/components/Navbar';
 
 const mockReplace = vi.fn();
@@ -12,7 +12,11 @@ vi.mock('next/navigation', () => ({
 }));
 
 vi.mock('next/link', () => ({
-  default: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) => (
+  default: ({
+    href,
+    children,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) => (
     <a href={href} {...props}>
       {children}
     </a>
@@ -119,8 +123,6 @@ describe('Navbar — authenticated', () => {
     useVisibilityMock.mockReturnValue({ showValues: false, handleToggleShowValues: mockToggle });
     render(<Navbar />);
 
-    expect(
-      screen.getByRole('button', { name: /exibir valores/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /exibir valores/i })).toBeInTheDocument();
   });
 });

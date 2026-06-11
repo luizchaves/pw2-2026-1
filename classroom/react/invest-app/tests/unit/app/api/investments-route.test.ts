@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { GET, POST } from '@/app/api/investments/route';
 import { mockInvestments } from '@test/fixtures/investments';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { GET, POST } from '@/app/api/investments/route';
 
 vi.mock('server-only', () => ({}));
 vi.mock('@/services/supabase/auth', () => ({
@@ -18,12 +18,13 @@ const mockAuth = vi.mocked(getAuthenticatedUser);
 const mockGetInvestments = vi.mocked(getInvestments);
 const mockSaveInvestment = vi.mocked(saveInvestment);
 
-const MOCK_USER = { id: '6ba7b810-9dad-11d1-80b4-00c04fd430c8' } as Awaited<ReturnType<typeof getAuthenticatedUser>>;
+const MOCK_USER_ID = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
+const MOCK_USER = { id: MOCK_USER_ID } as Awaited<ReturnType<typeof getAuthenticatedUser>>;
 
 const validInvestment = {
   ...mockInvestments[0],
   id: '550e8400-e29b-41d4-a716-446655440000',
-  userId: MOCK_USER!.id,
+  userId: MOCK_USER_ID,
 };
 
 function makeRequest(body?: unknown, headers: Record<string, string> = {}) {
@@ -57,7 +58,7 @@ describe('GET /api/investments', () => {
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual(mockInvestments);
-    expect(mockGetInvestments).toHaveBeenCalledWith(MOCK_USER!.id);
+    expect(mockGetInvestments).toHaveBeenCalledWith(MOCK_USER_ID);
   });
 
   it('returns 500 when service throws', async () => {
@@ -72,7 +73,6 @@ describe('GET /api/investments', () => {
 });
 
 describe('POST /api/investments', () => {
-
   it('returns 401 when unauthenticated', async () => {
     mockAuth.mockResolvedValue(null);
 
@@ -97,7 +97,7 @@ describe('POST /api/investments', () => {
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual(validInvestment);
-    expect(mockSaveInvestment).toHaveBeenCalledWith(validInvestment, MOCK_USER!.id);
+    expect(mockSaveInvestment).toHaveBeenCalledWith(validInvestment, MOCK_USER_ID);
   });
 
   it('returns 500 when service throws', async () => {

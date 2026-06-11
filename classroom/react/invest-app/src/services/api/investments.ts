@@ -1,5 +1,5 @@
-import type { Investment, InvestmentType } from '@/schemas/investment';
 import { supabase } from '@/providers/supabase';
+import type { Investment, InvestmentType } from '@/schemas/investment';
 
 async function fetchApi<T>(input: string, init?: RequestInit): Promise<T> {
   const {
@@ -10,9 +10,7 @@ async function fetchApi<T>(input: string, init?: RequestInit): Promise<T> {
     ...init,
     headers: {
       'Content-Type': 'application/json',
-      ...(session?.access_token
-        ? { Authorization: `Bearer ${session.access_token}` }
-        : {}),
+      ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
       ...init?.headers,
     },
   });

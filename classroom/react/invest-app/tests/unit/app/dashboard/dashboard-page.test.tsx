@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import DashboardPage from '@/app/(dashboard)/dashboard/page';
 import { mockInvestments, mockPortfolioTotalLabel } from '@test/fixtures/investments';
+import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import DashboardPage from '@/app/(dashboard)/dashboard/page';
 
 const useVisibilityMock = vi.fn();
 const useInvestmentsMock = vi.fn();
@@ -35,9 +35,10 @@ describe('DashboardPage', () => {
     render(<DashboardPage />);
 
     expect(screen.getByText('Nenhum investimento ainda')).toBeInTheDocument();
-    expect(
-      screen.getByRole('link', { name: 'Cadastrar agora' }),
-    ).toHaveAttribute('href', '/investments');
+    expect(screen.getByRole('link', { name: 'Cadastrar agora' })).toHaveAttribute(
+      'href',
+      '/investments',
+    );
   });
 
   it('mostra o patrimônio total e a quantidade de ativos', () => {

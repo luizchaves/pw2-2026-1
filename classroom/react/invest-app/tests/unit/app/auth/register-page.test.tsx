@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import RegisterPage from '@/app/(auth)/register/page';
 
 const replace = vi.fn();
@@ -19,10 +19,7 @@ const fillForm = async (
   overrides: Partial<Record<'password' | 'confirmPassword', string>> = {},
 ) => {
   await user.type(screen.getByPlaceholderText('Seu nome'), 'Maria Investidora');
-  await user.type(
-    screen.getByPlaceholderText('voce@email.com'),
-    'maria@email.com',
-  );
+  await user.type(screen.getByPlaceholderText('voce@email.com'), 'maria@email.com');
   await user.type(
     screen.getByPlaceholderText('Minimo de 6 caracteres'),
     overrides.password ?? 'segredo123',
@@ -42,14 +39,10 @@ describe('RegisterPage', () => {
   it('renderiza todos os campos do cadastro', () => {
     render(<RegisterPage />);
 
-    expect(
-      screen.getByRole('heading', { level: 1, name: 'Criar conta' }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'Criar conta' })).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Seu nome')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('voce@email.com')).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText('Minimo de 6 caracteres'),
-    ).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Minimo de 6 caracteres')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Repita sua senha')).toBeInTheDocument();
   });
 
@@ -60,9 +53,7 @@ describe('RegisterPage', () => {
     await fillForm(user, { confirmPassword: 'diferente123' });
     await user.click(screen.getByRole('button', { name: /criar conta/i }));
 
-    expect(
-      await screen.findByText('As senhas não conferem'),
-    ).toBeInTheDocument();
+    expect(await screen.findByText('As senhas não conferem')).toBeInTheDocument();
     expect(register).not.toHaveBeenCalled();
   });
 
@@ -93,9 +84,7 @@ describe('RegisterPage', () => {
     await user.click(screen.getByRole('button', { name: /criar conta/i }));
 
     expect(
-      await screen.findByText(
-        'Cadastro criado. Verifique seu email para confirmar a conta.',
-      ),
+      await screen.findByText('Cadastro criado. Verifique seu email para confirmar a conta.'),
     ).toBeInTheDocument();
     expect(replace).not.toHaveBeenCalled();
   });

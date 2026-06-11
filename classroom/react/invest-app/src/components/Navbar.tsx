@@ -1,11 +1,8 @@
 'use client';
 
+import { Eye, EyeOff, LogIn, LogOut, UserCircle, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeOff, LogIn, LogOut, UserCircle, UserPlus } from 'lucide-react';
-import { useVisibility } from '@/stores/visibility';
-import { useAuth } from '@/stores/auth';
-import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -22,15 +19,16 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from '@/components/ui/navigation-menu';
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/stores/auth';
+import { useVisibility } from '@/stores/visibility';
 
 export default function Navbar() {
   const { showValues, handleToggleShowValues } = useVisibility();
   const { user, logout } = useAuth();
   const router = useRouter();
   const displayName =
-    typeof user?.user_metadata.name === 'string'
-      ? user.user_metadata.name
-      : user?.email;
+    typeof user?.user_metadata.name === 'string' ? user.user_metadata.name : user?.email;
 
   const handleLogout = async () => {
     await logout();
@@ -41,10 +39,7 @@ export default function Navbar() {
     return (
       <header className="border-b border-border bg-background/95 backdrop-blur">
         <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/"
-            className="text-lg font-semibold tracking-tight text-slate-900"
-          >
+          <Link href="/" className="text-lg font-semibold tracking-tight text-slate-900">
             Invest App
           </Link>
           <div className="flex items-center gap-2">
@@ -77,10 +72,7 @@ export default function Navbar() {
   return (
     <header className="border-b border-border bg-background/95 backdrop-blur">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="text-lg font-semibold tracking-tight text-slate-900"
-        >
+        <Link href="/" className="text-lg font-semibold tracking-tight text-slate-900">
           Invest App
         </Link>
 
@@ -114,11 +106,7 @@ export default function Navbar() {
             className="rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900"
             aria-label={showValues ? 'Ocultar valores' : 'Exibir valores'}
           >
-            {showValues ? (
-              <EyeOff className="h-5 w-5" />
-            ) : (
-              <Eye className="h-5 w-5" />
-            )}
+            {showValues ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </Button>
 
           <DropdownMenu>
@@ -129,9 +117,7 @@ export default function Navbar() {
               )}
             >
               <UserCircle className="h-4 w-4" />
-              {displayName && (
-                <span className="hidden truncate sm:inline">{displayName}</span>
-              )}
+              {displayName && <span className="hidden truncate sm:inline">{displayName}</span>}
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuGroup>
