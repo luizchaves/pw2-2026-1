@@ -53,20 +53,20 @@ export default function InvestmentCard({
   const amountText = showValues ? formatCurrency(investment.amount / 100) : '••••••••';
 
   return (
-    <Card className="rounded-2xl border-slate-200 bg-white p-5 py-5 shadow-sm transition-shadow hover:shadow-md">
+    <Card className="rounded-2xl border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
       <CardHeader className="gap-4 px-0">
-        <div className="min-w-0 space-y-2">
-          <Badge
-            variant="outline"
-            className={`h-6 rounded-md px-2.5 text-xs font-semibold ${categoryTheme[investment.category]}`}
-          >
-            {categoryLabel[investment.category]}
-          </Badge>
+        <div className="flex min-w-0 items-center justify-between gap-2">
           <CardTitle>
             <h2 className="truncate text-base font-semibold leading-snug text-slate-950 sm:text-lg">
               {investment.name}
             </h2>
           </CardTitle>
+          <Badge
+            variant="outline"
+            className={`h-6 shrink-0 rounded-md px-2.5 text-xs font-semibold ${categoryTheme[investment.category]}`}
+          >
+            {categoryLabel[investment.category]}
+          </Badge>
         </div>
       </CardHeader>
 
@@ -94,7 +94,7 @@ export default function InvestmentCard({
         </div>
       </CardContent>
 
-      <CardFooter className="mt-1 grid grid-cols-2 gap-2 border-t border-slate-200 bg-white px-0 pt-4 pb-0">
+      <CardFooter className="mt-1 grid grid-cols-2 gap-2 border-t border-slate-200 bg-white px-0 py-4">
         <Button
           type="button"
           variant="outline"
