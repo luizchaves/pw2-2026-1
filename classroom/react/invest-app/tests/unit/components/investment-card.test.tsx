@@ -66,7 +66,7 @@ describe('InvestmentCard', () => {
       />,
     );
 
-    expect(screen.getByText('••••••')).toBeInTheDocument();
+    expect(screen.getByText('••••••••')).toBeInTheDocument();
     expect(screen.queryByText(/1\.000,00/)).not.toBeInTheDocument();
   });
 
@@ -83,7 +83,7 @@ describe('InvestmentCard', () => {
     expect(screen.getByText('IPCA + 5%')).toBeInTheDocument();
   });
 
-  it('shows "Nao informado" when yield is not provided', () => {
+  it('shows "Não informado" when yield is not provided', () => {
     render(
       <InvestmentCard
         investment={variableInvestment}
@@ -93,7 +93,7 @@ describe('InvestmentCard', () => {
       />,
     );
 
-    expect(screen.getByText('Nao informado')).toBeInTheDocument();
+    expect(screen.getByText('Não informado')).toBeInTheDocument();
   });
 
   it('shows "Sem vencimento" when dueDate is null', () => {
@@ -132,10 +132,10 @@ describe('InvestmentCard', () => {
       />,
     );
 
-    expect(screen.getByText('Renda Variavel')).toBeInTheDocument();
+    expect(screen.getByText('Renda Variável')).toBeInTheDocument();
   });
 
-  it('calls onEdit when the first action button is clicked', async () => {
+  it('calls onEdit when the edit action is clicked', async () => {
     const user = userEvent.setup();
     render(
       <InvestmentCard
@@ -146,12 +146,11 @@ describe('InvestmentCard', () => {
       />,
     );
 
-    const [editBtn] = screen.getAllByRole('button');
-    await user.click(editBtn);
+    await user.click(screen.getByRole('button', { name: 'Editar investimento' }));
     expect(onEdit).toHaveBeenCalledOnce();
   });
 
-  it('calls onDelete when the second action button is clicked', async () => {
+  it('calls onDelete when the delete action is clicked', async () => {
     const user = userEvent.setup();
     render(
       <InvestmentCard
@@ -162,8 +161,7 @@ describe('InvestmentCard', () => {
       />,
     );
 
-    const [, deleteBtn] = screen.getAllByRole('button');
-    await user.click(deleteBtn);
+    await user.click(screen.getByRole('button', { name: 'Remover investimento' }));
     expect(onDelete).toHaveBeenCalledOnce();
   });
 });
