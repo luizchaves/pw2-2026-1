@@ -31,13 +31,13 @@ type DetailItemProps = {
 
 function DetailItem({ icon: Icon, label, value }: DetailItemProps) {
   return (
-    <div className="flex min-w-0 items-start gap-3 rounded-lg border border-slate-200 bg-white px-3 py-3">
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-500">
-        <Icon className="size-4" />
+    <div className="flex min-w-0 items-center gap-2.5 rounded-lg border border-slate-200 bg-white px-2.5 py-2">
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-500">
+        <Icon className="size-3.5" />
       </span>
       <div className="min-w-0">
         <p className="text-xs font-medium text-slate-500">{label}</p>
-        <p className="mt-0.5 truncate text-sm font-semibold text-slate-900">{value}</p>
+        <p className="truncate text-sm font-semibold text-slate-900">{value}</p>
       </div>
     </div>
   );
@@ -53,8 +53,8 @@ export default function InvestmentCard({
   const amountText = showValues ? formatCurrency(investment.amount / 100) : '••••••••';
 
   return (
-    <Card className="rounded-2xl border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
-      <CardHeader className="gap-4 px-0">
+    <Card className="rounded-2xl border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
+      <CardHeader className="gap-3 px-0">
         <div className="flex min-w-0 items-center justify-between gap-2">
           <CardTitle>
             <h2 className="truncate text-base font-semibold leading-snug text-slate-950 sm:text-lg">
@@ -70,16 +70,16 @@ export default function InvestmentCard({
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4 px-0">
-        <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+      <CardContent className="space-y-3 px-0">
+        <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5">
           <p className="text-xs font-medium text-slate-500">Valor investido</p>
-          <p className="mt-1 text-2xl font-bold leading-tight text-slate-950">{amountText}</p>
+          <p className="mt-0.5 text-xl font-bold leading-tight text-slate-950">{amountText}</p>
         </div>
 
-        <div className="grid gap-3">
+        <div className="grid gap-2">
           <DetailItem icon={TrendingUp} label="Rentabilidade" value={yieldText} />
           <DetailItem icon={Landmark} label="Corretora" value={investment.broker} />
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-2 sm:grid-cols-2">
             <DetailItem
               icon={CalendarDays}
               label="Aporte"
@@ -94,7 +94,7 @@ export default function InvestmentCard({
         </div>
       </CardContent>
 
-      <CardFooter className="mt-1 grid grid-cols-2 gap-2 border-t border-slate-200 bg-white px-0 py-4">
+      <CardFooter className="mt-1 grid grid-cols-2 gap-2 border-t border-slate-200 bg-white px-0 py-3">
         <Button
           type="button"
           variant="outline"
