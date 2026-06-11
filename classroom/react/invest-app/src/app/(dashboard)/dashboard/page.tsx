@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useVisibility } from '@/stores/visibility';
 import { useInvestments } from '@/hooks/useInvestments';
 import { formatCurrency } from '@/lib/format';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 export default function DashboardPage() {
@@ -29,19 +30,24 @@ export default function DashboardPage() {
             unico lugar.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button
-              className="h-11 rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-sky-500"
-              render={<Link href="/investments" />}
+            <Link
+              href="/investments"
+              className={cn(
+                buttonVariants(),
+                'h-11 rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-sky-500',
+              )}
             >
               Ver investimentos
-            </Button>
-            <Button
-              variant="outline"
-              className="h-11 rounded-full border-slate-300 bg-white px-6 text-sm font-semibold text-slate-700 hover:border-slate-400"
-              render={<Link href="/investments" />}
+            </Link>
+            <Link
+              href="/investments"
+              className={cn(
+                buttonVariants({ variant: 'outline' }),
+                'h-11 rounded-full border-slate-300 bg-white px-6 text-sm font-semibold text-slate-700 hover:border-slate-400',
+              )}
             >
               Cadastrar ativo
-            </Button>
+            </Link>
           </div>
         </div>
         {isLoading ? (
@@ -60,12 +66,15 @@ export default function DashboardPage() {
             <p className="mt-2 text-sm text-slate-500">
               Adicione seu primeiro ativo e comece a acompanhar sua carteira.
             </p>
-            <Button
-              className="mt-6 h-11 rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-sky-500"
-              render={<Link href="/investments" />}
+            <Link
+              href="/investments"
+              className={cn(
+                buttonVariants(),
+                'mt-6 h-11 rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-sky-500',
+              )}
             >
               Cadastrar agora
-            </Button>
+            </Link>
           </Card>
         ) : (
           <Card className="rounded-3xl border-slate-200 bg-white p-8 py-8 shadow-sm">

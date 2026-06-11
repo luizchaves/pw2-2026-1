@@ -6,7 +6,7 @@ import { Eye, EyeOff, LogIn, LogOut, UserCircle, UserPlus } from 'lucide-react';
 import { useVisibility } from '@/stores/visibility';
 import { useAuth } from '@/stores/auth';
 import { cn } from '@/lib/utils';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,21 +48,26 @@ export default function Navbar() {
             Invest App
           </Link>
           <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              className="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-              render={<Link href="/login" />}
+            <Link
+              href="/login"
+              className={cn(
+                buttonVariants({ variant: 'ghost' }),
+                'rounded-full px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+              )}
             >
               <LogIn className="h-4 w-4" />
               Entrar
-            </Button>
-            <Button
-              className="rounded-full bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500"
-              render={<Link href="/register" />}
+            </Link>
+            <Link
+              href="/register"
+              className={cn(
+                buttonVariants(),
+                'rounded-full bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500',
+              )}
             >
               <UserPlus className="h-4 w-4" />
               Cadastrar
-            </Button>
+            </Link>
           </div>
         </nav>
       </header>

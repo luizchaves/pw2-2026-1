@@ -9,7 +9,8 @@ import {
   WalletCards,
 } from 'lucide-react';
 import { useAuth } from '@/stores/auth';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 const features = [
@@ -57,20 +58,25 @@ export default function LandingPage() {
               datas de aporte e vencimento em um painel simples para uso diario.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button
-                className="h-11 rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-sky-500"
-                render={<Link href={primaryHref} />}
+              <Link
+                href={primaryHref}
+                className={cn(
+                  buttonVariants(),
+                  'h-11 rounded-full bg-sky-600 px-6 text-sm font-semibold text-white shadow-sm hover:bg-sky-500',
+                )}
               >
                 {user ? 'Abrir dashboard' : 'Criar conta'}
                 <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                className="h-11 rounded-full border-slate-300 bg-white px-6 text-sm font-semibold text-slate-700 hover:border-slate-400"
-                render={<Link href={secondaryHref} />}
+              </Link>
+              <Link
+                href={secondaryHref}
+                className={cn(
+                  buttonVariants({ variant: 'outline' }),
+                  'h-11 rounded-full border-slate-300 bg-white px-6 text-sm font-semibold text-slate-700 hover:border-slate-400',
+                )}
               >
                 {user ? 'Ver investimentos' : 'Entrar'}
-              </Button>
+              </Link>
             </div>
           </div>
 
