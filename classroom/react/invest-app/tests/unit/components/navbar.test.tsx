@@ -99,7 +99,8 @@ describe('Navbar — authenticated', () => {
     mockLogout.mockResolvedValue(undefined);
     render(<Navbar />);
 
-    await user.click(screen.getByRole('button', { name: /sair/i }));
+    await user.click(screen.getByRole('button', { name: /joão silva/i }));
+    await user.click(await screen.findByRole('menuitem', { name: /sair/i }));
 
     expect(mockLogout).toHaveBeenCalledOnce();
     expect(mockReplace).toHaveBeenCalledWith('/login');
@@ -109,7 +110,10 @@ describe('Navbar — authenticated', () => {
     const user = userEvent.setup();
     render(<Navbar />);
 
-    await user.click(screen.getByRole('button', { name: /ocultar valores/i }));
+    await user.click(screen.getByRole('button', { name: /joão silva/i }));
+    await user.click(
+      await screen.findByRole('menuitem', { name: /ocultar valores/i }),
+    );
 
     expect(mockToggle).toHaveBeenCalledOnce();
   });
@@ -118,6 +122,8 @@ describe('Navbar — authenticated', () => {
     useVisibilityMock.mockReturnValue({ showValues: false, handleToggleShowValues: mockToggle });
     render(<Navbar />);
 
-    expect(screen.getByRole('button', { name: /exibir valores/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /joão silva/i }),
+    ).toBeInTheDocument();
   });
 });

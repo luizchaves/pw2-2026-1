@@ -39,6 +39,7 @@
 
 Navigation is handled by a persistent `Navbar` component.
 Anonymous users see Login and Register actions in the navbar.
+Authenticated users see product links through a shadcn `NavigationMenu` and account actions through a shadcn `DropdownMenu`.
 `/dashboard` and `/investments` are only accessible after login.
 Routes are organized with App Router route groups: `(auth)` for login/register and `(dashboard)` for authenticated product pages.
 
