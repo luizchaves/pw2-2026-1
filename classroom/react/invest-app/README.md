@@ -34,6 +34,8 @@ npm run lint
 npm run format
 ```
 
+Husky runs `npm run lint` before commits and `npm test` before pushes. Hooks are installed by the `prepare` script after `npm install`.
+
 ## Tests
 
 Unit and component tests are concentrated in `tests/unit` and run with Vitest + Testing Library:

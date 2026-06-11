@@ -1,0 +1,2 @@
+cd classroom/react/invest-app
+npm test
