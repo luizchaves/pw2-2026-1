@@ -1,2 +1,2 @@
 cd classroom/react/invest-app
-npx lint-staged
+pnpm exec lint-staged

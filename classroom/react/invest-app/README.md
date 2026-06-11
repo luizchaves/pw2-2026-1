@@ -5,13 +5,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Create `.env.local` from `.env.example` and set the Supabase publishable key:
@@ -30,24 +24,24 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 Biome handles linting and formatting:
 
 ```bash
-npm run lint
-npm run format
+pnpm lint
+pnpm format
 ```
 
-Husky runs `lint-staged` before commits so Biome formats and checks staged files, and `npm test` before pushes. Hooks are installed by the `prepare` script after `npm install`.
+Husky runs `lint-staged` before commits so Biome formats and checks staged files, and `pnpm test` before pushes. Hooks are installed by the `prepare` script after `pnpm install`.
 
 ## Tests
 
 Unit and component tests are concentrated in `tests/unit` and run with Vitest + Testing Library:
 
 ```bash
-npm run test:unit
+pnpm test:unit
 ```
 
 End-to-end tests are concentrated in `tests/e2e` and run with Playwright:
 
 ```bash
-npm run test:e2e
+pnpm test:e2e
 ```
 
 Run the complete suite with:

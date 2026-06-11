@@ -23,7 +23,7 @@ Follow these steps for every task:
 1. **Read** — Read `PRD.md` and all files you will touch before writing any code.
 2. **Plan** — Identify the minimal set of changes needed. Do not add unrequested features.
 3. **Implement** — Make the changes. Follow the conventions in the codebase (see below).
-4. **Validate** — Run `npm run build` (or `npm run lint`) and confirm there are no errors.
+4. **Validate** — Run `pnpm build` (or `pnpm lint`) and confirm there are no errors.
 5. **Update PRD** — Reflect the new or changed feature in `PRD.md` (data model, feature list, out-of-scope section, etc.).
 6. **Commit** — Stage all changed files and commit with a short, imperative message describing what was done (e.g. `feat: add due-date filter to investments page`).
 
@@ -49,7 +49,7 @@ Never skip steps 5 or 6.
 - **State:** Use Zustand for app-wide client state. Keep `useState` local when the state is not shared.
 - **Client components:** Mark a file `'use client'` only when it uses hooks or browser APIs. Prefer Server Components by default.
 - **Naming:** PascalCase for components and types; camelCase for variables, functions, and hooks; kebab-case for file names under `app/`.
-- **Formatting:** Biome owns linting and formatting. Run `npm run lint` for checks and `npm run format` to write formatting.
+- **Formatting:** Biome owns linting and formatting. Run `pnpm lint` for checks and `pnpm format` to write formatting.
 
 ---
 
