@@ -10,7 +10,16 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## Project
 
-This is **Invest App** — a personal investment portfolio tracker built with Next.js (App Router), React, TypeScript, Tailwind CSS, and Zod.
+This is **Invest App** — a personal investment portfolio tracker built with:
+
+- **Next.js** (App Router) + **React 19** + **TypeScript**
+- **Tailwind CSS** for styling; **shadcn/ui** (Base UI primitives) for UI components
+- **Zod** for schema validation; **React Hook Form** + `@hookform/resolvers` for forms
+- **Zustand** for app-wide client state; **TanStack Query** for server state and mutation cache
+- **Supabase** for authentication and data persistence
+- **Sonner** for toast notifications
+- **Biome** for linting and formatting; **Husky** + **lint-staged** for git hooks
+- **pnpm** as the package manager
 
 Read `PRD.md` before making any changes. It is the source of truth for features, data models, and scope.
 
@@ -46,7 +55,10 @@ Never skip steps 5 or 6.
 - **Styling:** Tailwind CSS utility classes only — no inline styles, no CSS modules.
 - **UI primitives:** Prefer existing shadcn/ui components in `src/components/ui/`; they are generated with Base UI primitives.
 - **Validation:** Use Zod for all schema definitions. Infer TypeScript types from schemas (`z.infer<typeof schema>`).
-- **State:** Use Zustand for app-wide client state. Keep `useState` local when the state is not shared.
+- **State:** Use Zustand for app-wide client state (`src/stores/`); use TanStack Query for server state and mutations (`src/hooks/`). Keep `useState` local when the state is not shared.
+- **Forms:** Use React Hook Form with `@hookform/resolvers/zod` and a Zod schema. Never build controlled forms with raw `useState`.
+- **Data access:** Client components must call Next.js API routes (`/api/…`) — never import the Supabase client directly from a client component.
+- **Toasts:** Use Sonner (`sonner`) for user-facing success and error notifications.
 - **Client components:** Mark a file `'use client'` only when it uses hooks or browser APIs. Prefer Server Components by default.
 - **Naming:** PascalCase for components and types; camelCase for variables, functions, and hooks; kebab-case for file names under `app/`.
 - **Formatting:** Biome owns linting and formatting. Run `pnpm lint` for checks and `pnpm format` to write formatting.
