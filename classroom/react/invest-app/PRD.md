@@ -238,7 +238,7 @@ Yield field accepted formats (case-insensitive):
 | Authentication | Supabase Auth controls account registration, login, logout, and API authorization.                |
 | UI system      | Shared UI primitives use shadcn/ui generated components backed by Base UI; toast notifications use Sonner. |
 | Typography     | App typography uses Geist Sans for both body and headings.                                        |
-| Code quality   | Biome handles linting and formatting through `npm run lint` and `npm run format`; Husky runs formatting and linting on pre-commit and tests on pre-push. |
+| Code quality   | Biome handles linting and formatting through `npm run lint` and `npm run format`; Husky runs lint-staged with Biome on pre-commit and tests on pre-push. |
 | Test coverage  | Unit and component tests use Vitest + Testing Library under `tests/unit`; e2e tests use Playwright under `tests/e2e`. |
 
 Zod schemas in `src/schemas/` are the source of truth for runtime validation and TypeScript types.

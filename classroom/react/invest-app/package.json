@@ -15,6 +15,9 @@
     "test:e2e": "playwright test",
     "prepare": "cd ../../.. && node classroom/react/invest-app/node_modules/husky/bin.js classroom/react/invest-app/.husky"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,json,jsonc,css}": "biome check --write --no-errors-on-unmatched"
+  },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
     "@hookform/resolvers": "^5.4.0",
@@ -48,6 +51,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
+    "lint-staged": "^17.0.7",
     "shadcn": "^4.11.0",
     "tailwindcss": "^4",
     "typescript": "^5",

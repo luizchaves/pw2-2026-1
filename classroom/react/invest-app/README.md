@@ -34,7 +34,7 @@ npm run lint
 npm run format
 ```
 
-Husky runs `npm run format` and `npm run lint` before commits, and `npm test` before pushes. Hooks are installed by the `prepare` script after `npm install`.
+Husky runs `lint-staged` before commits so Biome formats and checks staged files, and `npm test` before pushes. Hooks are installed by the `prepare` script after `npm install`.
 
 ## Tests
 
