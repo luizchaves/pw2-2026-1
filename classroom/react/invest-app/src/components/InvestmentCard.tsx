@@ -74,14 +74,10 @@ export default function InvestmentCard({
         <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
           <p className="text-xs font-medium text-slate-500">Valor investido</p>
           <p className="mt-1 text-2xl font-bold leading-tight text-slate-950">{amountText}</p>
-          <div className="mt-4 flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-emerald-700 ring-1 ring-emerald-100">
-            <TrendingUp className="size-4 shrink-0" />
-            <span className="text-xs font-medium text-slate-500">Rentabilidade</span>
-            <span className="ml-auto text-sm font-semibold">{yieldText}</span>
-          </div>
         </div>
 
         <div className="grid gap-3">
+          <DetailItem icon={TrendingUp} label="Rentabilidade" value={yieldText} />
           <DetailItem icon={Landmark} label="Corretora" value={investment.broker} />
           <div className="grid gap-3 sm:grid-cols-2">
             <DetailItem
