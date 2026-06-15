@@ -40,8 +40,9 @@
 Navigation is handled by a persistent `Navbar` component.
 Anonymous users see Login and Register actions in the navbar.
 Authenticated users see product links through a shadcn `NavigationMenu` and account actions through a shadcn `DropdownMenu`.
-`/dashboard` and `/investments` are only accessible after login.
+`/dashboard` and `/investments` are only accessible after login through client-side route guards in `AppShell`.
 Routes are organized with App Router route groups: `(auth)` for login/register and `(dashboard)` for authenticated product pages.
+The route guard is intentionally client-side for the didactic scope of this project; API routes still enforce data authorization with a valid Supabase bearer token.
 
 ---
 
@@ -52,7 +53,8 @@ Routes are organized with App Router route groups: `(auth)` for login/register a
 - Users can create an account with name, email, password, and password confirmation.
 - Users can sign in with email and password through Supabase Auth.
 - If Supabase requires email confirmation, registration shows a confirmation message before login.
-- Authenticated pages redirect anonymous users to `/login`.
+- Authenticated pages redirect anonymous users to `/login` through `AppShell`.
+- Route protection is client-side in the current version; middleware or server-side protection is a recommended hardening step for production-oriented discussions.
 - Logged-in users can sign out from the navbar.
 - Investment API calls send the current Supabase access token.
 

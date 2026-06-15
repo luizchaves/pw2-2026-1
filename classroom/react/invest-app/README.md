@@ -14,7 +14,8 @@ Este projeto faz parte dos exemplos da disciplina **Programacao para Web 2**.
 - Cadastro, edicao e remocao de investimentos.
 - Lista de investimentos com tipo, categoria, corretora, rendimento, valor aplicado e datas.
 - Alternancia global para mostrar ou ocultar valores monetarios.
-- API Routes do Next.js protegidas por token do Supabase.
+- Navegacao autenticada protegida no cliente pelo `AppShell`.
+- API Routes do Next.js autorizadas por token do Supabase.
 
 ## Stack
 
@@ -69,6 +70,11 @@ Rotas principais:
 | `/register` | Cadastro |
 | `/dashboard` | Resumo autenticado da carteira |
 | `/investments` | Lista e formulario de investimentos |
+
+As rotas autenticadas sao redirecionadas no cliente pelo `AppShell`, o que atende a proposta
+didatica do projeto. A protecao efetiva dos dados fica nas API Routes, que exigem um token valido
+do Supabase. Em um cenario de producao mais rigoroso, essa verificacao de acesso tambem deveria ser
+avaliada em middleware ou componentes/rotas server-side.
 
 ## Scripts
 
