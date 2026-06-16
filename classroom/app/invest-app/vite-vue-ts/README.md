@@ -1,4 +1,4 @@
-# Invest App Vue
+# Invest App Vite Vue TS
 
 Versao Vue 3 do Invest App, recriada a partir do projeto Next.js em `classroom/app/invest-app/nextjs`.
 

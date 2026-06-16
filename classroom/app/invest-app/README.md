@@ -75,7 +75,7 @@ O projeto Next.js tem recursos que nao existem do mesmo jeito nas outras versoes
 
 ### Vue.js
 
-Local: `vuejs/`
+Local: `vite-vue-ts/`
 
 **Stack**
 
@@ -185,7 +185,7 @@ Cada implementacao possui seus proprios scripts. Entre no diretorio da stack des
 Exemplo:
 
 ```bash
-cd classroom/app/invest-app/vuejs
+cd classroom/app/invest-app/vite-vue-ts
 pnpm install
 pnpm dev
 ```

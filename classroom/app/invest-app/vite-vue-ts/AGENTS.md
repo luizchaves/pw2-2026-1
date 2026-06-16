@@ -1,4 +1,4 @@
-# Invest App Vue Agent Guide
+# Invest App Vite Vue TS Agent Guide
 
 Read `PRD.md` before changing behavior. Keep this project aligned with `../nextjs` for product scope while preserving Vue conventions.
 

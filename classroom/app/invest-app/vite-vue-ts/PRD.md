@@ -1,8 +1,8 @@
-# Product Requirements Document — Invest App Vue
+# Product Requirements Document — Invest App Vite Vue TS
 
 ## Overview
 
-Invest App Vue e uma recriacao em Vue.js do app React/Next original para controle pessoal de investimentos.
+Invest App Vite Vue TS e uma recriacao em Vue.js do app React/Next original para controle pessoal de investimentos.
 
 ## Stack
 
