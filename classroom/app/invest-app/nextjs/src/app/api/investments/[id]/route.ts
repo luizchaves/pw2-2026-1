@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { withErrorHandler } from '@/lib/api-handler';
-import { getAuthenticatedUser } from '@/services/supabase/auth';
+import { getAuthenticatedUser, getBearerToken } from '@/services/supabase/auth';
 import { deleteInvestment } from '@/services/supabase/investments';
 
 const paramsSchema = z.object({
@@ -10,8 +10,9 @@ const paramsSchema = z.object({
 
 export const DELETE = withErrorHandler(
   async (request: Request, context: { params: Promise<{ id: string }> }) => {
+    const accessToken = getBearerToken(request);
     const user = await getAuthenticatedUser(request);
-    if (!user) {
+    if (!user || !accessToken) {
       return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
     }
 
@@ -20,7 +21,7 @@ export const DELETE = withErrorHandler(
       return NextResponse.json({ error: parsed.error.message }, { status: 400 });
     }
 
-    await deleteInvestment(parsed.data.id, user.id);
+    await deleteInvestment(parsed.data.id, user.id, accessToken);
 
     return new NextResponse(null, { status: 204 });
   },

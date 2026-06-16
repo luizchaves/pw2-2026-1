@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { supabase } from '@/providers/supabase';
+import { createSupabaseServerClient, supabase } from '@/providers/supabase';
 import type { Investment, InvestmentType } from '@/schemas/investment';
 import { toCents } from '@/schemas/investment';
 
@@ -68,8 +68,10 @@ export async function getInvestmentTypes() {
   return data satisfies InvestmentType[];
 }
 
-export async function getInvestments(userId: string) {
-  const { data, error } = await supabase
+export async function getInvestments(userId: string, accessToken: string) {
+  const client = createSupabaseServerClient(accessToken);
+
+  const { data, error } = await client
     .from('investments_with_types')
     .select(investmentSelect)
     .eq('userId', userId)
@@ -80,8 +82,10 @@ export async function getInvestments(userId: string) {
   return data.map((row) => toInvestment(row as InvestmentRow));
 }
 
-export async function saveInvestment(investment: Investment, userId: string) {
-  const { data: existingInvestment, error: ownershipError } = await supabase
+export async function saveInvestment(investment: Investment, userId: string, accessToken: string) {
+  const client = createSupabaseServerClient(accessToken);
+
+  const { data: existingInvestment, error: ownershipError } = await client
     .from('investments')
     .select('user_id')
     .eq('id', investment.id)
@@ -93,11 +97,11 @@ export async function saveInvestment(investment: Investment, userId: string) {
     throw new Error('Investimento não encontrado');
   }
 
-  const { error } = await supabase.from('investments').upsert(toInvestmentRow(investment, userId));
+  const { error } = await client.from('investments').upsert(toInvestmentRow(investment, userId));
 
   if (error) throw error;
 
-  const { data, error: selectError } = await supabase
+  const { data, error: selectError } = await client
     .from('investments_with_types')
     .select(investmentSelect)
     .eq('id', investment.id)
@@ -109,8 +113,10 @@ export async function saveInvestment(investment: Investment, userId: string) {
   return toInvestment(data as InvestmentRow);
 }
 
-export async function deleteInvestment(id: string, userId: string) {
-  const { error } = await supabase.from('investments').delete().eq('id', id).eq('user_id', userId);
+export async function deleteInvestment(id: string, userId: string, accessToken: string) {
+  const client = createSupabaseServerClient(accessToken);
+
+  const { error } = await client.from('investments').delete().eq('id', id).eq('user_id', userId);
 
   if (error) throw error;
 }

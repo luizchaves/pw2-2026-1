@@ -5,21 +5,24 @@ import { GET, POST } from '@/app/api/investments/route';
 vi.mock('server-only', () => ({}));
 vi.mock('@/services/supabase/auth', () => ({
   getAuthenticatedUser: vi.fn(),
+  getBearerToken: vi.fn(),
 }));
 vi.mock('@/services/supabase/investments', () => ({
   getInvestments: vi.fn(),
   saveInvestment: vi.fn(),
 }));
 
-import { getAuthenticatedUser } from '@/services/supabase/auth';
+import { getAuthenticatedUser, getBearerToken } from '@/services/supabase/auth';
 import { getInvestments, saveInvestment } from '@/services/supabase/investments';
 
 const mockAuth = vi.mocked(getAuthenticatedUser);
+const mockGetBearerToken = vi.mocked(getBearerToken);
 const mockGetInvestments = vi.mocked(getInvestments);
 const mockSaveInvestment = vi.mocked(saveInvestment);
 
 const MOCK_USER_ID = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';
 const MOCK_USER = { id: MOCK_USER_ID } as Awaited<ReturnType<typeof getAuthenticatedUser>>;
+const MOCK_ACCESS_TOKEN = 'test-token';
 
 const validInvestment = {
   ...mockInvestments[0],
@@ -37,8 +40,10 @@ function makeRequest(body?: unknown, headers: Record<string, string> = {}) {
 
 beforeEach(() => {
   mockAuth.mockReset();
+  mockGetBearerToken.mockReset();
   mockGetInvestments.mockReset();
   mockSaveInvestment.mockReset();
+  mockGetBearerToken.mockReturnValue(MOCK_ACCESS_TOKEN);
 });
 
 describe('GET /api/investments', () => {
@@ -58,7 +63,7 @@ describe('GET /api/investments', () => {
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual(mockInvestments);
-    expect(mockGetInvestments).toHaveBeenCalledWith(MOCK_USER_ID);
+    expect(mockGetInvestments).toHaveBeenCalledWith(MOCK_USER_ID, MOCK_ACCESS_TOKEN);
   });
 
   it('returns 500 when service throws', async () => {
@@ -97,7 +102,11 @@ describe('POST /api/investments', () => {
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual(validInvestment);
-    expect(mockSaveInvestment).toHaveBeenCalledWith(validInvestment, MOCK_USER_ID);
+    expect(mockSaveInvestment).toHaveBeenCalledWith(
+      validInvestment,
+      MOCK_USER_ID,
+      MOCK_ACCESS_TOKEN,
+    );
   });
 
   it('returns 500 when service throws', async () => {

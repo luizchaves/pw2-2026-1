@@ -2,9 +2,12 @@ import 'server-only';
 
 import { supabase } from '@/providers/supabase';
 
+export function getBearerToken(request: Request) {
+  return request.headers.get('authorization')?.replace(/^Bearer\s+/i, '') ?? null;
+}
+
 export async function getAuthenticatedUser(request: Request) {
-  const authorization = request.headers.get('authorization');
-  const token = authorization?.replace(/^Bearer\s+/i, '');
+  const token = getBearerToken(request);
 
   if (!token) {
     return null;

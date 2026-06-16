@@ -167,6 +167,7 @@ Opened in a `Modal`. Fields:
 | `public.investments_with_types` | View used by the app to read investments with category and owner data. |
 
 The database schema is versioned in `supabase/migrations/`, and the initial seed data is stored in `supabase/seed.sql`.
+Row-Level Security is enabled for Supabase tables: investment types are read-only public reference data, and investments can only be selected, inserted, updated, or deleted by the authenticated owner (`auth.uid() = user_id`).
 
 ### Supported investment types
 
@@ -236,6 +237,7 @@ Yield field accepted formats (case-insensitive):
 | Type safety    | End-to-end TypeScript with Zod-inferred types.                                                   |
 | Performance    | Next.js App Router; only client components that require interactivity are marked `'use client'`. |
 | Data access    | Client components call Next.js API routes instead of importing the Supabase client directly.      |
+| Database security | Supabase Row-Level Security enforces authenticated ownership for portfolio data.                |
 | Client cache    | TanStack Query manages investment fetches and mutation cache updates.                             |
 | Authentication | Supabase Auth controls account registration, login, logout, and API authorization.                |
 | UI system      | Shared UI primitives use shadcn/ui generated components backed by Base UI; toast notifications use Sonner. |
