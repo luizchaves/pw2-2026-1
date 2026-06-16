@@ -31,6 +31,7 @@ Vue 3, Vite, TypeScript, Vue Router, Pinia, TanStack Vue Query, Zod, Supabase, T
 ## Data Model
 
 Os modelos `Investment`, `InvestmentType` e validacoes de rendimento seguem a versao React, com valores monetarios armazenados em centavos.
+RLS esta habilitado nas tabelas Supabase: tipos de investimento sao dados de referencia legiveis publicamente, e investimentos so podem ser selecionados, inseridos, atualizados ou removidos pelo usuario autenticado dono do registro (`auth.uid() = user_id`).
 
 ## Boundaries
 

@@ -38,6 +38,7 @@ Os modelos seguem a versao React/Next:
 | `Investment` | `id`, `userId`, `name`, `typeId`, `broker`, `amount`, `yield`, `category`, `investedDate`, `dueDate` |
 
 Valores monetarios sao armazenados em centavos. Rendimentos aceitam formatos como `15%`, `IPCA + 5%`, `110% CDI` e `100% Selic`.
+RLS esta habilitado nas tabelas Supabase: tipos de investimento sao dados de referencia legiveis publicamente, e investimentos so podem ser selecionados, inseridos, atualizados ou removidos pelo usuario autenticado dono do registro (`auth.uid() = user_id`).
 
 ## Boundaries
 
