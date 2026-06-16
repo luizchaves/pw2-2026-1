@@ -1,0 +1,2 @@
+cd angular/invest-app
+pnpm test

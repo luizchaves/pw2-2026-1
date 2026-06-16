@@ -1,0 +1,46 @@
+{
+  "name": "invest-app",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "test": "pnpm run test:unit && pnpm run test:e2e",
+    "test:unit": "ng test --watch=false",
+    "test:e2e": "playwright test",
+    "prepare": "cd ../.. && node angular/invest-app/node_modules/husky/bin.js angular/invest-app/.husky"
+  },
+  "private": true,
+  "packageManager": "pnpm@10.32.1",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,json,jsonc,css,html}": "biome check --write --no-errors-on-unmatched"
+  },
+  "dependencies": {
+    "@angular/common": "^22.0.0",
+    "@angular/compiler": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "@angular/router": "^22.0.0",
+    "@lucide/angular": "^1.18.0",
+    "@supabase/supabase-js": "^2.108.2",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.0.1",
+    "@angular/cli": "^22.0.1",
+    "@angular/compiler-cli": "^22.0.0",
+    "@biomejs/biome": "^2.5.0",
+    "@playwright/test": "^1.61.0",
+    "husky": "^9.1.7",
+    "jsdom": "^28.0.0",
+    "lint-staged": "^17.0.7",
+    "prettier": "^3.8.1",
+    "typescript": "~6.0.2",
+    "vitest": "^4.0.8"
+  }
+}
