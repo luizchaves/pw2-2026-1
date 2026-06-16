@@ -1,6 +1,6 @@
 # Invest App Vue
 
-Versao Vue 3 do Invest App, recriada a partir do projeto React em `classroom/react/invest-app`.
+Versao Vue 3 do Invest App, recriada a partir do projeto Next.js em `classroom/app/invest-app/nextjs`.
 
 ## Stack
 

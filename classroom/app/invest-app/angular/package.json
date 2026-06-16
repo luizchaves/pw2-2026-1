@@ -11,7 +11,7 @@
     "test": "pnpm run test:unit && pnpm run test:e2e",
     "test:unit": "ng test --watch=false",
     "test:e2e": "playwright test",
-    "prepare": "cd ../.. && node angular/invest-app/node_modules/husky/bin.js angular/invest-app/.husky"
+    "prepare": "cd ../../../.. && node classroom/app/invest-app/angular/node_modules/husky/bin.js classroom/app/invest-app/angular/.husky"
   },
   "private": true,
   "packageManager": "pnpm@10.32.1",

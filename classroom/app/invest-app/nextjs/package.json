@@ -14,7 +14,7 @@
     "test:watch": "vitest",
     "pretest:e2e": "next build",
     "test:e2e": "playwright test",
-    "prepare": "cd ../../.. && node classroom/react/invest-app/node_modules/husky/bin.js classroom/react/invest-app/.husky"
+    "prepare": "cd ../../../.. && node classroom/app/invest-app/nextjs/node_modules/husky/bin.js classroom/app/invest-app/nextjs/.husky"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs,json,jsonc,css}": "biome check --write --no-errors-on-unmatched"

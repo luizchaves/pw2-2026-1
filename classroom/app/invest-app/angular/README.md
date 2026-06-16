@@ -1,6 +1,6 @@
 # Invest App Angular
 
-Port em Angular do projeto `classroom/react/invest-app`.
+Port em Angular do projeto `classroom/app/invest-app/nextjs`.
 
 ## Stack
 
