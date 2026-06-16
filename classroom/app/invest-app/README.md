@@ -60,6 +60,19 @@ E a versao mais completa em termos de fronteira web moderna: inclui frontend, ro
 
 E a stack com mais pecas moveis. O App Router e o limite entre Server Components, Client Components e API Routes exigem mais disciplina arquitetural.
 
+**Observacao sobre SSR / renderizacao**
+
+A versao Next.js usa App Router e tem codigo server-side nas API Routes, incluindo validacao e autorizacao por token antes de acessar o Supabase. Porem, as paginas principais da interface sao Client Components, e os dados da carteira sao carregados no navegador com TanStack Query apos a autenticacao client-side. Portanto, o projeto tem uma fronteira servidor/cliente real, mas nao faz SSR dos dados autenticados da carteira na renderizacao inicial.
+
+Para o escopo didatico atual, isso e suficiente: as telas protegidas usam redirecionamento no cliente pelo `AppShell`, e as API Routes continuam sendo a camada que protege os dados. Em um cenario mais proximo de producao, a versao Next.js poderia evoluir com:
+
+- middleware ou verificacao server-side para proteger `/dashboard` e `/investments` antes da renderizacao da pagina;
+- leitura inicial dos dados em Server Components, quando a sessao/cookies do Supabase estiverem disponiveis no servidor;
+- hidratacao inicial do TanStack Query com dados carregados no servidor, reduzindo loading states apos abrir a pagina;
+- uso de `loading.tsx` e Suspense para estados de carregamento por rota;
+- separacao mais fina entre componentes estaticos server-side e componentes interativos client-side;
+- politicas de cache/revalidacao explicitas para dados publicos, como tipos de investimento.
+
 **Exclusivo do React / Next usado no projeto**
 
 O projeto Next.js tem recursos que nao existem do mesmo jeito nas outras versoes:
@@ -146,7 +159,7 @@ A versao vanilla prioriza fundamentos da plataforma web:
 | Framework principal | Next.js 16 + React 19 | Angular 22 | Vue 3 + Vite | Vite sem framework |
 | Tipo de app | Full-stack Next App Router | SPA Angular | SPA Vue | SPA JavaScript simples |
 | Linguagem | TypeScript | TypeScript | TypeScript | JavaScript |
-| Renderizacao | Client components + API Routes no mesmo projeto | Client-side app com rotas Angular | Client-side app com Vite | Client-side DOM rendering |
+| Renderizacao | Client Components com dados carregados no cliente + API Routes server-side | Client-side app com rotas Angular | Client-side app com Vite | Client-side DOM rendering |
 | Roteamento | File-based routing do Next em `src/app` | `@angular/router` com `Routes` e `loadComponent` | `vue-router` com `createRouter` | Navegacao controlada por DOM/estado local |
 | Estado | Zustand + TanStack Query | Signals + services Angular | Pinia + TanStack Vue Query | Store JS modular + localStorage para preferencias |
 | Formularios | React Hook Form | Reactive Forms | Estado reativo + Zod manual | DOM events + Zod |
