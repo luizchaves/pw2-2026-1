@@ -9,7 +9,11 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "biome check .",
-    "format": "biome format --write ."
+    "format": "biome format --write .",
+    "test": "pnpm run test:unit && pnpm run test:e2e",
+    "test:unit": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
@@ -24,9 +28,14 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.16",
+    "@playwright/test": "^1.60.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@vue/test-utils": "^2.4.6",
     "@vitejs/plugin-vue": "^6.0.2",
+    "jsdom": "^29.1.1",
     "typescript": "^5.9.3",
     "vite": "^7.2.7",
+    "vitest": "^4.1.8",
     "vue-tsc": "^3.1.8"
   }
 }

@@ -6,7 +6,7 @@ Invest App Vue e uma recriacao em Vue.js do app React/Next original para control
 
 ## Stack
 
-Vue 3, Vite, TypeScript, Vue Router, Pinia, TanStack Vue Query, Zod, Supabase e Tailwind CSS.
+Vue 3, Vite, TypeScript, Vue Router, Pinia, TanStack Vue Query, Zod, Supabase, Tailwind CSS, Vitest, Vue Test Utils e Playwright.
 
 ## Pages
 
@@ -26,7 +26,12 @@ Vue 3, Vite, TypeScript, Vue Router, Pinia, TanStack Vue Query, Zod, Supabase e 
 - Cache de server state com TanStack Vue Query.
 - Validacao de formularios com Zod.
 - Persistencia direta no Supabase client-side, assumindo RLS configurado no banco.
+- Testes unitarios, de componentes e e2e.
 
 ## Data Model
 
 Os modelos `Investment`, `InvestmentType` e validacoes de rendimento seguem a versao React, com valores monetarios armazenados em centavos.
+
+## Boundaries
+
+Esta versao nao possui backend proprio nem API Routes. O cliente usa o Supabase diretamente, portanto as regras de acesso devem ser garantidas por RLS no banco.

@@ -15,3 +15,9 @@ export const setStorage = (key, value) => {
 export const removeStorage = (key) => {
   localStorage.removeItem(key)
 }
+
+export const updateStorage = (key, updater, fallback) => {
+  const nextValue = updater(getStorage(key) ?? fallback)
+  setStorage(key, nextValue)
+  return nextValue
+}
